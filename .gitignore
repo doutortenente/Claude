@@ -1,0 +1,13 @@
+# Segredos / ambiente
+.env
+.env.*
+!.env.example
+chaves_secretas.txt
+
+# Config local de sessão (scratch)
+**/settings.local.json
+
+# SO / logs
+*.log
+.DS_Store
+node_modules/
