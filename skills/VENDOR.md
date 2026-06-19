@@ -49,13 +49,14 @@ empacotados redundantes). A `session-start-hook/` (top-level) vem de `~/.claude/
 | Grupo | Origem | Skills | Licença |
 |---|---|---|---|
 | `_anthropic/public/` (8) | `/mnt/skills/public/` | `docx`, `pdf`, `pptx`, `xlsx`, `file-reading`, `pdf-reading`, `frontend-design`, `product-self-knowledge` | Proprietary Anthropic (cada uma com `LICENSE.txt`, exceto `product-self-knowledge`) |
-| `_anthropic/examples/` (2) | `/mnt/skills/examples/` | `mcp-builder`, `doc-coauthoring` — **curado**: as outras 22 do `/mnt/skills/examples/` foram **descartadas** (ver abaixo) | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`) |
+| `_anthropic/examples/` (3) | `/mnt/skills/examples/` | `mcp-builder`, `doc-coauthoring`, `theme-factory` — **curado**: as outras 21 do `/mnt/skills/examples/` foram **descartadas** (ver abaixo) | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`) |
 | `session-start-hook/` (top-level) | `~/.claude/skills/` | cria SessionStart hooks p/ Claude Code on the web | sem `LICENSE` no upstream |
 
-**Curadoria do `examples/` (snapshot trazia 24; mantidas 2):** o catálogo `/mnt/skills/examples/`
-é majoritariamente **demo de consumo** sem relação com dev de software clínico. Mantidas só as 2
-relevantes (`mcp-builder` — constrói MCP servers; `doc-coauthoring` — workflow de specs/PRD/RFC).
-Descartadas as 22 restantes:
+**Curadoria do `examples/` (snapshot trazia 24; mantidas 3):** o catálogo `/mnt/skills/examples/`
+é majoritariamente **demo de consumo** sem relação com dev de software clínico. Mantidas só as 3
+relevantes: `mcp-builder` (constrói MCP servers), `doc-coauthoring` (workflow de specs/PRD/RFC) e
+`theme-factory` (aplica temas/paletas a artefatos gerados — complementa `docx`/`pptx`/`xlsx`/`pdf`).
+Descartadas as 21 restantes:
 - Concierge de consumo: `grocery-shopping`, `meal-delivery`, `hire-help`, `call-to-book`,
   `event-planning`, `cancel-unsubscribe`, `return-refund`, `file-form`, `prescription-refill`.
 - Finança/reembolso pessoal: `benepass-reimbursement`, `file-expenses`, `financial-calculator`.
@@ -63,7 +64,7 @@ Descartadas as 22 restantes:
   `brand-guidelines` (marca da Anthropic, não do SASI).
 - Prosa/educação não-clínica: `learn`, `internal-comms`, `setup-writing-style` (saídas clínicas
   são dados estruturados — mesma lógica do `humanizer` rejeitado).
-- Redundantes: `theme-factory`, `web-artifacts-builder` (cobertos pelo arsenal `_design/`);
+- Redundantes: `web-artifacts-builder` (mira artefatos claude.ai, não o produto real);
   `skill-creator` (duplicata da `skills/skill-creator/` top-level, fork daymade).
 
 **Notas:**
