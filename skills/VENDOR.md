@@ -49,12 +49,24 @@ empacotados redundantes). A `session-start-hook/` (top-level) vem de `~/.claude/
 | Grupo | Origem | Skills | Licença |
 |---|---|---|---|
 | `_anthropic/public/` (8) | `/mnt/skills/public/` | `docx`, `pdf`, `pptx`, `xlsx`, `file-reading`, `pdf-reading`, `frontend-design`, `product-self-knowledge` | Proprietary Anthropic (cada uma com `LICENSE.txt`, exceto `product-self-knowledge`) |
-| `_anthropic/examples/` (24) | `/mnt/skills/examples/` | `algorithmic-art`, `benepass-reimbursement`, `brand-guidelines`, `call-to-book`, `cancel-unsubscribe`, `canvas-design`, `doc-coauthoring`, `event-planning`, `file-expenses`, `file-form`, `financial-calculator`, `grocery-shopping`, `hire-help`, `internal-comms`, `learn`, `mcp-builder`, `meal-delivery`, `prescription-refill`, `return-refund`, `setup-writing-style`, `skill-creator`, `slack-gif-creator`, `theme-factory`, `web-artifacts-builder` | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`/`setup-writing-style`) |
+| `_anthropic/examples/` (2) | `/mnt/skills/examples/` | `mcp-builder`, `doc-coauthoring` — **curado**: as outras 22 do `/mnt/skills/examples/` foram **descartadas** (ver abaixo) | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`) |
 | `session-start-hook/` (top-level) | `~/.claude/skills/` | cria SessionStart hooks p/ Claude Code on the web | sem `LICENSE` no upstream |
 
+**Curadoria do `examples/` (snapshot trazia 24; mantidas 2):** o catálogo `/mnt/skills/examples/`
+é majoritariamente **demo de consumo** sem relação com dev de software clínico. Mantidas só as 2
+relevantes (`mcp-builder` — constrói MCP servers; `doc-coauthoring` — workflow de specs/PRD/RFC).
+Descartadas as 22 restantes:
+- Concierge de consumo: `grocery-shopping`, `meal-delivery`, `hire-help`, `call-to-book`,
+  `event-planning`, `cancel-unsubscribe`, `return-refund`, `file-form`, `prescription-refill`.
+- Finança/reembolso pessoal: `benepass-reimbursement`, `file-expenses`, `financial-calculator`.
+- Criativo/arte fora de escopo: `algorithmic-art`, `canvas-design`, `slack-gif-creator`,
+  `brand-guidelines` (marca da Anthropic, não do SASI).
+- Prosa/educação não-clínica: `learn`, `internal-comms`, `setup-writing-style` (saídas clínicas
+  são dados estruturados — mesma lógica do `humanizer` rejeitado).
+- Redundantes: `theme-factory`, `web-artifacts-builder` (cobertos pelo arsenal `_design/`);
+  `skill-creator` (duplicata da `skills/skill-creator/` top-level, fork daymade).
+
 **Notas:**
-- `_anthropic/examples/skill-creator/` é a versão **Anthropic** — distinta da `skills/skill-creator/`
-  top-level (fork do daymade). Mantidas as duas de propósito (proveniências diferentes).
 - Skills *built-in* invocáveis por `/` (`deep-research`, `verify`, `code-review`, `simplify`, `loop`,
   `claude-api`, `run`, `init`, `review`, `security-review`, `update-config`, `keybindings-help`,
   `fewer-permission-prompts`) **não foram vendoradas**: são embutidas no binário do Claude Code, não
