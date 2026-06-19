@@ -10,10 +10,17 @@ Fonte canônica de **skills** e **settings** do Claude Code, sincronizada para o
 ```text
 Claude/
 ├── skills/          Skills vendor (~17): superpowers, TDD, brainstorming, code-review…
-│   └── _design/     Arsenal de design auditado: taste-skill, frontend-design-pro,
-│                    ui-ux-pro-max, bencium (ver skills/VENDOR.md)
+│   ├── _design/     Arsenal de design auditado: taste-skill, frontend-design-pro,
+│   │                ui-ux-pro-max, bencium (ver skills/VENDOR.md)
+│   └── _anthropic/  Skills do ambiente Claude Code (snapshot /mnt/skills):
+│       ├── public/    8 skills proprietárias: docx, pdf, pptx, xlsx, file-reading,
+│       │              pdf-reading, frontend-design, product-self-knowledge
+│       └── examples/  24 skills de exemplo: mcp-builder, canvas-design, theme-factory…
 └── settings/        settings.json (permissões + hooks do prompt-improver)
 ```
+
+> `_anthropic/` é licença **proprietária da Anthropic** (ver `skills/VENDOR.md`) —
+> não redistribuir fora deste repo privado.
 
 ## Como usar
 
