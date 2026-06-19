@@ -9,8 +9,10 @@ Fonte canônica de **skills** e **settings** do Claude Code, sincronizada para o
 
 ```text
 Claude/
-├── skills/      Skills vendor (~17): superpowers, TDD, brainstorming, code-review…
-└── settings/    settings.json (permissões + hooks do prompt-improver)
+├── skills/          Skills vendor (~17): superpowers, TDD, brainstorming, code-review…
+│   └── _design/     Arsenal de design auditado: taste-skill, frontend-design-pro,
+│                    ui-ux-pro-max, bencium (ver skills/VENDOR.md)
+└── settings/        settings.json (permissões + hooks do prompt-improver)
 ```
 
 ## Como usar
