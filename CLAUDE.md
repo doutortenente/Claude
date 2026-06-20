@@ -15,7 +15,8 @@ Claude/
 │   └── _anthropic/  Skills do ambiente Claude Code (snapshot /mnt/skills):
 │       ├── public/    8 skills proprietárias: docx, pdf, pptx, xlsx, file-reading,
 │       │              pdf-reading, frontend-design, product-self-knowledge
-│       └── examples/  3 skills curadas: mcp-builder, doc-coauthoring, theme-factory
+│       └── examples/  5 skills curadas: mcp-builder, doc-coauthoring, theme-factory,
+│                      internal-comms, setup-writing-style
 └── settings/        settings.json (permissões + hooks do prompt-improver)
 ```
 

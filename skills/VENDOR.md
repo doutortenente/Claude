@@ -49,21 +49,21 @@ empacotados redundantes). A `session-start-hook/` (top-level) vem de `~/.claude/
 | Grupo | Origem | Skills | Licença |
 |---|---|---|---|
 | `_anthropic/public/` (8) | `/mnt/skills/public/` | `docx`, `pdf`, `pptx`, `xlsx`, `file-reading`, `pdf-reading`, `frontend-design`, `product-self-knowledge` | Proprietary Anthropic (cada uma com `LICENSE.txt`, exceto `product-self-knowledge`) |
-| `_anthropic/examples/` (3) | `/mnt/skills/examples/` | `mcp-builder`, `doc-coauthoring`, `theme-factory` — **curado**: as outras 21 do `/mnt/skills/examples/` foram **descartadas** (ver abaixo) | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`) |
+| `_anthropic/examples/` (5) | `/mnt/skills/examples/` | `mcp-builder`, `doc-coauthoring`, `theme-factory`, `internal-comms`, `setup-writing-style` — **curado**: as outras 19 do `/mnt/skills/examples/` foram **descartadas** (ver abaixo) | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`/`setup-writing-style`) |
 | `session-start-hook/` (top-level) | `~/.claude/skills/` | cria SessionStart hooks p/ Claude Code on the web | sem `LICENSE` no upstream |
 
-**Curadoria do `examples/` (snapshot trazia 24; mantidas 3):** o catálogo `/mnt/skills/examples/`
-é majoritariamente **demo de consumo** sem relação com dev de software clínico. Mantidas só as 3
-relevantes: `mcp-builder` (constrói MCP servers), `doc-coauthoring` (workflow de specs/PRD/RFC) e
-`theme-factory` (aplica temas/paletas a artefatos gerados — complementa `docx`/`pptx`/`xlsx`/`pdf`).
-Descartadas as 21 restantes:
+**Curadoria do `examples/` (snapshot trazia 24; mantidas 5):** o catálogo `/mnt/skills/examples/`
+é majoritariamente **demo de consumo** sem relação com dev de software clínico. Mantidas as 5
+relevantes: `mcp-builder` (constrói MCP servers), `doc-coauthoring` (workflow de specs/PRD/RFC),
+`theme-factory` (temas/paletas p/ artefatos gerados — complementa `docx`/`pptx`/`xlsx`/`pdf`),
+`internal-comms` (formatos de status/3P/FAQ/incident report) e `setup-writing-style` (perfil de voz
+p/ rascunhos de email/comms — pareia com Gmail no fluxo). Descartadas as 19 restantes:
 - Concierge de consumo: `grocery-shopping`, `meal-delivery`, `hire-help`, `call-to-book`,
   `event-planning`, `cancel-unsubscribe`, `return-refund`, `file-form`, `prescription-refill`.
 - Finança/reembolso pessoal: `benepass-reimbursement`, `file-expenses`, `financial-calculator`.
 - Criativo/arte fora de escopo: `algorithmic-art`, `canvas-design`, `slack-gif-creator`,
   `brand-guidelines` (marca da Anthropic, não do SASI).
-- Prosa/educação não-clínica: `learn`, `internal-comms`, `setup-writing-style` (saídas clínicas
-  são dados estruturados — mesma lógica do `humanizer` rejeitado).
+- Educação/runtime fora de escopo: `learn` (modo tutor — comportamento de runtime, não config/tooling).
 - Redundantes: `web-artifacts-builder` (mira artefatos claude.ai, não o produto real);
   `skill-creator` (duplicata da `skills/skill-creator/` top-level, fork daymade).
 
