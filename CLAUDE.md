@@ -115,7 +115,7 @@ tela com dado real.
   `chore:`) — ver `git log`.
 - Desenvolva em branch de feature; não faça push direto em `main` sem permissão.
 
-## Família de repos (`~/WebstormProjects/`)
+## Família de repos (`~/dev/`)
 
 SASI (produto) · **Claude** (este) · Cursor · GROK · JARVIS · comando-uti
 (GERAL/índice).
