@@ -34,6 +34,47 @@ parent. Para ativar uma como project-skill num repo, copie/symlinke a pasta com 
 para o `.claude/skills/` daquele projeto (vide §Como re-sincronizar). Originalmente instalados via
 `claude plugin install` em `~/.claude/` (efêmero) — re-vendorados aqui por isso.
 
+### Skills do ambiente Claude Code (`_anthropic/`) — snapshot 19-Jun-2026
+
+Skills que vêm **pré-carregadas no ambiente Claude Code** (montadas em `/mnt/skills/`),
+re-vendoradas aqui a pedido do Dr. Tenente. O ambiente web é efêmero, então capturamos um
+snapshot dos diretórios **já extraídos** (não os arquivos `.skill`, que são só os zips
+empacotados redundantes). A `session-start-hook/` (top-level) vem de `~/.claude/skills/`.
+
+> ⚠️ **Licença proprietária Anthropic.** Cada skill traz `LICENSE.txt`: *"© 2025 Anthropic,
+> PBC. All rights reserved. Use of these materials is governed by your agreement with
+> Anthropic."* — **NÃO redistribuir** fora deste repo privado. Não há SHA de upstream
+> público; proveniência = snapshot do ambiente em 19-Jun-2026.
+
+| Grupo | Origem | Skills | Licença |
+|---|---|---|---|
+| `_anthropic/public/` (8) | `/mnt/skills/public/` | `docx`, `pdf`, `pptx`, `xlsx`, `file-reading`, `pdf-reading`, `frontend-design`, `product-self-knowledge` | Proprietary Anthropic (cada uma com `LICENSE.txt`, exceto `product-self-knowledge`) |
+| `_anthropic/examples/` (5) | `/mnt/skills/examples/` | `mcp-builder`, `doc-coauthoring`, `theme-factory`, `internal-comms`, `setup-writing-style` — **curado**: as outras 19 do `/mnt/skills/examples/` foram **descartadas** (ver abaixo) | Proprietary Anthropic (`LICENSE.txt`; sem licença em `doc-coauthoring`/`setup-writing-style`) |
+| `session-start-hook/` (top-level) | `~/.claude/skills/` | cria SessionStart hooks p/ Claude Code on the web | sem `LICENSE` no upstream |
+
+**Curadoria do `examples/` (snapshot trazia 24; mantidas 5):** o catálogo `/mnt/skills/examples/`
+é majoritariamente **demo de consumo** sem relação com dev de software clínico. Mantidas as 5
+relevantes: `mcp-builder` (constrói MCP servers), `doc-coauthoring` (workflow de specs/PRD/RFC),
+`theme-factory` (temas/paletas p/ artefatos gerados — complementa `docx`/`pptx`/`xlsx`/`pdf`),
+`internal-comms` (formatos de status/3P/FAQ/incident report) e `setup-writing-style` (perfil de voz
+p/ rascunhos de email/comms — pareia com Gmail no fluxo). Descartadas as 19 restantes:
+- Concierge de consumo: `grocery-shopping`, `meal-delivery`, `hire-help`, `call-to-book`,
+  `event-planning`, `cancel-unsubscribe`, `return-refund`, `file-form`, `prescription-refill`.
+- Finança/reembolso pessoal: `benepass-reimbursement`, `file-expenses`, `financial-calculator`.
+- Criativo/arte fora de escopo: `algorithmic-art`, `canvas-design`, `slack-gif-creator`,
+  `brand-guidelines` (marca da Anthropic, não do SASI).
+- Educação/runtime fora de escopo: `learn` (modo tutor — comportamento de runtime, não config/tooling).
+- Redundantes: `web-artifacts-builder` (mira artefatos claude.ai, não o produto real);
+  `skill-creator` (duplicata da `skills/skill-creator/` top-level, fork daymade).
+
+**Notas:**
+- Skills *built-in* invocáveis por `/` (`deep-research`, `verify`, `code-review`, `simplify`, `loop`,
+  `claude-api`, `run`, `init`, `review`, `security-review`, `update-config`, `keybindings-help`,
+  `fewer-permission-prompts`) **não foram vendoradas**: são embutidas no binário do Claude Code, não
+  existem como `SKILL.md` em disco. Já acompanham o CLI em qualquer ambiente.
+- Muitas das `examples/` (`grocery-shopping`, `prescription-refill`, `meal-delivery`…) são demos de
+  consumo, fora do escopo clínico/dev deste repo — guardadas como referência, não para ativação.
+
 ## Notas de instalação / fiação
 
 ### prompt-improver — hooks ATIVOS
