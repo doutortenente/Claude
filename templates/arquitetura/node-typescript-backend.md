@@ -28,4 +28,4 @@ meu-projeto-node/
 
 **Variações:** Express/Fastify → camadas ou features. NestJS → `modules/` com decorators.
 
-**No Comando UTI:** `sasi-mcp-server/` segue este padrão (Node + TypeScript + MCP).
+**No SASI:** `mcp-server/` segue este padrão (Node + TypeScript + MCP).
