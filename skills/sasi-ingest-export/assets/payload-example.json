@@ -14,7 +14,7 @@
     "uti": "UTI3",
     "leito": "7",
     "paciente_id": null,
-    "nota": "paciente_id null → Edge Function buscará por (uti, leito, status_leito=ativo); se achar usa, senão exige paciente_upsert preenchido"
+    "nota": "paciente_id null → MCP sasi_deploy_ingest busca por (uti, leito, status_leito=ativo); se achar usa, senão exige paciente_upsert preenchido"
   },
   "paciente_upsert": null,
   "evolucao_snapshot": {

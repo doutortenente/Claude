@@ -67,7 +67,7 @@ Qualquer flag **não é bloqueador** — o JSON segue, mas campo `requires_human
 Leia `references/01-schema-eventos-clinicos.md` para o schema exato. Devolve JSON validado (`sasi-ocr-ingest/v1`). O Dr. Nicolas revisa; gravação no Supabase só com **“deploy”** / **“salvar no Supabase”** via MCP.
 
 **B. Exportar Evolução** (quando pedir "exportar evolução" ou "gerar nota de prontuário"):
-Leia `references/04-export-evolucao-template.md`. Saída é **texto puro em Markdown**, copiar-e-colar direto na evolução oficial.
+Leia `references/04-export-evolucao-template.md` (modo D2+ / TEMPLATE-BASE v2). Saída é **texto puro em Markdown**, copiar-e-colar direto na evolução oficial. Template v1 SOAP legado: `04-export-evolucao-template_v1_LEGADO.md`.
 
 **C. Exportar Turno** (quando pedir "passagem", "exportar turno", "passagem de plantão"):
 Leia `references/05-export-passagem-turno.md`. Saída é **1 página A4**, condensada, por paciente ou bloco de leitos.
@@ -79,7 +79,7 @@ Leia `references/05-export-passagem-turno.md`. Saída é **1 página A4**, conde
 1. **Chave Gemini/Claude NUNCA no output do usuário** — se ele colar credenciais junto com a foto, extraia só a foto e ignore as chaves.
 2. **Nenhum campo inventado**: se não está na imagem/PDF, retorne `null`. Iatrogenia é criada por "preenchimento automático" de valores médios.
 3. **Todo output estruturado é JSON válido**: valide mentalmente antes de entregar. Se inclui JSON numa resposta Markdown, SEMPRE em bloco ````json`.
-4. **Gravação no Supabase:** por padrão só entrega o JSON. INSERT/UPSERT via MCP quando o Dr. pedir **“deploy”** ou **“salvar no Supabase”**. Sem Edge Function, sem AppSheet, sem pipeline automático.
+4. **Gravação no Supabase:** por padrão só entrega o JSON. INSERT/UPSERT via MCP tool **`sasi_deploy_ingest`** quando o Dr. pedir **“deploy”** ou **“salvar no Supabase”**. Sem AppSheet, sem pipeline automático.
 5. **Nunca mostre reasoning clínico errado com ar de certeza** — se SOFA cardio pede peso e tu não tem, componente volta `null` com `missing: ["peso"]`, não chuta.
 6. **Pior valor, não médio** — convenção do projeto: `pam1 = MIN` (pior PAM do período), FiO2 do pior P/F, Lac do maior valor.
 

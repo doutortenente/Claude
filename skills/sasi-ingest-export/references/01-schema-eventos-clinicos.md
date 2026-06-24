@@ -242,7 +242,7 @@ Isto é o **shape exato** que Claude deve produzir ao final da extração:
 
 ### Regras de preenchimento do payload
 
-1. **`target.paciente_id` é null** → Edge Function procura por `(uti, leito, status_leito=ativo)`; se achar, usa; se não, exige `paciente_upsert` preenchido.
+1. **`target.paciente_id` é null** → MCP `sasi_deploy_ingest` procura por `(uti, leito, status_leito=ativo)`; se achar, usa; se não, exige `paciente_upsert` preenchido.
 2. **`evolucao_snapshot` é null** quando a foto é só de lab/imagem (eventos isolados). Nesse caso, os valores vão SÓ em `eventos_clinicos` e linkam à evolução ativa do dia.
 3. **`eventos_clinicos` é SEMPRE array** (pode ter 1, 10, 50 itens).
 4. **Toda gasometria gera**: `ph`, `pco2`, `po2`, `hco3`, `be`, `lactato`, `pf_ratio` (se FiO2 disponível) — como `valor_json` num único evento OU eventos separados se o backend preferir (usar separados — mais fácil de plotar).
