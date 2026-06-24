@@ -12,4 +12,4 @@ Claude/
 ## Uso
 
 Skills e settings daqui são copiados/symlinkados para `.claude/` de cada projeto.
-Não contém segredos. Ver projeto-índice **comando-uti** (GERAL).
+Não contém segredos. Workspace: `~/dev/` · índice em `memory/MAPA-DEV.md`.
