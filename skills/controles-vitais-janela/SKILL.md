@@ -23,6 +23,16 @@ description: >
 > versão completa; modelo de saída alinhado ao `references/exemplo-resolvido.md`
 > (contrato de saída padrão-ouro). Alterou aqui? É a única cópia — não fork.
 
+## Amostras de folha (md)
+
+Três PDFs reais convertidos para referência de layout (texto OCR fraco — scan manuscrito):
+
+- `references/amostras/folha-uti2-2026-05-10.md`
+- `references/amostras/sinais-uti2-2026-06-21.md`
+- `references/amostras/prescricao-uti2-2026-06-21.md`
+
+Transcrição operacional continua vindo da foto/PDF que o Dr. enviar no plantão.
+
 ## Missão
 Pegar a folha bruta de enfermagem (manuscrita, fotografada, escaneada) e cuspir,
 por leito, um bloco **copiar-e-colar** com os parâmetros agregados na janela
