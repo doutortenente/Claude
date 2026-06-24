@@ -23,6 +23,16 @@ description: >
 > versão completa; modelo de saída alinhado ao `references/exemplo-resolvido.md`
 > (contrato de saída padrão-ouro). Alterou aqui? É a única cópia — não fork.
 
+## Fixtures locais (PDF scan → md)
+
+Exemplos reais importados de `Files_to_claudecode` (texto parcial — scan manuscrito):
+
+- `references/fixtures/folha-enfermagem-uti2-10-05-26.md`
+- `references/fixtures/sinais-uti2-21-06-26.md`
+- `references/fixtures/prescricoes-uti2-21-06-26.md`
+
+Use como referência de layout Beneficência Portuguesa; transcrição final sempre da imagem/PDF que o Dr. enviar.
+
 ## Missão
 Pegar a folha bruta de enfermagem (manuscrita, fotografada, escaneada) e cuspir,
 por leito, um bloco **copiar-e-colar** com os parâmetros agregados na janela
