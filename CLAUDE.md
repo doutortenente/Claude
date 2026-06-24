@@ -135,5 +135,4 @@ tela com dado real.
 
 ## Família de repos (`~/dev/`)
 
-SASI (produto) · **Claude** (este) · Cursor · GROK · JARVIS · `~/dev/memory` (índice workspace)
-(GERAL/índice).
+SASI (produto) · **Claude** (este) · JARVIS · `~/dev/memory` (índice workspace).
