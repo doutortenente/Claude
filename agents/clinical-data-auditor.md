@@ -1,6 +1,6 @@
 ---
 name: clinical-data-auditor
-description: Audita dados clínicos (eventos_clinicos, sinais vitais, doses, labs) buscando campos sem fonte legível. Use ao revisar ingest de OCR, ao validar dados antes de exibir no dashboard, ou ao checar integridade de uma tabela clínica.
+description: Audita dados clínicos (eventos_clinicos, sinais vitais, doses, labs) buscando campos sem fonte legível. Use ao revisar ingest Claude→JSON, ao validar dados antes de exibir no dashboard, ou ao checar integridade de uma tabela clínica.
 tools: Read, Grep, Glob, Bash
 model: opus
 ---

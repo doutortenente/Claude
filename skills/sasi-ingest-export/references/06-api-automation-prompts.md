@@ -1,4 +1,11 @@
-# 🤖 Prompts de Automação — iOS Shortcut / n8n / cURL direto
+# ⛔ LEGADO — NÃO USAR
+
+> **Arquivado 24-jun-2026.** O fluxo operacional é: **Claude no chat → JSON → MCP (`deploy`)**.
+> Sem iOS Shortcut, sem Gemini Vision, sem AppSheet, sem POST em `ocr-ingest`.
+
+---
+
+# 🤖 Prompts de Automação — iOS Shortcut / n8n / cURL direto (LEGADO)
 
 Quando não dá pra abrir o Claude no chat (round, meio de procedimento, contexto de emergência), dispara o atalho do iPad e o pipeline roda sozinho: **Gemini Vision (extração crua) → Claude API (auditoria clínica + payload) → POST na Edge Function `ocr-ingest`**.
 

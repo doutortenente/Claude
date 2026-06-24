@@ -180,7 +180,9 @@ create index idx_eventos_tipo_ts on eventos_clinicos (tipo, ts desc);
 
 ---
 
-## 📦 PAYLOAD padrão do Edge Function `ocr-ingest`
+## 📦 PAYLOAD de ingest (schema `sasi-ocr-ingest/v1`)
+
+> Gravação operacional: MCP com comando **deploy** — não POST em Edge Function.
 
 Isto é o **shape exato** que Claude deve produzir ao final da extração:
 

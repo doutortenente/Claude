@@ -1,6 +1,6 @@
 ---
 name: deploy-sentinel
-description: Portão final antes de mergear na main (= deploy em produção hospitalar via Netlify). Use proativamente antes de qualquer push/merge na main. Roda build, typecheck, lint e testes, confere RLS em tabelas novas e tipos TS regenerados, e devolve um veredito único.
+description: Portão final antes de mergear na main (= deploy pessoal via Netlify). Use proativamente antes de qualquer push/merge na main. Roda build, typecheck, lint e testes, confere RLS em tabelas novas e tipos TS regenerados, e devolve um veredito único.
 tools: Read, Grep, Glob, Bash
 model: sonnet
 ---
