@@ -5,9 +5,14 @@ Configuração reutilizável do Claude Code do Dr. Tenente: skills vendor + sett
 
 ```text
 Claude/
-├── skills/      Skills vendor (~17): superpowers, TDD, brainstorming, code-review…
-└── settings/    settings.json (permissões + hooks do prompt-improver)
+├── skills/      Skills (78 SKILL.md) + _design/ + _anthropic/
+├── agents/      Subagentes (secretaria, clinical-auditor…)
+├── settings/    settings.json (permissões + hooks)
+├── templates/   Scaffolding de projetos
+└── memory/      Índice FTS — SKILLS-CATALOGO.md, query_claude_index.py
 ```
+
+**Navegação:** `python3 memory/scripts/query_claude_index.py skills` — não varrer `skills/` à mão.
 
 ## Uso
 

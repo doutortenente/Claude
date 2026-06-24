@@ -11,3 +11,7 @@ chaves_secretas.txt
 *.log
 .DS_Store
 node_modules/
+
+# Índice local (regenerável)
+memory/claude_index.db
+memory/claude_index.db.bak

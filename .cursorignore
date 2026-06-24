@@ -1,0 +1,9 @@
+# Vendor pesado — não indexar no contexto do agente (use memory/SKILLS-CATALOGO.md)
+skills/_design/**/data/*.csv
+skills/_design/**/cli/assets/**
+skills/_anthropic/**/schemas/**
+skills/_anthropic/**/*.xsd
+skills/_design/**/*.ttf
+skills/_design/**/*.png
+skills/_design/**/preview/**
+skills/_design/**/node_modules/**

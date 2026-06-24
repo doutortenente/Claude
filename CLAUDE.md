@@ -60,6 +60,24 @@ Fluxo de desenvolvimento (superpowers + daymade): `brainstorming`,
   `.gitignore` bloqueia `.env*`, `**/settings.local.json`, `*.log`. Este repo toca
   contexto clínico/Supabase — trate qualquer dado sensível com cuidado.
 
+## Navegação rápida (obrigatório — repo é pesado)
+
+Este repo tem **~900 arquivos** e **34 MB** em `skills/_design/` + `_anthropic/`.
+**Não varrer** `skills/` com Glob nem Read em massa — é lento e queima contexto.
+
+| Precisa de | Use primeiro |
+|---|---|
+| Qual skill existe? | `memory/SKILLS-CATALOGO.md` |
+| Path de uma skill | `python3 memory/scripts/query_claude_index.py skill <nome>` |
+| Scripts (.py/.sh) | `python3 memory/scripts/query_claude_index.py scripts` |
+| Subagentes | `python3 memory/scripts/query_claude_index.py agents` |
+| Busca no repo | `python3 memory/scripts/query_claude_index.py search <termo>` |
+| Inventário | `memory/MAPA-CLAUDE.md` |
+
+Regenerar índice: `python3 memory/scripts/build_claude_index.py`.
+
+`_design/` e `_anthropic/` são **sob demanda** — só abrir quando a skill for acionada.
+
 ## Workflows
 
 ### Adicionar / vendorar uma nova skill
