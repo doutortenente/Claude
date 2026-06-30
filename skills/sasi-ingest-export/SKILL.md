@@ -97,7 +97,13 @@ Regras:
 4. **Dose de vasopressor**: noradrenalina em BIC → converter pra mcg/kg/min (precisa peso) e gerar `nor_dose`. Sem peso → `nor_dose=null` + `missing:["peso"]`. É o que define o SOFA cardiovascular, mais que a PAM isolada.
 5. **Ao exportar evolução**, incluir a linha `SOFA — componentes capturados: X/6 · faltando: [...]`. Transparência > escore falso.
 
-O **cálculo** do escore (0–4 por componente) é feito a jusante, no banco (view de SOFA) — a skill só garante a **captura** dos insumos.
+**Pré-requisitos do motor v1** (ruleset `SOFA1_v1.0` — ver `docs/SOFA-RULESET.md` no repo sasi). Capturar **sem novo tipo no banco**, anexando ao `valor_json` do evento:
+6. **Suporte ventilatório**: no evento `pf_ratio`, gravar `valor_json: {"suporte_vent": "VMI"|"VNI"|"HFNC"|"none"}`. O motor só pontua resp 3–4 **com** suporte. Sem o dado → `"suporte_vent": null` + warning.
+7. **Vasopressor por droga**: um evento por droga — `nor_dose`/`adr_dose`/`dopa_dose`/`dobuta_dose` (`valor_num` em mcg/kg/min) + `valor_json: {"duracao_min": N}`. **NÃO** somar drogas num evento só. Sem peso → `null` + `missing:["peso"]`.
+8. **Sedação + GCS pré-sedação**: evento `rass` (`valor_num`) + no `gcs` gravar `valor_json: {"pre_sedacao": true|false, "confounded_by_sedation": true|false}`. É o que permite a imputação CNS do motor (carry-forward do GCS pré-sedação).
+9. **Diurese diária**: gravar `diurese_h` em mL/h. Se a folha só traz total 24h, dividir por 24 e marcar `valor_json: {"from_24h_total": true}`. O motor converte pra mL/dia.
+
+O **cálculo** do escore (0–4 por componente) é feito a jusante, no banco (view/motor de SOFA) — a skill só garante a **captura** dos insumos.
 
 ---
 
