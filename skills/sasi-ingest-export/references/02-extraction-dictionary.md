@@ -17,7 +17,7 @@ Folha impressa ou manuscrita, geralmente em grade horária de 24h ou por turno.
 - **resp**: `fr` (menor/maior), `spo2` (menor/maior, extrair o PIOR como principal), `fio2O2` ou `vmFio2`, `suporte` (inferir: se tem PEEP → `IOT + VM`; se tem VNI escrito → `VNI`; cateter O2 + fluxo → `CN` ou `O2`)
 - **hemo**: `pa_sys_min`, `pa_sys_max`, `pa_dia_min`, `pa_dia_max`, `pam1` (MIN), `pam2` (MAX), `fc_min`, `fc_max`
 - **renal**: `diurese` (total das 24h ou do turno), `diureseHoras` (duração coberta), `bh` (balanço hídrico do período)
-- **neuro**: escalas (GCS, RASS, CAM-ICU, Richmond)
+- **neuro**: escalas (GCS, RASS, CAM-ICU, Richmond) — **gerar evento próprio `gcs`** (componente SOFA neuro), além de registrar no snapshot. Se sedado (RASS −4/−5): registrar `gcs` + `gcs_confounded_by_sedation: true`.
 - **dvas**: qualquer droga em BIC com `vazao_ml_h`, `diluicao`, `droga`
 
 **Armadilhas específicas:**
@@ -30,6 +30,8 @@ Folha impressa ou manuscrita, geralmente em grade horária de 24h ou por turno.
 
 **Output de eventos clínicos** (gerar UM evento por cada):
 - `pam_min`, `pam` (média), `fc` (MAX — pior), `fr` (MAX), `spo2` (MIN — pior), `diurese_h` (calc: diurese/horas), `bh_h`, `temp` (MAX — pior se febril)
+- **`gcs`** (SOFA neuro — sempre que a folha trouxer Glasgow)
+- **`nor_dose`** em mcg/kg/min (SOFA cardio) quando há noradrenalina em BIC + peso disponível
 - Se VM: `pf_ratio` (calculado de PaO2/FiO2 se tem gaso no mesmo período)
 
 ---
@@ -49,7 +51,7 @@ Painel padrão: Ureia, Cr, Na, K, Mg, Ca, glicemia, TGO, TGP, FA, GGT, BB (total
 - Creatinina → `cr` (mg/dL)
 - Sódio → `na` (mEq/L)
 - Potássio → `k` (mEq/L)
-- Bilirrubina Total → `bb` (mg/dL)
+- Bilirrubina Total → `bb` (mg/dL) — **componente SOFA hepático: sempre gerar evento quando o painel traz BB; se ausente, declarar faltante, não inventar**
 - (outros → `custom` com `valor_json`)
 
 **Armadilhas:**
@@ -90,7 +92,7 @@ Painel padrão: Ureia, Cr, Na, K, Mg, Ca, glicemia, TGO, TGP, FA, GGT, BB (total
 - Lactato: unidade `mmol/L` (padrão) vs `mg/dL` (× 0,111 pra mmol/L). BR usa mmol/L predominante.
 - SatO2 da gaso vs da oximetria → pode divergir. Usar SatO2 da oximetria pro `spo2`, da gaso pro `custom`.
 
-**Eventos gerados:** `pf_ratio`, `lactato`, + `custom` com `valor_json` do painel completo.
+**Eventos gerados:** `po2`, `pf_ratio` (SOFA resp — se FiO₂ ausente na gaso, buscar na folha/ventilador; sem FiO₂ → `pf_ratio=null` + warning `missing:["fio2"]`), `lactato`, + `custom` com `valor_json` do painel completo.
 
 ---
 

@@ -74,6 +74,30 @@ Leia `references/05-export-passagem-turno.md`. Saída é **1 página A4**, conde
 
 ---
 
+## 🎖️ Captura obrigatória para SOFA (6 componentes)
+
+O escore SOFA exige os **6** componentes abaixo. Hoje 3 ficam zerados e o escore não fecha em ninguém. SEMPRE que o insumo permitir, capture e gere o evento clínico correspondente. Quando faltar, **declare o que faltou** — nunca silencie, nunca chute.
+
+| Componente | Dado | `tipo` do evento | De onde vem |
+|---|---|---|---|
+| Respiratório | PaO₂/FiO₂ | `pf_ratio` (+ `po2`) | gasometria com pO₂ + FiO₂ |
+| Coagulação | Plaquetas | `plaq` | hemograma |
+| Hepático | Bilirrubina total | `bb` | bioquímica |
+| Cardiovascular | PAM + dose de vasopressor | `pam` + `nor_dose` (mcg/kg/min) | folha / BIC / prescrição |
+| Neurológico | Glasgow | `gcs` | folha de enfermagem (neuro) |
+| Renal | Creatinina (e diurese) | `cr` (+ `diurese_h`) | bioquímica / folha |
+
+Regras:
+1. **P/F**: havendo gasometria, registre `po2` E calcule `pf_ratio`. Precisa FiO₂ — se não está na gaso, busque na folha/ventilador; sem FiO₂ → `pf_ratio=null` + warning `missing:["fio2"]`.
+2. **Bilirrubina**: bioquímica com BB total → sempre gerar evento `bb`. Ausente no painel → declarar faltante, não inventar.
+3. **Glasgow**: extrair da folha e gerar evento próprio `gcs` (além do snapshot neuro). Sedação profunda (RASS −4/−5) → registrar `gcs` + `gcs_confounded_by_sedation: true`.
+4. **Dose de vasopressor**: noradrenalina em BIC → converter pra mcg/kg/min (precisa peso) e gerar `nor_dose`. Sem peso → `nor_dose=null` + `missing:["peso"]`. É o que define o SOFA cardiovascular, mais que a PAM isolada.
+5. **Ao exportar evolução**, incluir a linha `SOFA — componentes capturados: X/6 · faltando: [...]`. Transparência > escore falso.
+
+O **cálculo** do escore (0–4 por componente) é feito a jusante, no banco (view de SOFA) — a skill só garante a **captura** dos insumos.
+
+---
+
 ## 🚨 Regras invioláveis
 
 1. **Chave Gemini/Claude NUNCA no output do usuário** — se ele colar credenciais junto com a foto, extraia só a foto e ignore as chaves.
