@@ -157,6 +157,8 @@ Vai pra `eventos_clinicos` como `tipo='custom'`, `valor_json` com `{tipo_exame, 
 
 **Vai pra `evolucao_snapshot` como array** — não gera `evento_clinico` (exceto se for DVA, aí entra em `dvas` do snapshot).
 
+**Ordenar por sistema (modo D):** ao exportar prescrição, classificar cada droga em 1 dos 7 blocos canônicos (Cardiovascular · SNC · GI/Endócrino · Infeccioso/Respiratório · Hematológico/Profilaxias · Nutrição/Eletrólitos · Sintomáticos/SN) e rodar o safety check conservador — ver `references/07-export-prescricao-ordenada.md`.
+
 ---
 
 ## 📝 `texto_livre`

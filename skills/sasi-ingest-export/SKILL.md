@@ -72,6 +72,9 @@ Leia `references/04-export-evolucao-template.md` (modo D2+ / TEMPLATE-BASE v2). 
 **C. Exportar Turno** (quando pedir "passagem", "exportar turno", "passagem de plantão"):
 Leia `references/05-export-passagem-turno.md`. Saída é **1 página A4**, condensada, por paciente ou bloco de leitos.
 
+**D. Exportar Prescrição Ordenada** (quando subir foto de prescrição ou pedir "ordenar/exportar prescrição"):
+Leia `references/07-export-prescricao-ordenada.md`. Saída = prescrição agrupada em **7 blocos por sistema** + safety check conservador (zero alucinação). Texto puro pro prontuário. **NÃO grava no banco** — fluxo faseado: texto revisável agora, SQL é fase 2 (quando o frontend consumir).
+
 ---
 
 ## 🎖️ Captura obrigatória para SOFA (6 componentes)
@@ -130,6 +133,7 @@ Claude já é multimodal — lê a folha direto, audita, monta o payload. Não e
 - `references/03-clinical-sanity-checks.md` — Ranges fisiológicos + regras de incompatibilidade
 - `references/04-export-evolucao-template.md` — Template de evolução médica (SOAP adaptado SASI)
 - `references/05-export-passagem-turno.md` — Template de passagem de plantão 1 página
+- `references/07-export-prescricao-ordenada.md` — Ordenador de prescrição por sistema (7 blocos) + safety check
 - `references/06-api-automation-prompts.md` — **LEGADO** (não usar)
 
 ---
