@@ -171,3 +171,26 @@ Evolução digitada/dictada. Parse heurístico:
 - Extrair `impressao` (linhas com "Paciente evoluindo...", "em quadro de...") e `conduta` (linhas com "manter", "iniciar", "suspender", "aumentar").
 
 Quando em dúvida, preencher `warnings` com o trecho ambíguo e retornar `null` no campo.
+
+---
+
+## 📌 Pendências / Tarefas → array `pendencias[]`
+
+**O que é pendência:** uma **tarefa acionável do próximo turno** — algo que alguém precisa *fazer* ou *conseguir*, não um estado clínico. Sai do resumo e vai pro array `pendencias: [{tarefa, prioridade}]`. É a fonte única: a mesma tarefa **não** se repete na Conduta nem na Impressão.
+
+**Gatilhos de detecção** (verbo de ação / espera por resultado):
+- Verbos imperativos: "solicitar", "programar", "agendar", "passar (sonda/acesso)", "reavaliar", "discutir com (CCIH / cirurgia / neuro)", "colher", "trocar", "puncionar".
+- Espera por exame/parecer/procedimento: "Aguarda TC", "Aguarda CATE", "Aguarda EDA", "Aguarda Holter", "Aguarda ecocardiograma", "Aguarda parecer X", "Aguarda cultura".
+- Ações com hora marcada: "SBT amanhã 10h", "extubação programada", "diálise às 14h".
+- Providências de risco: "HEMOTRANSFUSÃO urgente", "reservar hemoderivados", "reserva de vaga".
+
+**NÃO é pendência** (fica no eixo próprio, não vira tarefa): diagnóstico/impressão ("sepse pulmonar"), meta terapêutica contínua já em curso ("manter PAM > 65", "controle glicêmico"), dose/prescrição (vai em `prescricao`/`dvas`).
+
+**Prioridade:**
+| Valor | Quando | Exemplos |
+|---|---|---|
+| `1` | Tempo-sensível / segurança do paciente | HEMOTRANSFUSÃO urgente, corrigir distúrbio grave, procedimento com hora marcada |
+| `2` | Rotina do dia (default) | TC de controle, parecer de especialidade, colher cultura |
+| `3` | Pode esperar / eletivo | conciliação medicamentosa, agendamento eletivo |
+
+**Zero alucinação:** só vira pendência o que está escrito/dito. Não inferir tarefa "que faria sentido". Se a frase é ambígua entre conduta e tarefa, manter no resumo e sinalizar em `warnings`.

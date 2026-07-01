@@ -67,7 +67,7 @@ Conduta estruturada por Sistemas:
 1. {Sistema}: {ação + dose + meta numérica}.
 2. {Sistema}: {...}.
 {Profilaxias: TVP / LAMG / cabeceira / higiene oral — sempre revisar}.
-{Seguimento de especialidades + pendências/contingência}.
+{Seguimento de especialidades + pendências/contingência — as tarefas acionáveis saem do array `pendencias[]` (fonte única, ver SKILL.md regra nº 7), não redigidas soltas aqui}.
 
 —
 Assinatura: Dr. Nicolas — Intensivista

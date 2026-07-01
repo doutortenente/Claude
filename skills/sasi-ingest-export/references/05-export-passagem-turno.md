@@ -46,7 +46,7 @@ Use quando o comando é `"passar turno leito 7"` ou similar.
 - **DVAs linha única**: `Nor 0.20↓ · Vaso 0.04` (seta ↓ se desmame, ↑ se escalada).
 - **ATBs com D-X**: `Merop D-3 · Linez D-5` (X = dias de terapia).
 - **Alertas**: apenas o que REALMENTE muda decisão no próximo turno. Máximo 3.
-- **Tarefas pendentes**: checkbox, imperativa, com horário se crítico (`☐ SBT 10h`).
+- **Tarefas pendentes**: checkbox, imperativa, com horário se crítico (`☐ SBT 10h`). **Fonte única = array `pendencias[]`** do payload (uma linha por item, ordenar por `prioridade`). Este bloco RENDERIZA o array — não redija a tarefa aqui de novo se ela já está no array (ver regra inviolável nº 7 do SKILL.md). Uma tarefa que ainda não está no array deve ser adicionada AO array, não escrita solta aqui.
 - **Plano rescue**: o que fazer se deteriorar. Curto, decisivo (`PAM < 60 → retoma Nor 0.25 + bolus SF 500; SpO2 < 90 → sedação profunda + aumentar PEEP 10`).
 
 ---

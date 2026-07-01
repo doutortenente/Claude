@@ -66,6 +66,8 @@ Qualquer flag **não é bloqueador** — o JSON segue, mas campo `requires_human
 **A. Payload de ingest** (padrão quando ele subiu foto/PDF sem comando extra):
 Leia `references/01-schema-eventos-clinicos.md` para o schema exato. Devolve JSON validado (`sasi-ocr-ingest/v1`). O Dr. Nicolas revisa; gravação no Supabase só com **“deploy”** / **“salvar no Supabase”** via MCP.
 
+**Pendências/tarefas vão no array próprio `pendencias: [{tarefa, prioridade}]`** (prioridade `1`=alta/tempo-sensível, `2`=rotina do dia [default], `3`=pode esperar) — **NUNCA** embutidas na Conduta, na Impressão ou no texto da passagem. O `sasi_deploy_ingest` grava cada item como linha na tabela `pendencias`, que alimenta a coluna "Pendências/Riscos" da Passagem de Turno e a ficha do paciente. Regra de detecção em `references/02-extraction-dictionary.md`.
+
 **B. Exportar Evolução** (quando pedir "exportar evolução" ou "gerar nota de prontuário"):
 Leia `references/04-export-evolucao-template.md` (modo D2+ / TEMPLATE-BASE v2). Saída é **texto puro em Markdown**, copiar-e-colar direto na evolução oficial. Template v1 SOAP legado: `04-export-evolucao-template_v1_LEGADO.md`.
 
@@ -115,6 +117,7 @@ O **cálculo** do escore (0–4 por componente) é feito a jusante, no banco (vi
 4. **Gravação no Supabase:** por padrão só entrega o JSON. INSERT/UPSERT via MCP tool **`sasi_deploy_ingest`** quando o Dr. pedir **“deploy”** ou **“salvar no Supabase”**. Sem AppSheet, sem pipeline automático.
 5. **Nunca mostre reasoning clínico errado com ar de certeza** — se SOFA cardio pede peso e tu não tem, componente volta `null` com `missing: ["peso"]`, não chuta.
 6. **Pior valor, não médio** — convenção do projeto: `pam1 = MIN` (pior PAM do período), FiO2 do pior P/F, Lac do maior valor.
+7. **Pendência tem fonte única** — cada tarefa acionável é gerada UMA vez, no array `pendencias[]`. Os textos de export (Evolução, Passagem de Turno) **renderizam a partir dele**, não redigem a pendência de novo na prosa. Pendência escrita na Conduta **e** no array = mesma tarefa aparecendo duas vezes (uma no resumo, outra na coluna) — proibido.
 
 ---
 

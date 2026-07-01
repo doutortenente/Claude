@@ -236,6 +236,10 @@ Isto é o **shape exato** que Claude deve produzir ao final da extração:
       "source_text": "Lac 3,4",
       "requires_review": false
     }
+  ],
+  "pendencias": [
+    { "tarefa": "TC abdome controle pós-op", "prioridade": 2 },
+    { "tarefa": "SBT amanhã 10h", "prioridade": 1 }
   ]
 }
 ```
@@ -247,3 +251,4 @@ Isto é o **shape exato** que Claude deve produzir ao final da extração:
 3. **`eventos_clinicos` é SEMPRE array** (pode ter 1, 10, 50 itens).
 4. **Toda gasometria gera**: `ph`, `pco2`, `po2`, `hco3`, `be`, `lactato`, `pf_ratio` (se FiO2 disponível) — como `valor_json` num único evento OU eventos separados se o backend preferir (usar separados — mais fácil de plotar).
 5. **Toda dose de DVA vira**: `nor_dose`, `adr_dose`, `vaso_dose`, `dobuta_dose` com `valor_num` em mcg/kg/min.
+6. **`pendencias` é array opcional** de `{tarefa, prioridade}` (prioridade `1`|`2`|`3`, default `2`). Cada item vira uma linha na tabela `pendencias`, com `evolucao_id` linkado à evolução deste deploy (ou `null` se for só lab/imagem). **NÃO repetir a tarefa dentro de `conduta`/`impressao`** — o array é a fonte única.
