@@ -73,9 +73,44 @@ Leia `references/04-export-evolucao-template.md` (modo D2+ / TEMPLATE-BASE v2). 
 
 **C. Exportar Turno** (quando pedir "passagem", "exportar turno", "passagem de plantão"):
 Leia `references/05-export-passagem-turno.md`. Saída é **1 página A4**, condensada, por paciente ou bloco de leitos.
+**O cálculo é do script, não do LLM.** Balanço hídrico, Máx–Mín dos vitais e flags saem do motor determinístico `scripts/build_passagem.py` — o LLM extrai os números **crus** por leito, o motor calcula e monta o `.md`. Ver «🧮 Motor de cálculo» abaixo. Motivo: LLM erra aritmética/classificação (contava diurese como ingesta, somava balanço errado).
 
 **D. Exportar Prescrição Ordenada** (quando subir foto de prescrição ou pedir "ordenar/exportar prescrição"):
 Leia `references/07-export-prescricao-ordenada.md`. Saída = prescrição agrupada em **7 blocos por sistema** + safety check conservador (zero alucinação). Texto puro pro prontuário. **NÃO grava no banco** — fluxo faseado: texto revisável agora, SQL é fase 2 (quando o frontend consumir).
+
+---
+
+## 🧮 Motor de cálculo determinístico — `scripts/build_passagem.py`
+
+**Regra de ouro: o LLM NÃO faz aritmética** (mesma doutrina de `hemodinamica-calculada`). O LLM lê a folha e extrai os números **crus**; o script calcula. Isso mata o bug de balanço (diurese contada como ingesta, soma errada) de forma estrutural.
+
+**O que o motor calcula:** Máx–Mín de cada vital + contagem de flags `[Nx > limiar]` · `balanço = Σganhos − Σperdas` com dicionário canônico (CANON) que **reclassifica** item lançado no lado errado (diurese→perda, com warning) · monta o bloco `.md` no formato da passagem.
+
+**Uso:**
+```bash
+python3 scripts/build_passagem.py --file leito.json   # 1 leito OU {"meta":..,"leitos":[..]}
+python3 scripts/build_passagem.py --demo              # validação (com o bug embutido → corrigido)
+```
+
+**JSON de entrada (o que o LLM extrai, por leito):**
+```json
+{
+  "leito": "01", "iniciais": "VLC", "dia_internacao": "5º",
+  "sup_o2": "AA", "dieta": "...",
+  "vitais": { "PAS": [139,128], "PAD": {"max":84,"min":59}, "FC": [...], "TAX": [...], "Dx": [...] },
+  "ganhos": [ {"nome":"dieta","ml":600}, {"nome":"soro EV","ml":430} ],
+  "perdas": [ {"nome":"diurese","ml":1100} ],
+  "evacuacao": "ausente no período",
+  "terapias": "…", "exame_fisico": "…", "evolucao": "…",
+  "impressao": ["…"], "conduta": ["…"]
+}
+```
+- `vitais.<nome>`: **lista horária** (flags exatas `[Nx]`) ou `{"max","min"}` (flag `[≥1x]`). Vitais reconhecidos: `PAS PAD PAM FC FR SpO2 TAX Dx`.
+- `ganhos`/`perdas`: só `{nome, ml}`. A **categoria é da CANON do script** — nome fora do dicionário NÃO entra na soma e vira warning (nunca inventa). Diurese/SNG/dreno/evacuação = sempre perda.
+- Seções de prosa (`terapias`, `exame_fisico`, `evolucao`, `impressao`, `conduta`) o script só **costura** — vêm do LLM/texto, não são calculadas.
+- **Warnings** (reclassificações, item sem `ml`, nome desconhecido) saem no stderr — sempre revisar.
+
+**Pipeline de velocidade:** extrair os leitos em **paralelo** (um subagente por leito) → cada um cospe o JSON cru → `build_passagem.py` consolida o `.md`. O gargalo nunca foi o banco; foi preparo sequencial + LLM calculando.
 
 ---
 
