@@ -112,7 +112,15 @@ def calc_balanco(ganhos, perdas):
         nonlocal g_total, p_total
         for it in (itens or []):
             nome = it.get("nome", "?")
-            ml = it.get("ml", None)
+            serie = it.get("serie")
+            if serie is not None:                      # células horárias cruas → o SCRIPT soma (não a enfermagem)
+                ileg = sum(1 for v in serie if isinstance(v, str))
+                cells = [float(v) for v in serie if isinstance(v, (int, float))]
+                ml = sum(cells)
+                if ileg:
+                    warnings.append(f"'{nome}': {ileg} célula(s) ilegível(is) — soma pode subestimar, revisar folha")
+            else:
+                ml = it.get("ml", None)
             if ml is None:
                 warnings.append(f"item '{nome}' sem volume (ml) — ignorado no cálculo")
                 continue
@@ -198,6 +206,19 @@ def render_leito(leito, meta):
     # balanço determinístico
     bal = calc_balanco(leito.get("ganhos"), leito.get("perdas"))
     all_warn += bal["warnings"]
+    conf = leito.get("conferencia_enfermagem")   # o que a enfermagem SOMOU à mão (não confiável)
+    conf_linha = None
+    if conf:
+        divs = []
+        for rot, calc, inf in [("Ganhos", bal["ganho_total"], conf.get("ganhos")),
+                               ("Perdas", bal["perda_total"], conf.get("perdas")),
+                               ("BH",     bal["balanco"],     conf.get("bh"))]:
+            if inf is not None and abs(calc - inf) > 0.5:
+                divs.append(f"{rot}: folha diz {_fmt(inf)}, células somam {_fmt(calc)} ({calc-inf:+.0f})")
+        for d in divs:
+            all_warn.append("CONFERÊNCIA — " + d)
+        if divs:
+            conf_linha = "⚠️ DIVERGE da soma da enfermagem: " + " · ".join(divs)
     if leito.get("sup_o2") or leito.get("dieta"):
         L.append(f"Sup O2: {leito.get('sup_o2','?')} | Dieta: {leito.get('dieta','?')}")
     diurese = next((ml for nm, ml in bal["itens_perda"] if classify(nm) == "perda" and "diur" in nm.lower()), None)
@@ -207,6 +228,8 @@ def render_leito(leito, meta):
         f"Perdas: {_fmt(bal['perda_total'])} ml"
         + (f" (diurese {_fmt(diurese)} ml)" if diurese is not None else "")
         + f" | BH: {sinal}{_fmt(bal['balanco'])} ml")
+    if conf_linha:
+        L.append(conf_linha)
     if leito.get("evacuacao"):
         L.append(f"Evacuação: {leito['evacuacao']}")
 

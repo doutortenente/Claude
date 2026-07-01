@@ -106,7 +106,8 @@ python3 scripts/build_passagem.py --demo              # validação (com o bug e
 }
 ```
 - `vitais.<nome>`: **lista horária** (flags exatas `[Nx]`) ou `{"max","min"}` (flag `[≥1x]`). Vitais reconhecidos: `PAS PAD PAM FC FR SpO2 TAX Dx`.
-- `ganhos`/`perdas`: só `{nome, ml}`. A **categoria é da CANON do script** — nome fora do dicionário NÃO entra na soma e vira warning (nunca inventa). Diurese/SNG/dreno/evacuação = sempre perda.
+- `ganhos`/`perdas`: `{nome, ml}` OU `{nome, serie:[célula por hora]}` — **prefira a série**: o script soma as células cruas. **NUNCA confie no total que a enfermagem escreveu à mão** — ela também erra a conta; some as células. Célula ilegível → passar como `"?"` (conta como incerteza, não é somada). A **categoria é da CANON do script** — nome fora do dicionário NÃO entra na soma e vira warning (nunca inventa). Diurese/SNG/dreno/evacuação = sempre perda.
+- `conferencia_enfermagem: {ganhos, perdas, bh}` (opcional) = o total que a enfermagem somou na folha. O motor compara com a soma das células e **flaga `⚠️ DIVERGE`** quando não bate — acende a luz pra revisar aquela conta (erro dela ou leitura duvidosa).
 - Seções de prosa (`terapias`, `exame_fisico`, `evolucao`, `impressao`, `conduta`) o script só **costura** — vêm do LLM/texto, não são calculadas.
 - **Warnings** (reclassificações, item sem `ml`, nome desconhecido) saem no stderr — sempre revisar.
 
