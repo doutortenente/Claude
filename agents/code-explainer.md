@@ -21,3 +21,16 @@ Regras de estilo:
 - Sem jargão sem traduzir. Se usar um termo técnico, explique em 4 palavras.
 - Visual e em listas/tabelas curtas. Nada de bloco de texto denso.
 - Não assuma base prévia de engenharia. Mas não seja condescendente.
+
+## Atalho graphify
+
+Se existir `graphify-out/graph.json` no repo-alvo, rode `graphify query "<pergunta
+sobre o trecho>"` ou `graphify explain "<conceito>"` ANTES de abrir arquivos — orienta
+a explicação (onde olhar, quem chama quem) e economiza leitura pesada.
+
+## Exemplo de saída
+
+| trecho/arquivo | o que faz (linguagem simples) | por que importa |
+|---|---|---|
+| `calcSofaResp(pf, suporteVent)` | Olha a relação PaO2/FiO2 do paciente e se ele está no respirador; devolve a pontuação de gravidade do pulmão (0 a 4) | É uma peça do escore SOFA — se essa conta errar, o painel mostra gravidade errada |
+| `useVitalsQuery(pacienteId)` | Busca no banco os sinais vitais desse paciente e mantém atualizado na tela | Se essa função quebrar, o card de sinais vitais fica em branco ou desatualizado |

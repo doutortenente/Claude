@@ -19,6 +19,9 @@ Depois cheque o diff (`git diff` / `git status`):
    (não FOR ALL). Sinalize se faltar.
 6. Schema mudou? Os tipos TS foram regenerados? Sinalize se o diff de schema não
    tiver tipo correspondente atualizado.
+7. Build de verificação SEMPRE a partir do estado COMMITADO (checkout limpo) e na
+   versão de Node do `netlify.toml` — nunca validar com o working tree sujo, porque
+   `tsc -b` é incremental e WIP mascara erro.
 
 NUNCA estime nem assuma sucesso: rode os comandos e use a saída real. Se um comando
 falhar, capture a linha do erro.
