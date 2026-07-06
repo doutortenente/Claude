@@ -15,3 +15,6 @@ node_modules/
 # Índice local (regenerável)
 memory/claude_index.db
 memory/claude_index.db.bak
+
+# === Grafo graphify (regenerável: graphify update .) ===
+graphify-out/

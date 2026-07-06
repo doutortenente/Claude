@@ -27,6 +27,10 @@ nunca no symlink.
 - Conferir entrega de outro agente → `fiscal`.
 - Memória do operador → `secretaria`.
 - Gate de merge na main → `deploy-sentinel`.
+- Repo com `graphify-out/` (sasi, celebro, claude) → `batedor`/`residente`/`fiscal`
+  começam o reconhecimento com `graphify query`, não com grep/Read direto no
+  código. O gerente inclui essa instrução na missão sempre que despachar um
+  subagente pra um desses 3 repos.
 
 ### Conferência obrigatória de achado que dispara ação
 
