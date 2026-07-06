@@ -28,6 +28,16 @@ nunca no symlink.
 - Memória do operador → `secretaria`.
 - Gate de merge na main → `deploy-sentinel`.
 
+### Conferência obrigatória de achado que dispara ação
+
+Relatório de subagente de leitura (`batedor` ou outro) que vá motivar ação de
+risco — merge, deleção, gravação em banco, push — **não vira ação direto**: o
+gerente confere antes, com 1 comando direto (caso simples) ou despachando o
+`fiscal` (entrega substantiva). Origem: 06-jul-2026, o `batedor` errou 2x na
+faxina do dia (inverteu a direção à-frente/atrás do `git` e afirmou conteúdo de
+pasta vazia); o `batedor.md` já ganhou procedimentos de evidência (commit
+`4624a59`) — esta regra é a segunda camada de defesa, do lado do gerente.
+
 ## Squads e limites técnicos
 
 1. **Subagente NÃO lança outro subagente.** A hierarquia é gerente → subagente, 2
@@ -39,6 +49,13 @@ nunca no symlink.
 3. **Empilhar Opus como líder-subagente seria pagar caro por um agente que não pode
    delegar.** O Workflow faz a mesma coordenação de graça (é roteiro, não modelo) e
    sem risco de alucinar um passo do processo.
+
+## Rotina agendada (chefe/caco)
+
+- **Faxina do workspace** — `~/dev/scripts/faxina_dev.py` (boletim leitura-pura:
+  raiz `~/dev`, `Downloads` envelhecido, repos sujos/à-frente-atrás/merge travado,
+  worktrees órfãos, lixo comum). `caco` roda semanalmente ou quando o operador
+  reclamar de bagunça ("tá tudo uma bagunça").
 
 ## Convenção de modelo
 
