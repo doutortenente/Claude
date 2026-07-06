@@ -63,6 +63,8 @@ Qualquer flag **não é bloqueador** — o JSON segue, mas campo `requires_human
 
 ### FASE 4 — Geração de saída (uma das três, conforme o que o usuário pediu)
 
+> 📖 **Leitura OBRIGATÓRIA antes de redigir qualquer texto** (`impressao[]`, `conduta[]`, `pendencias[]`, resumos, exports A/B/C/D): `references/00-estilo-texto-clinico.md`. Regras: acentuação sempre, CAPS só siglas/rótulos de seção, `->` só entre valores numéricos seriados (nunca como conectivo de frase nem vetor decorativo por problema), zero explicação didática/mecanismo de ação, conduta só com fonte rastreável (sem genérico de preenchimento, sem sigla não confirmada).
+
 **A. Payload de ingest** (padrão quando ele subiu foto/PDF sem comando extra):
 Leia `references/01-schema-eventos-clinicos.md` para o schema exato. Devolve JSON validado (`sasi-ocr-ingest/v1`). O Dr. Nicolas revisa; gravação no Supabase só com **“deploy”** / **“salvar no Supabase”** via MCP.
 
@@ -173,6 +175,7 @@ Claude já é multimodal — lê a folha direto, audita, monta o payload. Não e
 
 ## 📁 Referências (leia só a que for relevante pra tarefa)
 
+- `references/00-estilo-texto-clinico.md` — **OBRIGATÓRIA antes de redigir qualquer texto** (acentuação, CAPS, setas, zero didática, conduta com fonte)
 - `references/01-schema-eventos-clinicos.md` — DDL + dicionário de campos da tabela `eventos_clinicos` e `evolucoes`
 - `references/02-extraction-dictionary.md` — O que extrair de cada tipo de documento
 - `references/03-clinical-sanity-checks.md` — Ranges fisiológicos + regras de incompatibilidade

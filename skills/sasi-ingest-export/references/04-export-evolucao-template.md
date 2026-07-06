@@ -12,6 +12,8 @@ Produz texto **copiável e colável** direto na evolução oficial. Estilo SOAP 
 **Entrada esperada:** snapshot da evolução (JSONB) + cadastrais do paciente + histórico 72h (se disponível).
 **Saída:** Markdown estruturado, pronto para o prontuário eletrônico.
 
+> 📖 **Leitura obrigatória antes de redigir:** `00-estilo-texto-clinico.md` — acentuação, CAPS, setas, zero didática, conduta com fonte.
+
 ---
 
 ## Estrutura fixa (IMUTÁVEL) — modo EVOLUÇÃO D2+
@@ -38,7 +40,7 @@ Dispositivos:
 IOT - {...}. CVC - {...}. Cateter arterial - {...}. SVD - {...}. SNE/SNG - {...}. Outros - {...}.
 
 Uso:
-Drogas Vasoativas: {Não / Nora X mcg/kg/min (↑↓)}.
+Drogas Vasoativas: {Não / Nora X mcg/kg/min (em desmame / em escalada)}.
 Sedação: {Não / agentes + doses + meta RASS}.
 Antibióticos: {Não / nome + dose + intervalo + D[n] + foco}.
 NPT: {...}. TNE: {...}.
@@ -60,7 +62,7 @@ Scores:
 SOFA {total} ({Resp}, {Coag}, {Hep}, {Cardio}, {Neuro}, {Renal}). ΔSOFA 24h: {Δ}. {qSOFA se aplicável}.
 
 Impressão:
-1. {Problema ativo} [{↑/↓/=}] — {leitura clínica de 1 linha}.
+1. {Problema ativo} — {leitura clínica de 1 linha}.
 2. {...}
 
 Conduta estruturada por Sistemas:
@@ -80,6 +82,6 @@ Gerado por SASI — Sistema de Auditoria e Síntese Intensiva — TEMPLATE-BASE 
 - **Abreviações MAIÚSCULAS:** PAS, PAD, PAM, FC, FR, SpO2, TAX, DX, BH, HB, HT, PLAQ, LEUCO, UR, CR, NA, K. Unidades obrigatórias.
 - **Flags de absurdo `(revisar)`:** PAS<50/>260 · PAM<30/>200 · FC<20/>250 · FR<4/>80 · SpO2>100/<50 · TAX<30/>43 · DX<20/>800 · BH>±10.000 · Nora>2. Flag não bloqueia.
 - **Cabeçalho:** problemas numerados com qualificador de disfunção, nunca diagnóstico nu.
-- **Impressão:** vetor `↑/↓/=` obrigatório em cada problema (Δ comprimido em um símbolo).
+- **Impressão:** tendência dita em palavras (`em ascensão`, `em melhora`, `estável`), **sem** vetor `↑/↓/=` decorativo por problema — proibido desde a reforma de estilo (ver `00-estilo-texto-clinico.md` §3).
 - **Conduta:** mapeamento 1:1 com Impressão, metas numéricas sempre.
 - **Campo vazio:** sistema inteiro → `não avaliado`; campo isolado → omite a linha. Nunca inventa.
