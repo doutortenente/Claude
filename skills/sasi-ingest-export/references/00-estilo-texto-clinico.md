@@ -53,10 +53,28 @@ vício, não estilo — se precisar de ênfase, é negrito ou item destacado (ex
 
 ---
 
-## 3. Setas — `->` só entre valores numéricos seriados
+## 3. Setas/vetores — PROIBIDOS em qualquer texto gerado, só `->` de série sobrevive
 
-`->` (ou `→`) é a notação do próprio operador para **série de valores da mesma
-variável ao longo do tempo** — mantém exatamente assim:
+**Regra absoluta: `↑`, `↓`, `=` (e qualquer variação — `[↑]`, `(↑2)`, seta como
+símbolo isolado) são PROIBIDOS em TODO texto gerado por esta skill** — Impressão,
+Conduta, passagem de turno, pendência, notação de droga vasoativa/sedação e delta
+de SOFA/score. Não existe exceção "decorativa": tendência sempre em **palavra**.
+
+- Problema na Impressão: tendência em palavra — `em ascensão`, `em piora`,
+  `em melhora`, `estável` — nunca `[↑]`/`[↓]`/`[=]` ao lado do problema.
+  - ❌ `1. IRA em ascensão rápida [↑] — Cr 1,1 -> 3,5`
+  - ✅ `1. IRA em ascensão rápida — Cr 1,1 -> 3,5`
+- Droga vasoativa/sedação em desmame ou escalada: `em desmame` / `em escalada` por
+  extenso — nunca seta.
+  - ❌ `Nor 0.20↓`
+  - ✅ `Nor 0,20 em desmame`
+- Delta de SOFA/score: `(+2)` / `(-1)` numérico — nunca seta.
+  - ❌ `SOFA 12 ↑2`
+  - ✅ `SOFA 12 (+2)`
+
+A **única sobrevivente** é `->` (ou `→`) entre **valores numéricos da mesma
+variável em série ao longo do tempo** — isso é notação do próprio operador, não
+seta decorativa:
 
 - ✅ `CR: 1,7 -> 2,0 -> 3,5 -> 4,2 mg/dl` *(exemplo real, compilado 05-jul L01)*
 - ✅ `Hb 6,7 -> 8,7 g/dl`
@@ -68,15 +86,6 @@ em prosa) — isso não é notação de série, é atalho que quebra a leitura:
 - ✅ `Febre persistente; associada Micafungina (05/07)`
 - ❌ `Aumentar ventilação-minuto (↑FR) p/ clarear CO2`
 - ✅ `Aumentar ventilação-minuto (FR mais alta) para corrigir CO2` *(ver também §4 — aqui cabe cortar a explicação de mecanismo)*
-
-**Proibido vetor `↑/↓/=` decorativo por problema** na Impressão (o template antigo
-exigia isso — removido, ver `04-export-evolucao-template.md`):
-
-- ❌ `1. IRA em ascensão rápida [↑] — Cr 1,1 -> 3,5` *(exemplo real, compilado noturno-final)*
-- ✅ `1. IRA em ascensão rápida — Cr 1,1 -> 3,5`
-
-A tendência (piora/melhora) já está dita em palavras ("em ascensão", "em melhora");
-o símbolo ao lado é redundância decorativa, não informação nova.
 
 ---
 

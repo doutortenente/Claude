@@ -282,7 +282,8 @@ Regras:
 - Terapias seguem o Módulo B + Filtro HANDOFF (sem SN/ACM, sem correção glicêmica).
 - Dieta (tipo) na linha de balanço; detalhe de NPT/TNE/produto/rate em TGI/NUTRIÇÃO.
 - ORTOGONALIDADE DE EIXOS mantida: Intercorrências = só o Δ; Exame físico = só estado;
-  Impressão = problema + vetor ↑/↓/=; Conduta = ação 1:1 com cada problema + meta numérica.
+  Impressão = problema + tendência em palavra (em ascensão/em melhora/estável), sem seta;
+  Conduta = ação 1:1 com cada problema + meta numérica.
 - Linha/sistema/bloco sem dado → omitir (ou `não avaliado` se sistema inteiro). Vazio é sinal.
 
 ### Template unificado (copiar-e-colar)
@@ -327,7 +328,7 @@ Evolução / Intercorrências 24h:
 viradas de débito. Verbos de ação. Sem estado estável, sem impressão.}
 
 Impressão / Problemas ativos:
-1. {Problema} [↑/↓/=] — {leitura de 1 linha}.
+1. {Problema}, {tendência em palavra: em ascensão/em melhora/estável} — {leitura de 1 linha}.
 2. ...
 
 Conduta estruturada por sistemas:

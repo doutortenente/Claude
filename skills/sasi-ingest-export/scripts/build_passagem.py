@@ -37,7 +37,7 @@ ENTRADA (JSON). Um leito:
     "terapias": "NEURO: ...\nCV: ...",
     "exame_fisico": "Neurológico: ...",
     "evolucao": "Manejo IC ...",
-    "impressao": ["IC aguda [=] ...", "DRC agudizada [↓] ..."],
+    "impressao": ["IC aguda, estável ...", "DRC agudizada, em melhora ..."],
     "conduta": ["CV/Renal: ...", "Endócrino: ..."]
   }
   Vários leitos: {"meta":{"unidade":"UTI 4","data":"27/06/2026","turno":"diurno",
@@ -295,7 +295,7 @@ DEMO = {
         "evacuacao": "ausente no período",
         "terapias": "CV: carvedilol 25 mg VO manhã; AAS 100 mg VO almoço.\nRENAL: nefrotóxicos suspensos.",
         "evolucao": "Manejo IC aguda + DRC agudizada; Cr em recuo (6,4→3,5). Sem instabilidade.",
-        "impressao": ["IC aguda [=] — estável, sem DVA.", "DRC agudizada / sd cardiorrenal [↓ melhora]."],
+        "impressao": ["IC aguda, estável — sem DVA.", "DRC agudizada / sd cardiorrenal, em melhora."],
         "conduta": ["CV/Renal: manejo IC + vigilância renal; meta PAM ≥ 65.", "Profilaxia: TEV/LAMG/cabeceira."],
     }]
 }

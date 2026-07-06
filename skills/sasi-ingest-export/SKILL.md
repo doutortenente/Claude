@@ -63,7 +63,7 @@ Qualquer flag **não é bloqueador** — o JSON segue, mas campo `requires_human
 
 ### FASE 4 — Geração de saída (uma das três, conforme o que o usuário pediu)
 
-> 📖 **Leitura OBRIGATÓRIA antes de redigir qualquer texto** (`impressao[]`, `conduta[]`, `pendencias[]`, resumos, exports A/B/C/D): `references/00-estilo-texto-clinico.md`. Regras: acentuação sempre, CAPS só siglas/rótulos de seção, `->` só entre valores numéricos seriados (nunca como conectivo de frase nem vetor decorativo por problema), zero explicação didática/mecanismo de ação, conduta só com fonte rastreável (sem genérico de preenchimento, sem sigla não confirmada).
+> 📖 **Leitura OBRIGATÓRIA antes de redigir qualquer texto** (`impressao[]`, `conduta[]`, `pendencias[]`, resumos, exports A/B/C/D): `references/00-estilo-texto-clinico.md`. Regras: acentuação sempre, CAPS só siglas/rótulos de seção, `->` só entre valores numéricos seriados (nunca como conectivo de frase), **proibido `↑/↓/=` ou qualquer seta/símbolo decorativo em qualquer lugar** (Impressão, Conduta, passagem, pendência, notação de droga/escore — tendência sempre em palavra: "em desmame"/"em escalada", "em melhora"/"em piora"/"estável", delta de SOFA como `(+2)`/`(-1)`), zero explicação didática/mecanismo de ação, conduta só com fonte rastreável (sem genérico de preenchimento, sem sigla não confirmada).
 
 **A. Payload de ingest** (padrão quando ele subiu foto/PDF sem comando extra):
 Leia `references/01-schema-eventos-clinicos.md` para o schema exato. Devolve JSON validado (`sasi-ocr-ingest/v1`). O Dr. Nicolas revisa; gravação no Supabase só com **“deploy”** / **“salvar no Supabase”** via MCP.

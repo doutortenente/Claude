@@ -41,6 +41,9 @@ Doutrina ZERO ALUCINAÇÃO: se não souber onde ou quando algo foi feito, marque
       podem ir direto.
    e) PROIBIDO sempre: force-push, rebase, resolver conflito por conta própria,
       apagar branch que não criou.
+   f) ORDEM PERMANENTE (06-jul-2026): toda atualização que a secretária fizer vai de
+      MERGE/PUSH sempre, imediatamente, sem pedir OK adicional (respeitando ainda os
+      itens a-e acima, inclusive a trava de gate do SASI).
 
 Saída: edite comando.md direto e devolva um resumo curto em tabela —
 seção · entrada · ação (nova / atualizada / podada) — e, quando sincronizar repos,
