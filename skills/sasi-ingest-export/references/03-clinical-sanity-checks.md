@@ -107,6 +107,15 @@ Se prescrição tem `via: Oral` E paciente tem `SNE` documentada → flag `clini
 ### SOFA cardio sem peso
 Dose de Nor em mcg/kg/min exige peso. Se `peso = null` → SOFA cardio retorna `null` com `missing: ['peso']`. NÃO assuma 70kg.
 
+### SOFA sem baseline
+ΔSOFA não calculável → marcar `delta_unavailable`, **NÃO** assumir baseline 0.
+
+### Gasometria venosa rotulada como arterial
+Gaso venosa rotulada arterial → P/F não aplicável, flag.
+
+### Cultura positiva sem antibiograma
+Cultura positiva sem antibiograma → flag `antibiograma_missing` (laudo provavelmente incompleto/preliminar).
+
 ---
 
 ## 📅 Sanity de datas/timestamps
