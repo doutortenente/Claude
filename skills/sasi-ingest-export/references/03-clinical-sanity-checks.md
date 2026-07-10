@@ -116,6 +116,9 @@ Gaso venosa rotulada arterial → P/F não aplicável, flag.
 ### Cultura positiva sem antibiograma
 Cultura positiva sem antibiograma → flag `antibiograma_missing` (laudo provavelmente incompleto/preliminar).
 
+### PAM calculada vs medida divergente
+PAM calculada vs medida divergente > 15 mmHg → `review`.
+
 ---
 
 ## 📅 Sanity de datas/timestamps
