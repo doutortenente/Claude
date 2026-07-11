@@ -5,187 +5,198 @@ description: Gera nota de admissão de UTI no formato fixo do Comando Tático UC
 
 # Admissão UTI — Comando Tático UCI
 
-Skill cirúrgica para redigir a nota de admissão inicial em UTI no formato exato do Dr. Nicolas. Sem improviso. Sem inventar dado. Sem comentário motivacional dentro da nota — a nota é instrumento clínico-legal, não palco.
+Skill cirúrgica para redigir a **nota de admissão** (modo D1) no formato exato do Dr. Nicolas. Sem improviso. Sem inventar dado. Sem comentário motivacional dentro da nota — a nota é instrumento clínico-legal, não palco.
+
+> ⚙️ **ARQUITETURA SASI v2:** esta skill e a `sasi-ingest-export` compartilham o **mesmo TEMPLATE-BASE CANÔNICO** (`~/dev/sasi/doctrine/_SASI_TEMPLATE_BASE_v2.md`). A anatomia da nota é idêntica nas duas — muda só o eixo temporal (HPMA aqui, Intercorrências lá) e o dia (D1 aqui, D[n] lá). **Se você alterar o template-base nesta skill, replique IDÊNTICO na outra no mesmo commit.** Divergência entre as cópias é bug clínico-legal.
 
 ## Doutrina de operação
 
-**Regra 1 — Zero alucinação.** Se o dado não veio na fonte (texto, foto, PDF, transferência), o campo fica em branco com `[ ]` ou `Não informado`. Nunca preencha sinal vital, dose, antecedente ou achado físico que o usuário não forneceu. Inventar dado em prontuário é falsificação documental — não acontece nessa trincheira.
+**Regra 1 — Zero alucinação.** Dado que não veio na fonte → campo `[ ]` ou `Não informado`. Nunca preencha sinal vital, dose, antecedente ou achado físico não fornecido. Inventar dado em prontuário é falsificação documental — não acontece nessa trincheira.
 
-**Regra 2 — Preservação literal do template.** A estrutura abaixo é IMUTÁVEL. Mesma ordem de seções, mesmos rótulos, mesma pontuação, mesmas linhas em branco. O Dr. Nicolas e a equipe leem essa nota dezenas de vezes por plantão — qualquer drift quebra a leitura padrão.
+**Regra 2 — Preservação literal do template-base.** A estrutura é IMUTÁVEL. Mesma ordem, mesmos rótulos, mesma pontuação, mesmas linhas em branco. A equipe lê essa nota dezenas de vezes por plantão — drift quebra a leitura padrão.
 
-**Regra 3 — Conduta no final, isolada.** A seção `Conduta:` fecha a nota. Doses, metas terapêuticas e plano por sistema vão dentro dela, em formato lista numerada quando houver múltiplas frentes. Se o usuário não forneceu plano, deixe a seção pronta com cabeçalhos por sistema vazios para preenchimento manual — nunca chute a conduta clínica.
+**Regra 3 — Conduta no final, isolada e estruturada por sistemas.** A seção `Conduta estruturada por Sistemas:` fecha a nota, numerada (1., 2., ...), com título de sistema. Mapeamento **1:1** com os problemas ativos da Impressão. Doses e metas numéricas dentro de cada bloco. Sem plano fornecido → esqueleto numerado com cabeçalhos vazios.
 
-**Regra 4 — Raciocínio condensado nos comentários internos.** Quando você precisar pontuar algo ao Dr. Nicolas FORA da nota (raciocínio, alerta, dúvida), faça isso APÓS o bloco da nota, em uma seção separada chamada `// Comando Tático — Notas de operação:`. Dentro da nota: só dado clínico.
+**Regra 4 — HPMA condensada.** A HPMA é UM parágrafo de 6-10 linhas, cronologia linear (gatilho → evolução → chegada). Nunca 15+ linhas. Nunca bullets. Síntese é a forma — o leitor extrai o essencial em <30s.
 
-## Template fixo (NÃO alterar estrutura)
+**Regra 5 — Ortogonalidade de eixos.** HPMA = TEMPO. Exame físico = ESTADO. Impressão = PROBLEMA ATIVO. Conduta = AÇÃO. Nenhum fato cabe em dois blocos. (Detalhe na tabela de desconflito do template-base.)
+
+**Regra 6 — Raciocínio nos comentários internos.** Alertas/dúvidas/raciocínio ao Dr. Nicolas vão APÓS o bloco da nota, em `// Comando Tático — Notas de operação:`. Dentro da nota: só dado clínico.
+
+---
+
+## 🪖 TEMPLATE-BASE CLÍNICO CANÔNICO — v2.0 (Ramo C)
+
+> **FONTE DA VERDADE COMPARTILHADA.** Idêntico em `admissao-uti` e `sasi-ingest-export`. Ver `~/dev/sasi/doctrine/_SASI_TEMPLATE_BASE_v2.md`. Versionar sempre.
+
+### Princípio — ORTOGONALIDADE DE EIXOS
+
+| Bloco | Eixo | Responde | PROIBIDO |
+|---|---|---|---|
+| HPMA / Intercorrências 24h | **TEMPO (Δ)** | O que mudou: gatilho, eventos, picos, procedimentos, suspensões, reações | Estado estável; repetir EF; emitir impressão |
+| Exame físico por sistemas | **ESTADO** | Achado objetivo atual por órgão, vitais Max–Min | Narrar evento; opinar/concluir |
+| Impressão | **PROBLEMA ATIVO** | Lista numerada + tendência em palavra (em ascensão/em melhora/estável) | Prosa corrida; repetir dado bruto do EF; seta/vetor decorativo |
+| Conduta por sistemas | **AÇÃO** | Plano 1:1 com cada problema, dose + meta | "Ajustar conforme resposta" sem número; ação órfã |
+
+**Diferença admissão (D1) vs evolução (D2+):** no D1 o eixo TEMPO é a **HPMA** (cronologia de chegada) e `DH = 1º DIA`. Tudo o mais é idêntico ao template da evolução.
+
+### Estrutura fixa (IMUTÁVEL) — modo ADMISSÃO D1
 
 ```
-Paciente de [IDADE] anos, em [N]° dia de internação em UTI por quadro de:
-[MOTIVO PRINCIPAL DA INTERNAÇÃO EM UTI — uma linha objetiva]
+{NOME COMPLETO}, {IDADE}a{, PESO kg} — {UTI} Leito {LEITO} — DH 1º DIA — {DATA} {TURNO}
+HD / Problemas ativos:
+1. {Diagnóstico/problema principal — com qualificador de gravidade/disfunção}
+2. {Secundário}
+3. {...}
+{⚠️ ALERGIA: {agente} ({reação})  |  Alergias: nega.}
 
-__Admissão__
+Admissão ({DD/MM/AA}): {Síntese de 2-3 linhas do estado de CHEGADA à UTI — achados-chave, conduta inicial, exames de entrada que mudam manejo. NÃO é HPMA.}
 
-Antecedentes:
-[lista de comorbidades, cirurgias prévias, internações relevantes]
+HPMA: {Parágrafo único de 6-10 linhas. Cronologia linear: gatilho/início → evolução pré-admissão → trajetória assistencial → estado à chegada na UTI. Sem bullets. Sem subseções.}
 
-Medicamentos de uso domiciliar:
-[lista com dose e posologia]
+Antecedentes: {linha única vírgula-separada; bullets curtos se >4 itens}
 
-__ALERGIAS:__
-[NEGA / lista]
+Medicamentos de uso domiciliar: {nome + dose + posologia; anticoagulante/antiagregante em destaque}
+
+ALERGIAS: {NEGA. / agente + reação}
 
 Dispositivos:
-IOT - [Não / Sim, descrever - data].
-CVC - [Não / Sim, sítio - data].
-Cateter arterial - [Não / Sim, sítio - data].
-SVD - [Não / Sim, data].
-SNE/SNG - [Não / Sim, posição - data].
+IOT - {Não / Sim, tubo nº, profundidade, data}.
+CVC - {Não / Sim, sítio, data}.
+Cateter arterial - {Não / Sim, sítio, data}.
+SVD - {Não / Sim, data}.
+SNE/SNG - {Não / Sim, posição, data}.
+Outros - {DLE, dreno, traqueo, MP — se houver}.
 
 Uso:
-Drogas Vasoativas: [Não / Noradrenalina X mcg/kg/min, etc].
-Sedação: [Não / Fentanil X mcg/kg/h + Midazolam X mg/h, etc].
-Antibióticos: [Não / lista com D[n] e justificativa].
-NPT: [Não / Sim, descrever].
-TNE: [Não / Sim, dieta + volume].
+Drogas Vasoativas: {Não / Nora X mcg/kg/min, etc}.
+Sedação: {Não / agentes + doses + meta RASS}.
+Antibióticos: {Não / nome + dose + intervalo + D[n] + foco}.
+NPT: {Não / Sim}.
+TNE: {Não / Sim, fórmula + volume}.
 
-Sinais Vitais admissão:
-PA: ([valor]) mmHg
-FC: [valor] bpm
-Sao2: [valor]%, [aa / O2 nasal Xl/min / VM]
-FR: [valor] ipm
-DX: [valor] mg/dl
-Temp: [valor] °C
+Exame físico por sistemas:
+Neurológico: {GCS/RASS + pupilas + déficit + sedação se ativa}.
+Cardiovascular: PA {PAS_MAX}–{PAS_MIN}/{PAD_MAX}–{PAD_MIN} mmHg (PAM {MAX}–{MIN}), FC {MAX}–{MIN} bpm, {perfusão/pulsos/ausculta}. {DVA}.
+Respiratório: {suporte}, FR {MAX}–{MIN} ipm, SpO2 {MAX}–{MIN}%. {ausculta}. {P/F}.
+TGI: {dieta + via}, {abdome + RHA}, {débito SNG/SNE}, {evacuações}.
+Renal: Diurese {valor} mL/{h}h ({mL/kg/h}), BH {valor} mL. Cr {série}, Ur {valor}. Na {valor}, K {valor}. {KDIGO/TRRC}.
+Hematológico: Hb {valor} g/dL, Ht {valor}%, Plaq {valor}×10³/µL, Leuco {valor}×10³/µL. {INR/TP/TTPA}.
+Infeccioso: {ATB + D[n] + foco}. {culturas + status}.
+{Metabólico/Gaso: pH / pCO2 / HCO3 / SBE / Lactato — quando houver}.
 
-Exame Físico Geral:
-- Pele e mucosas: [achado]
-- Sistema Nervoso Central: [ECG, déficits, pupilas, RASS se sedado]
-- Sistema CardioVascular: [ritmo, BCNF, TEC, pulsos]
-- Sistema Respiratório: [MV, RA, parâmetros VM se aplicável]
-- Sistema Digestório: [abdome, RHA, sinais peritoneais]
-- Extremidades: [edema, panturrilhas, perfusão]
+Scores:
+SOFA {total} ({Resp R}, {Coag C}, {Hep L}, {Cardio CV}, {Neuro N}, {Renal RN}). ΔSOFA 24h: {Δ}. {qSOFA se aplicável}.
 
-- Hemato: [síntese hematológica relevante]
-- Infecto: [foco, ATB em curso, cultura pendente, D[n]]
-- Metabolico: [DHE, glicemia, ácido-base]
-- Renal: [diurese, função renal, balanço]
-- Cardio: [hemodinâmica, DVA, ECG quando relevante]
+Impressão:
+1. {Problema ativo}, {tendência em palavra: em ascensão/em melhora/estável} — {leitura clínica de 1 linha}.
+2. {...}
 
-Exames Complementares relevantes:
-[laboratoriais, imagem, gasometria — somente os relevantes para o quadro de admissão]
+Conduta estruturada por Sistemas:
+1. {Sistema}: {ação + dose + meta numérica}.
+2. {Sistema}: {...}.
+{Profilaxias: TVP / LAMG / cabeceira / higiene oral — sempre revisar}.
 
-Conduta:
-[plano numerado quando múltiplo, com doses, metas terapêuticas e justificativa quando pertinente]
+—
+Assinatura: Dr. Nicolas — Intensivista
+Gerado por SASI — Sistema de Auditoria e Síntese Intensiva — TEMPLATE-BASE v2.0
 ```
 
-## Como preencher cada bloco
+### Regras de preenchimento (valem para AMBAS as skills)
 
-### Cabeçalho (idade + dia de internação + motivo)
-- Para admissão NOVA na UTI: sempre **1° dia de internação em UTI** (D1).
-- Idade vem da fonte. Sem idade → `Paciente de [ ] anos`.
-- Motivo: uma linha objetiva, preferencialmente com sufixo etiológico/sindrômico.
-  - Bom: `Choque séptico de foco pulmonar com IRpA hipoxêmica, em IOT.`
-  - Ruim: `Pneumonia` (genérico demais — não identifica gravidade nem disfunção que justifica UTI).
+- **Sinais vitais Max–Min INVIOLÁVEL:** `[MÁXIMO]–[MÍNIMO]` em TODOS os parâmetros, **SpO2 incluso** (`SpO2 98–89%`, nunca `89–98`). Min>max na fonte → inverte + tag `(revisar)`. **Na admissão**, quando só existe o valor de chegada (um momento, sem janela de observação), registre o valor único — Max–Min passa a valer assim que houver janela.
+- **Abreviações MAIÚSCULAS:** PAS, PAD, PAM, FC, FR, SpO2, TAX, DX, BH, HB, HT, PLAQ, LEUCO, UR, CR, NA, K. Unidades obrigatórias.
+- **Flags de absurdo `(revisar)`:** PAS<50/>260 · PAM<30/>200 · FC<20/>250 · FR<4/>80 · SpO2>100/<50 · TAX<30/>43 · DX<20/>800 · BH>±10.000 · Nora>2. Flag não bloqueia.
+- **Cabeçalho:** problemas numerados com qualificador de disfunção, nunca diagnóstico nu.
+- **Impressão:** tendência dita em palavra (em ascensão/em melhora/estável) em cada problema — proibido `↑/↓/=` ou qualquer seta/vetor decorativo.
+- **Conduta:** mapeamento 1:1 com Impressão, metas numéricas sempre.
+- **Campo vazio:** sistema inteiro → `não avaliado`; campo isolado → omite a linha. Nunca inventa.
+
+---
+
+## Como preencher cada bloco (específico de ADMISSÃO)
+
+### Cabeçalho
+- Admissão NOVA → sempre `DH 1º DIA`.
+- Reinternação/readmissão → "1º dia" reinicia, mas registre `Reinternação em UTI por...` no problema 1.
+- Idade da fonte; sem idade → `[ ]a`.
+- Motivo/problema principal sempre com sufixo etiológico/sindrômico. Bom: `Choque séptico de foco pulmonar com IRpA hipoxêmica, em IOT.` Ruim: `Pneumonia` (genérico — não identifica gravidade nem disfunção que justifica UTI).
+
+### Admissão (DD/MM/AA)
+Mini-síntese de 2-3 linhas do **estado de chegada** à UTI: achados-chave + conduta inicial relevante + exames de entrada que mudam manejo. É o "como o paciente chegou", não a história. Em D1, preenche agora; nas evoluções seguintes (outra skill), este campo será congelado deste valor.
+
+### HPMA
+Parágrafo único, 6-10 linhas. Gatilho → evolução pré-admissão → trajetória (PS, enfermaria, centro cirúrgico) → estado à chegada. Sem bullets, sem subseções. Trecho da cronologia não informado na fonte → declare a lacuna (`[período pré-hospitalar não informado]`), nunca preencha por inferência.
 
 ### Antecedentes
-- Liste em ordem de relevância para o quadro atual, não cronológica.
-- HAS, DM2, DAC, ICFEr, DPOC, DRC, neoplasias, cirurgias relevantes, internações prévias com IOT/UTI.
-- Tabagismo/etilismo entram aqui se forem fator de risco para o quadro atual.
+- Em ordem de relevância para o quadro atual, não cronológica.
+- HAS, DM2, DAC, ICFEr, DPOC, DRC, neoplasias, cirurgias relevantes, internações prévias com IOT/UTI. Tabagismo/etilismo entram se forem fator de risco para o quadro atual.
 
 ### Medicamentos de uso domiciliar
-- Sempre com dose e posologia quando informados.
-- Se a fonte trouxe só o nome: liste só o nome com `(dose não informada)`.
-- Anticoagulantes e antiagregantes em destaque — risco de sangramento pesa em decisões agudas.
+- Sempre com dose e posologia quando informados. Só o nome na fonte → `(dose não informada)`.
+- **Anticoagulantes e antiagregantes em destaque** — risco de sangramento pesa em decisões agudas.
 
 ### ALERGIAS
-- Padrão: `NEGA.` em maiúscula quando paciente nega.
-- Se houver: nome do agente + tipo de reação (anafilaxia, rash, broncoespasmo). Reação importa para reexposição.
+- Padrão: `NEGA.` em maiúscula quando o paciente nega.
+- Se houver: agente + tipo de reação (anafilaxia, rash, broncoespasmo) — a reação importa para reexposição.
 
 ### Dispositivos
-- Cada linha é uma linha. Preserve o formato `Dispositivo - Não.` ou `Dispositivo - Sim, [detalhe + data].`
-- IOT: anote tubo (n°), profundidade na rima, data de IOT.
-- CVC: sítio (jugular D/E, subclávia D/E, femoral D/E), n° de lúmens, data.
+- Cada linha é uma linha. Formato `Dispositivo - Não.` ou `Dispositivo - Sim, [detalhe + data].`
+- IOT: tubo (nº), profundidade na rima, data de IOT.
+- CVC: sítio (jugular D/E, subclávia D/E, femoral D/E), nº de lúmens, data (CLABSI).
 - Cateter arterial: sítio (radial D/E, femoral D/E), data.
-- SVD: data de passagem (relevante para CAUTI).
+- SVD: data de passagem (CAUTI).
 - SNE/SNG: posição (gástrica/pós-pilórica), data.
 
-### Uso de DVA, sedação, ATB, NPT, TNE
-- DVA: nome + dose em mcg/kg/min ou mcg/min (padrão da UTI). Múltiplas DVA: liste todas.
+### Uso (DVA, sedação, ATB, NPT, TNE)
+- DVA em mcg/kg/min (padrão da UTI); múltiplas DVA → liste todas.
 - Sedação: agentes + doses contínuas + meta de RASS quando informada.
-- ATB: nome + dose + intervalo + dia de ATB (D1, D2, ...) + foco/justificativa entre parênteses quando útil.
+- ATB: nome + dose + intervalo + dia (D1, D2, ...) + foco/justificativa entre parênteses.
 - NPT/TNE: volume/24h, fórmula quando pertinente.
 
-### Sinais Vitais admissão
-- São os sinais **da admissão na UTI**, não os atuais e não os do PS.
-- Se tem PAM (paciente com cateter arterial), registre como `PA: (PAS x PAD / PAM) mmHg`.
-- Sao2 sempre com o suporte: `aa`, `O2 nasal 2l/min`, `VNI FiO2 50%`, `VM FiO2 X% PEEP X`.
-- Sem dado → deixe o placeholder vazio: `PA: ( ) mmHg`.
+### Sinais vitais (no EF) — da ADMISSÃO
+São os vitais **da admissão na UTI**, não do PS e não os atuais. Com cateter arterial, registre PAM. SpO2 sempre com o suporte (`aa`, `O2 nasal 2l/min`, `VM FiO2 X% PEEP X`). Sem dado → placeholder vazio.
 
-### Exame Físico Geral
-- Use frases padrão quando o achado for normal — mas só se o usuário descreveu como normal. NÃO assuma normalidade por omissão.
-- Quando o achado for anormal, descreva com precisão: `Descorada +2/4+`, `Ictérica +3/4+`, `Hipocorada com palidez cutâneo-mucosa`.
-- SNC sob sedação: registre RASS e pupilas. ECG só faz sentido em paciente não sedado.
-- Sistema respiratório com VM: parâmetros vão aqui (modo, VC, FR, FiO2, PEEP, P-platô).
-- Abdome agudo/dúvida cirúrgica: descreva achados específicos (Blumberg, Murphy, Giordano, Rovsing) — esses sinais matam diagnóstico se omitidos.
+### Exame físico por sistemas
+- Frases-padrão de normalidade SÓ se a fonte descreveu normal. NÃO assuma normalidade por omissão.
+- Sob sedação: RASS + pupilas (GCS não é aferível em sedado — registre o confundidor).
+- VM: parâmetros (modo, VC, FR, FiO2, PEEP, P-platô) no respiratório.
+- Abdome cirúrgico: descreva Blumberg/Murphy/Giordano/DB — esses sinais matam diagnóstico se omitidos.
 
-### Síntese por sistema (Hemato, Infecto, Metabolico, Renal, Cardio)
-Esta é a **leitura clínica** do paciente, não repetição do exame físico. Cada sistema deve responder:
-- Qual é o problema ativo neste sistema?
-- Qual a intervenção em curso?
-- Qual a próxima ação esperada?
+### Scores (SOFA na admissão)
+Calcule SÓ os componentes com dado na fonte (cutoffs do ruleset `SOFA1_v1.0`); componente sem dado = `não avaliado`. **Sem baseline → ΔSOFA não se assume 0** — escreva `sem baseline`. Score parcial honesto vale mais que score completo inventado.
 
-Exemplos:
-- `- Infecto: Choque séptico de foco pulmonar (BGN comunitário). Em D1 de Pip-Tazo 4,5g 6/6h. Hemoculturas e culturas de aspirado coletadas pré-ATB. Aguardando antibiograma.`
-- `- Renal: IRA AKI 2 (Cr 2,4 / basal 0,9), pré-renal por hipoperfusão. Diurese 0,3 ml/kg/h nas últimas 6h. Em ressuscitação volêmica direcionada por delta-PP.`
-- `- Hemato: Plaquetopenia 78mil em queda (D-1 = 142mil). DD: consumo séptico vs heparina (HIT improvável, Warkentin 2 pontos). Sem sangramento ativo.`
+### Impressão
+Lista de problemas ativos numerada, cada um com tendência dita em palavra (em ascensão/em melhora/estável) e leitura de 1 linha — nunca seta/vetor decorativo. Na admissão, a tendência costuma ser "estável" (sem baseline 24h) ou a trajetória recente do PS.
 
-Se não houver dado para o sistema: deixe `- [Sistema]: ` em branco para preenchimento manual. NÃO escreva "sem alterações" sem evidência.
+### Conduta estruturada por Sistemas
+1:1 com a Impressão. Metas numéricas (PAM ≥ 65, SpO2 92-96%, glicemia 140-180, lactato em queda, diurese ≥ 0,5 mL/kg/h). Profilaxias sempre revisadas (TVP, LAMG, cabeceira 30-45°, higiene oral com clorexidina se IOT). Sem plano fornecido → esqueleto numerado vazio.
 
-### Exames Complementares relevantes
-- Liste apenas os que importam para a admissão e para a condução das próximas 24h.
-- Hemograma, função renal, função hepática, coagulograma, gasometria, lactato, PCR. Imagem (TC, RX, USG) com laudo resumido.
-- Datas e horários quando o quadro for evolutivo (ex: lactato 6,2 → 4,1 → 2,8).
-- NÃO infle a seção. Se o usuário forneceu 30 exames, escolha os que mudam conduta.
+---
 
-### Conduta
-Estrutura preferencial em lista numerada por sistema/frente terapêutica:
+## Edge cases
 
-```
-1. Hemodinâmica:
-   - [intervenção, dose, meta]
-2. Ventilatório:
-   - [parâmetros VM, meta de SpO2, PaO2/FiO2]
-3. Sedação/Analgesia:
-   - [agentes, meta RASS, meta BPS]
-4. Infecto:
-   - [ATB com dose, plano de duração, culturas]
-5. Renal/Metabólico:
-   - [reposição, balanço alvo, controle glicêmico]
-6. Profilaxias:
-   - TVP: [HBPM/HNF dose ou compressão pneumática se contraindicado]
-   - LAMG: [IBP / antagonista H2 se indicado]
-   - Cabeceira 30-45°
-   - Higiene oral com clorexidina 0,12% se IOT
-7. Nutrição:
-   - [TNE/NPT, fórmula, volume]
-8. Exames de seguimento:
-   - [próximos exames programados]
-```
+- **Reinternação na UTI / readmissão:** o "1º dia" reinicia, mas o problema 1 registra que é reinternação (`Reinternação em UTI por...`).
+- **Transferência de outra UTI:** considere D1 nesta UTI, mas registre o histórico em Antecedentes (`Internação prévia em UTI [hospital] de [data] a [data] por [motivo]`).
+- **Pós-operatório imediato:** o motivo de internação é o procedimento + intercorrência se houver. Em Antecedentes, registre cirurgia + cirurgião + tempo cirúrgico se relevante.
+- **Paciente pediátrico ou neonatal:** esta skill é desenhada para adulto. Se vier paciente <18a, sinalize ao Dr. Nicolas em `// Comando Tático` que o template pode precisar de ajuste.
+- **Dado conflitante na fonte (ex: PA 120x80 e PA 90x60 sem timestamp claro):** registre o que está mais próximo da admissão na UTI e sinalize o conflito nas notas de operação.
 
-Doses e metas terapêuticas SEMPRE explícitas. Sem "ajustar conforme resposta" — escreva a meta numérica (PAM ≥ 65, SpO2 92-96%, glicemia 140-180, lactato em queda, diurese ≥ 0,5 ml/kg/h).
-
-Se o usuário NÃO forneceu plano: monte o esqueleto numerado com cabeçalhos vazios — ele preenche.
+---
 
 ## Workflow de execução
 
-1. **Ler a fonte.** Texto, foto, PDF, descrição livre — extraia tudo que for dado clínico verificável.
-2. **Mapear cada dado para o campo correto** do template. Dado ambíguo → vai para `// Comando Tático — Notas de operação:` como pergunta, NÃO entra na nota.
-3. **Preencher o template literalmente.** Mantenha rótulos, ordem, pontuação, linhas em branco.
-4. **Auto-checagem antes de devolver:**
-   - Algum dado clínico foi inventado? (se sim, remova)
-   - A estrutura está idêntica ao template? (se não, corrija)
-   - As doses têm unidade? (mg, mcg/kg/min, UI/h)
-   - As metas terapêuticas têm número? (PAM, SpO2, lactato, diurese)
-5. **Devolver** em bloco de código (para preservar formatação ao copiar) seguido de notas de operação se houver.
+1. **Ler a fonte** (texto, foto, PDF, transferência) — extrair todo dado verificável.
+2. **Mapear cada dado para o eixo correto** (Tempo→HPMA, Estado→EF, Problema→Impressão, Ação→Conduta). Dado ambíguo → vai para Notas de operação como pergunta, NÃO entra na nota.
+3. **Preencher o template-base literalmente.**
+4. **Auto-checagem (Ramo C):**
+   - Algum dado inventado? (remove)
+   - Vitais corretos (valor único de chegada; Max–Min quando houver janela, SpO2 incluso)?
+   - HPMA é parágrafo único 6-10 linhas?
+   - Cada problema da Impressão tem conduta 1:1?
+   - Doses com unidade (mg, mcg/kg/min, UI/h)? Metas com número (PAM, SpO2, lactato, diurese)?
+   - Estrutura idêntica ao template-base?
+5. **Entregar** conforme a seção Output abaixo.
 
 ## Output
 
@@ -193,19 +204,18 @@ Devolva nesta ordem:
 
 1. **Bloco de código com a nota completa** — pronta para copiar e colar no prontuário.
 2. **`// Comando Tático — Notas de operação:`** (opcional) — alertas, dúvidas, dados ambíguos, sugestões de raciocínio. Aqui sim a voz tática do Comando UCI fala. Fora da nota.
-3. **Seção final isolada — Conduta destilada:** apenas as doses-chave e metas terapêuticas, em formato bullet curto, fora do bloco da nota. Isso é referência rápida para o Dr. Nicolas conferir antes de prescrever. Esta seção segue o formato exigido pelo user preference: conduta, doses e metas isoladas e incondicionais ao final.
+3. **Seção final isolada — Conduta destilada:** apenas as doses-chave e metas terapêuticas, em bullets curtos, fora do bloco da nota — referência rápida para o Dr. Nicolas conferir antes de prescrever. Conduta, doses e metas isoladas e incondicionais ao final.
 
 ## Geração opcional de .docx (Times New Roman 10)
 
-Se o usuário pedir explicitamente "gera o docx", "salva em word", "exporta", ou enviar uma frase equivalente:
+Se o usuário pedir explicitamente "gera o docx", "salva em word", "exporta" ou equivalente:
 
-- Use a skill `docx` em paralelo (ler `/mnt/skills/public/docx/SKILL.md` antes).
-- Fonte: Times New Roman, tamanho 10.
-- Margens: padrão (deixe como vem).
-- Salve em `/mnt/user-data/outputs/admissao_<sobrenome_paciente_ou_leito>_<YYYY-MM-DD>.docx`.
-- Apresente com `present_files`.
+- Use a skill `docx` (no PC: `~/dev/claude/skills/_anthropic/public/docx/`; no claude.ai: `/mnt/skills/public/docx/` — ler o SKILL.md dela antes).
+- Fonte: Times New Roman, tamanho 10. Margens padrão.
+- Nome: `admissao_<sobrenome_paciente_ou_leito>_<YYYY-MM-DD>.docx` (no claude.ai salvar em `/mnt/user-data/outputs/`; no PC, na pasta que o operador indicar).
+- Sem pedido explícito → entregue só texto. Não infle o output.
 
-Sem pedido explícito → entregue só texto. Não infle o output.
+---
 
 ## Exemplo de execução
 
@@ -215,22 +225,26 @@ Sem pedido explícito → entregue só texto. Não infle o output.
 **Output esperado:**
 
 ```
-Paciente de 68 anos, em 1° dia de internação em UTI por quadro de:
-Choque séptico de foco pulmonar com IRpA hipoxêmica, em IOT/VM e DVA.
+[NOME COMPLETO], 68a — UTI Leito 07 — DH 1º DIA — [DATA] [TURNO]
+HD / Problemas ativos:
+1. Choque séptico de foco pulmonar, em DVA (Nora 0,4 mcg/kg/min)
+2. IRpA hipoxêmica, em IOT/VM (FiO2 60%, PEEP 10)
+3. IRA provável (CR 2,1 / basal 0,8), pré-renal por hipoperfusão a esclarecer
+4. Hiperlactatemia (lactato 4,8 mmol/L), em ressuscitação
+Alergias: nega.
 
-__Admissão__
+Admissão ([DD/MM/AA]): Chega do PS intubada, sob Nora 0,4 mcg/kg/min e sedoanalgesia (RASS -3), PAM 63 mmHg, lactato 4,8 mmol/L. Hemoculturas e aspirado coletados pré-ATB; em D1 de Pip-Tazo (foco pulmonar). Pendentes à chegada: CVC, linha arterial, SVD, gasometria, hemograma.
 
-Antecedentes: HAS, DM2, ex-tabagista 40 maços-ano.
+HPMA: Paciente com HAS, DM2 e ex-tabagismo (40 maços-ano) [período pré-hospitalar não informado]. No PS evoluiu com insuficiência respiratória de foco pulmonar e choque, sendo intubada e iniciada noradrenalina. Coletadas hemoculturas e aspirado traqueal, seguidas da primeira dose de Piperacilina-Tazobactam 4,5g EV (D1, foco pulmonar). Admitida na UTI sob VM (FiO2 60%, PEEP 10, VC 380 mL) e Nora 0,4 mcg/kg/min, sedada com fentanil e midazolam (RASS -3), PAM 63 mmHg, lactato 4,8 mmol/L à entrada.
 
-Medicamentos de uso domiciliar:
-- Losartana 50mg/dia
-- Metformina 850mg 12/12h
-- AAS 100mg/dia
+Antecedentes: HAS, DM2, ex-tabagista (40 maços-ano).
 
-__ALERGIAS:__ NEGA.
+Medicamentos de uso domiciliar: Losartana 50 mg/dia; Metformina 850 mg 12/12h; AAS 100 mg/dia (antiagregante — destaque).
+
+ALERGIAS: NEGA.
 
 Dispositivos:
-IOT - Sim, intubada no PS - D1.
+IOT - Sim, intubada no PS (tubo nº [ ], profundidade [ ]) - D1.
 CVC - [ ].
 Cateter arterial - [ ].
 SVD - [ ].
@@ -239,95 +253,60 @@ SNE/SNG - [ ].
 Uso:
 Drogas Vasoativas: Noradrenalina 0,4 mcg/kg/min.
 Sedação: Fentanil 100 mcg/h + Midazolam 5 mg/h, RASS -3.
-Antibióticos: Piperacilina-Tazobactam 4,5g 6/6h - D1 (foco pulmonar).
+Antibióticos: Piperacilina-Tazobactam 4,5g EV 6/6h - D1 (foco pulmonar).
 NPT: Não.
 TNE: Não.
 
-Sinais Vitais admissão:
-PA: (90x50 / PAM 63) mmHg
-FC: 118 bpm
-Sao2: 94%, VM FiO2 60% PEEP 10 VC 380
-FR: 22 ipm
-DX: 168 mg/dl
-Temp: 38,2 °C
+Exame físico por sistemas:
+Neurológico: Sob sedação, RASS -3. Pupilas [ ]. GCS não aferível sob sedação.
+Cardiovascular: PA 90/50 mmHg (PAM 63) à admissão, FC 118 bpm. Perfusão [ ]. Nora 0,4 mcg/kg/min.
+Respiratório: VM (FiO2 60%, PEEP 10, VC 380 mL), FR 22 ipm, SpO2 94%. Ausculta [ ]. P/F não calculável (sem PaO2 — gasometria pendente).
+TGI: Dieta zero. Abdome [ ].
+Renal: Diurese não informada (SVD a passar). CR 2,1 mg/dL (basal 0,8), UR [ ]. NA [ ], K [ ].
+Hematológico: não avaliado (hemograma pendente).
+Infeccioso: Pip-Tazo 4,5g EV 6/6h, D1 (foco pulmonar). Hemoculturas + aspirado coletados pré-ATB, resultados pendentes.
+Metabólico/Gaso: DX 168 mg/dL. Lactato 4,8 mmol/L. TAX 38,2 °C. Gasometria pendente.
 
-Exame Físico Geral:
-- Pele e mucosas: [ ]
-- Sistema Nervoso Central: Sob sedação, RASS -3, pupilas [ ]
-- Sistema CardioVascular: Taquicárdico, BCNF, em uso de DVA
-- Sistema Respiratório: Em VM, parâmetros acima
-- Sistema Digestório: [ ]
-- Extremidades: [ ]
+Scores:
+SOFA parcial: Cardio 4 (Nora >0,1 mcg/kg/min), Renal 2 (CR 2,1). Resp não avaliado (sem PaO2), Coag não avaliado (sem PLAQ), Hepático não avaliado (sem bilirrubina), Neuro não avaliado (GCS confundido por sedação). ΔSOFA: sem baseline — não assumir 0.
 
-- Hemato: [ ]
-- Infecto: Choque séptico de foco pulmonar. Em D1 de Pip-Tazo 4,5g 6/6h. Hemoculturas e aspirado coletados pré-ATB. Aguardando antibiograma.
-- Metabolico: Hiperglicemia leve (DX 168). Lactato 4,8 mmol/L na admissão.
-- Renal: IRA AKI provável (Cr 2,1 / basal 0,8 = razão 2,6). Diurese não informada. Pré-renal por hipoperfusão a esclarecer.
-- Cardio: Choque distributivo com Nora 0,4 mcg/kg/min, PAM 63. FC 118.
+Impressão:
+1. Choque séptico de foco pulmonar, estável sob DVA — PAM 63 no limiar da meta com Nora 0,4; ressuscitação em curso.
+2. IRpA hipoxêmica em VM, estável — SpO2 94% com FiO2 60%; P/F a definir com gasometria.
+3. IRA provável, sem baseline 24h — pré-renal por hipoperfusão a esclarecer; diurese a monitorar.
+4. Hiperlactatemia 4,8, em ressuscitação — clearance a seriar.
 
-Exames Complementares relevantes:
-- Lactato: 4,8 mmol/L
-- Cr: 2,1 mg/dl (basal 0,8)
-- DX admissão: 168 mg/dl
+Conduta estruturada por Sistemas:
+1. Hemodinâmica: Nora titulada para PAM ≥ 65 mmHg; reavaliar fluido-responsividade (delta-PP, VCI); lactato seriado 4/4h até clearance.
+2. Respiratório: VM protetora, P-platô < 30, driving pressure < 15, meta SpO2 92-96%; gasometria pós-admissão para P/F.
+3. Neuro/Sedação: manter Fentanil + Midazolam, meta RASS -2 a -3; reavaliar despertar diário após estabilização.
+4. Infecto: Pip-Tazo 4,5g EV 6/6h (D1); seguir culturas para de-escalonamento; reavaliar foco com imagem de tórax.
+5. Renal/Metabólico: balanço hídrico cuidadoso pós-ressuscitação; função renal e eletrólitos 12/12h; glicemia alvo 140-180 mg/dL.
+6. Acessos: programar CVC + linha arterial; SVD para diurese horária (meta ≥ 0,5 mL/kg/h).
+7. Profilaxias: TVP - enoxaparina 40 mg SC 1x/dia (se sem contraindicação); LAMG - omeprazol 40 mg EV 1x/dia; cabeceira 30-45°; higiene oral com clorexidina 0,12% 12/12h (IOT).
+8. Nutrição: iniciar TNE precoce em 24-48h se estabilidade hemodinâmica.
 
-Conduta:
-1. Hemodinâmica:
-   - Manter Nora titulada para PAM ≥ 65 mmHg
-   - Reavaliar fluido-responsividade (delta-PP, VTI AoA, USG VCI)
-   - Lactato seriado de 4/4h até clearance
-2. Ventilatório:
-   - VM protetora, manter SpO2 92-96%, P-platô < 30, driving pressure < 15
-   - Reavaliar PaO2/FiO2 com gasometria pós-admissão
-3. Sedação/Analgesia:
-   - Manter Fentanil + Midazolam, meta RASS -2 a -3
-   - Reavaliar despertar diário se estabilização
-4. Infecto:
-   - Pip-Tazo 4,5g 6/6h, prosseguir até antibiograma
-   - Avaliar de-escalonamento com cultura
-   - Reavaliar foco (RX/TC tórax)
-5. Renal/Metabólico:
-   - Balanço hídrico cuidadoso, alvo neutro a levemente positivo após ressuscitação inicial
-   - Controle glicêmico alvo 140-180 mg/dl
-   - Função renal e eletrólitos 12/12h
-6. Profilaxias:
-   - TVP: enoxaparina 40mg SC 1x/dia (se sem contraindicação)
-   - LAMG: omeprazol 40mg EV 1x/dia
-   - Cabeceira 30-45°
-   - Higiene oral com clorexidina 0,12% 12/12h
-7. Nutrição:
-   - Iniciar TNE precoce nas próximas 24-48h se hemodinâmica estável
-8. Acessos:
-   - Programar passagem de CVC e cateter arterial
-   - Passagem de SVD para controle horário de diurese
+—
+Assinatura: Dr. Nicolas — Intensivista
+Gerado por SASI — Sistema de Auditoria e Síntese Intensiva — TEMPLATE-BASE v2.0
 ```
 
 // Comando Tático — Notas de operação:
-- Faltam: dado de pele/mucosas, pupilas, abdome, extremidades, diurese horária, gasometria, hemograma. Pedir à equipe.
-- CVC e linha arterial ainda não passados — paciente em DVA dose moderada e hemodinâmica instável, prioridade alta nos próximos 30 min.
-- AKI 2-3 já presente na admissão. Reavaliar indicação de TRS se não responder à ressuscitação ou se uremia/acidose progredirem.
+- Faltam: pele/mucosas, pupilas, ausculta, abdome, extremidades, diurese horária, gasometria, hemograma. Pedir à equipe.
+- CVC e linha arterial não confirmados — paciente em DVA dose moderada e hemodinâmica instável, prioridade alta nos próximos 30 min.
+- IRA já presente na admissão. Reavaliar indicação de TRS se não responder à ressuscitação ou se uremia/acidose progredirem.
 - Etiologia do foco pulmonar a definir — pneumonia comunitária vs aspirativa. Cobertura atual cobre os dois cenários iniciais.
+- Nota: vitais registrados como valor único de chegada (sem janela de observação ainda); a partir da primeira janela, formato Máx–Mín.
 
 **Conduta destilada:**
 - Nora titulada → PAM ≥ 65 mmHg
 - VM protetora → SpO2 92-96%, P-platô < 30
 - RASS -2 a -3
-- Pip-Tazo 4,5g 6/6h
-- Glicemia 140-180 mg/dl
-- Enoxaparina 40mg SC 1x/dia (TVP)
-- Omeprazol 40mg EV 1x/dia (LAMG)
+- Pip-Tazo 4,5g EV 6/6h (D1)
+- Glicemia 140-180 mg/dL
+- Enoxaparina 40 mg SC 1x/dia (TVP) · Omeprazol 40 mg EV 1x/dia (LAMG)
 - Cabeceira 30-45°
-- Lactato 4/4h até clearance
-- Função renal 12/12h
-
----
-
-## Edge cases
-
-- **Reinternação na UTI / readmissão:** o "1° dia" reinicia. Mas no motivo de internação, registre que é reinternação (`Reinternação em UTI por...`).
-- **Transferência de outra UTI:** considere D1 nesta UTI, mas registre histórico de UTI prévia em Antecedentes (`Internação prévia em UTI [hospital] de [data] a [data] por [motivo]`).
-- **Paciente em pós-operatório imediato:** o motivo de internação é o procedimento + intercorrência se houver. Em Antecedentes registre cirurgia + cirurgião + tempo cirúrgico se relevante.
-- **Paciente pediátrico ou neonatal:** esta skill é desenhada para adulto. Se vier paciente <18a, sinalize ao Dr. Nicolas em `// Comando Tático` que o template pode precisar de ajuste.
-- **Dado conflitante na fonte (ex: PA 120x80 e PA 90x60 sem timestamp claro):** registre o que está mais próximo da admissão na UTI e sinalize o conflito nas notas de operação.
+- Lactato 4/4h até clearance · Função renal 12/12h
 
 ---
 
