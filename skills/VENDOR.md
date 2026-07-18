@@ -98,7 +98,7 @@ desinformação de mídia (SIFT/CRAAP), não fato clínico — arriscada em cont
 
 ## Assimilação em massa dos zips — 16-jul-2026
 
-Estas 99 skills vieram dos 13 zips baixados em `~/Downloads` em 03-jul-2026 (código-fonte de
+Estas 90 skills vieram dos 13 zips baixados em `~/Downloads` em 03-jul-2026 (código-fonte de
 ferramentas/CLIs de terceiros — não pacotes de "skill" isolados), extraídos e catalogados por um
 workflow de leitura em 2 rodadas (batedores Haiku/Sonnet + fiscal), que levantou um censo de 359
 `SKILL.md` únicas dentro deles. Destas, as skills abaixo foram lidas de fato e julgadas com
@@ -112,7 +112,6 @@ não sobrescrita).
 |---|---|---|
 | `security-audit/` | `buildwithclaude-main/agent-triforce` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `artifacts-builder/` | `buildwithclaude-main/all-skills` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `work-pipeline/` | `buildwithclaude-main/agents-uc-taskmanager` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `code-health/` | `buildwithclaude-main/agent-triforce` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `feature-spec/` | `buildwithclaude-main/agent-triforce` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `implement-feature/` | `buildwithclaude-main/agent-triforce` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
@@ -184,16 +183,8 @@ não sobrescrita).
 | `scan/` | `buildwithclaude-main/plugins/gsd/skills/scan` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `session-report/` | `buildwithclaude-main/plugins/gsd/skills/session-report` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `ship/` | `buildwithclaude-main/plugins/gsd/skills/ship` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `brief/` | `buildwithclaude-main/plugins/origin/skills/brief` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `capture/` | `buildwithclaude-main/plugins/origin/skills/capture` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `debrief/` | `buildwithclaude-main/plugins/origin/skills/debrief` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `distill/` | `buildwithclaude-main/plugins/origin/skills/distill` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `meeting/` | `buildwithclaude-main/plugins/meeting-bots` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `thumbgate/` | `buildwithclaude-main/plugins/thumbgate` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `forget/` | `buildwithclaude-main/plugins/origin` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `handoff/` | `buildwithclaude-main/plugins/origin` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `read/` | `buildwithclaude-main/plugins/origin` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `recall/` | `buildwithclaude-main/plugins/origin` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `public-plugin-builder/` | `buildwithclaude-main/plugins/public-plugin-builder` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `ralph-review-trio/` | `buildwithclaude-main/plugins/ralph-review-trio` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `ultracost/` | `buildwithclaude-main/plugins/ultracost` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
