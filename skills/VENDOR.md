@@ -169,7 +169,7 @@ não sobrescrita).
 | `docs-update/` | `buildwithclaude-main/plugins/gsd` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `execute-phase/` | `buildwithclaude-main/plugins/gsd/skills/execute-phase` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `explore/` | `buildwithclaude-main/plugins/gsd/skills/explore` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
-| `graphify/` | `buildwithclaude-main/plugins/gsd/skills/graphify` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
+| `gsd-graphify/` | `buildwithclaude-main/plugins/gsd/skills/graphify` — **renomeada localmente 19-jul-2026** (colidia com o graphify da casa, ferramenta `graphifyy` dos repos sasi/celebro/claude) | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `inbox/` | `buildwithclaude-main/plugins/gsd/skills/inbox` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `new-milestone/` | `buildwithclaude-main/plugins/gsd/skills/new-milestone` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `note/` | `buildwithclaude-main/plugins/gsd/skills/note` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
