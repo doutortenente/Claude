@@ -56,7 +56,7 @@ pasta vazia); o `batedor.md` já ganhou procedimentos de evidência (commit
 
 ## Rotina agendada (chefe/caco)
 
-- **Faxina do workspace** — `~/dev/scripts/faxina_dev.py` (boletim leitura-pura:
+- **Faxina do workspace** — `~/dev/scripts/pc/faxina_dev.py` (boletim leitura-pura:
   raiz `~/dev`, `Downloads` envelhecido, repos sujos/à-frente-atrás/merge travado,
   worktrees órfãos, lixo comum). `caco` roda semanalmente ou quando o operador
   reclamar de bagunça ("tá tudo uma bagunça").

@@ -23,9 +23,6 @@ Claude/
 ├── CLAUDE.md            Este arquivo (instruções para o agente)
 ├── README.md            Resumo curto do repo
 ├── .gitignore           Bloqueia segredos (.env), settings.local.json, logs
-├── scripts/             ⭐ CASA ÚNICA dos scripts de infra do repo
-│   ├── build_claude_index.py    Regenera índice + MAPA + SKILLS-CATALOGO
-│   └── query_claude_index.py    Consulta o índice
 ├── agents/              11 subagentes
 ├── memory/              Índice gerado: claude_index.db, MAPA-CLAUDE.md, SKILLS-CATALOGO.md
 └── skills/              Skills
@@ -40,19 +37,22 @@ Claude/
                          doc-coauthoring, theme-factory, web-artifacts-builder, skill-creator…
 ```
 
-### Onde mora script (regra da casa única)
+### Onde mora script (casa única, travada 22-jul-2026)
 
-| Tipo de script | Casa |
-|---|---|
-| Infra deste repo (índice, build) | `claude/scripts/` |
-| Corpo de uma skill (a skill chama ele) | `skills/<nome>/scripts/` — **não mover daqui, quebra a skill** |
-| Manutenção do PC (fora deste repo) | `~/dev/scripts/` |
+Este repo **não tem** pasta `scripts/`. Todo script de infra mora em `~/dev/scripts/`,
+em gavetas por assunto. O índice deste repo é gerado de fora:
 
-Nunca enterrar script em `memory/` — `memory/` guarda só índice gerado.
+```bash
+python3 ~/dev/scripts/indices/build_claude_index.py    # regenera índice + MAPA + CATÁLOGO
+python3 ~/dev/scripts/indices/query_claude_index.py    # consulta
+```
+
+Única exceção: script que **é o corpo de uma skill** fica em `skills/<nome>/scripts/`
+— a skill chama ele por caminho relativo, tirar de lá quebra a skill.
 
 ### Skills top-level (119, achatadas em `skills/<nome>/`)
 
-O número real está no índice, não nesta lista: `python3 scripts/query_claude_index.py skills`.
+O número real está no índice, não nesta lista: `python3 ~/dev/scripts/indices/query_claude_index.py skills`.
 Custo: cada skill instalada injeta `name` + `description` no prompt em **toda** mensagem
 (~42.600 caracteres hoje). Skill que não é usada é pedágio — desativar movendo para
 `skills/_off/` (o prefixo `_` tira da descoberta sem apagar nada).
@@ -85,13 +85,13 @@ Antes de grep, use o grafo: `graphify query "<pergunta>"` rodado de dentro do re
 | Precisa de | Use primeiro |
 |---|---|
 | Qual skill existe? | `memory/SKILLS-CATALOGO.md` |
-| Path de uma skill | `python3 scripts/query_claude_index.py skill <nome>` |
-| Scripts (.py/.sh) | `python3 scripts/query_claude_index.py scripts` |
-| Subagentes | `python3 scripts/query_claude_index.py agents` |
-| Busca no repo | `python3 scripts/query_claude_index.py search <termo>` |
+| Path de uma skill | `python3 ~/dev/scripts/indices/query_claude_index.py skill <nome>` |
+| Scripts (.py/.sh) | `python3 ~/dev/scripts/indices/query_claude_index.py scripts` |
+| Subagentes | `python3 ~/dev/scripts/indices/query_claude_index.py agents` |
+| Busca no repo | `python3 ~/dev/scripts/indices/query_claude_index.py search <termo>` |
 | Inventário | `memory/MAPA-CLAUDE.md` |
 
-Regenerar índice: `python3 scripts/build_claude_index.py`.
+Regenerar índice: `python3 ~/dev/scripts/indices/build_claude_index.py`.
 
 `_design/` e `_anthropic/` são **sob demanda** — só abrir quando a skill for acionada.
 
@@ -103,7 +103,7 @@ Regenerar índice: `python3 scripts/build_claude_index.py`.
 2. Garanta um `SKILL.md` válido na raiz da pasta da skill.
 3. **Registre em `skills/VENDOR.md`:** upstream, commit SHA fixado, licença e o que
    foi copiado. Sem entrada em `VENDOR.md`, a skill não é rastreável/auditável.
-4. Se a skill exigir hooks, fie-os em `settings/settings.json` (ver abaixo).
+4. Se a skill exigir hooks, fie-os em `~/.claude/settings.json` (ver abaixo).
 
 ### Re-sincronizar com o upstream
 1. `git clone <upstream>` num diretório temporário.

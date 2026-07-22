@@ -1,28 +1,28 @@
 # MAPA — repo Claude
 
-> Gerado 22-jul-2026 por `scripts/build_claude_index.py`
+> Gerado 22-jul-2026 por `~/dev/scripts/indices/build_claude_index.py`
 
-**Total:** 1819 arquivos · 61.6 MB · 190,148 linhas · 1,043,806 tokens indexados · **158 skills**
+**Total:** 1819 arquivos · 61.6 MB · 189,647 linhas · 1,042,482 tokens indexados · **158 skills**
 
 ## Por categoria
 
 | Categoria | Arq | Tokens | O que é |
 |---|---:|---:|---|
-| `other` | 672 | 437,650 | Revisar |
+| `other` | 672 | 436,265 | Revisar |
 | `skill_design` | 263 | 234,980 | Arsenal `_design/` (ui-ux-pro-max, taste-skill…) |
 | `skill_anthropic` | 199 | 175,509 | Snapshot `_anthropic/` (docx, pdf, examples…) |
 | `skill_dev` | 116 | 107,164 | Superpowers + engenharia (TDD, plans, debugging…) |
 | `script` | 85 | 68,541 | Scripts executáveis em skills/ |
 | `skill_clinical` | 3 | 7,977 | Skills UTI (admissao, sasi-ingest, controles-vitais) |
-| `agent` | 11 | 4,679 | Subagentes — `agents/*.md` |
-| `root` | 5 | 4,198 | CLAUDE.md, README, VENDOR.md |
-| `memory` | 2 | 3,108 | Este índice |
+| `agent` | 11 | 4,767 | Subagentes — `agents/*.md` |
+| `root` | 5 | 4,182 | CLAUDE.md, README, VENDOR.md |
+| `memory` | 2 | 3,097 | Este índice |
 | `vendor_blob` | 463 | 0 | Binários/pesados (só path, sem FTS) |
 
 ## Maiores arquivos (exceto vendor_blob)
 
-- `graphify-out/2026-07-22/GRAPH_REPORT.md` — 14,802 tok (`other`)
-- `graphify-out/GRAPH_REPORT.md` — 14,798 tok (`other`)
+- `graphify-out/2026-07-22/GRAPH_REPORT.md` — 14,798 tok (`other`)
+- `graphify-out/GRAPH_REPORT.md` — 14,569 tok (`other`)
 - `skills/_design/taste-skill/skills/taste-skill/SKILL.md` — 12,853 tok (`skill_design`)
 - `skills/skill-creator/SKILL.md` — 10,121 tok (`skill_dev`)
 - `graphify-out/2026-07-11/GRAPH_REPORT.md` — 7,788 tok (`other`)
@@ -44,7 +44,7 @@
 Não usar `Glob **/skills/**` nem ler `_design/`/`_anthropic/` sem necessidade.
 
 ```bash
-python3 scripts/query_claude_index.py skills --clinical
-python3 scripts/query_claude_index.py find engine.py
-python3 scripts/query_claude_index.py agents
+python3 ~/dev/scripts/indices/query_claude_index.py skills --clinical
+python3 ~/dev/scripts/indices/query_claude_index.py find engine.py
+python3 ~/dev/scripts/indices/query_claude_index.py agents
 ```
