@@ -1,50 +1,50 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions",
-    "allow": [
-      "Bash(*)",
-      "Read(*)",
-      "Write(*)",
-      "Edit(*)",
-      "Glob(*)",
-      "Grep(*)"
-    ]
+    "allow": [],
+    "defaultMode": "dontAsk"
   },
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "description": "prompt-improver: declarative hook engine, UserPromptSubmit nudge rules",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/skills/prompt-improver/scripts/engine.py UserPromptSubmit || python ${CLAUDE_PROJECT_DIR}/.claude/skills/prompt-improver/scripts/engine.py UserPromptSubmit"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "description": "prompt-improver: PreToolUse nudge rules on plan-mode entry and Bash commands",
-        "matcher": "EnterPlanMode|Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/skills/prompt-improver/scripts/engine.py PreToolUse || python ${CLAUDE_PROJECT_DIR}/.claude/skills/prompt-improver/scripts/engine.py PreToolUse"
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "description": "prompt-improver: SubagentStart nudge rules when an agent spawns",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ${CLAUDE_PROJECT_DIR}/.claude/skills/prompt-improver/scripts/engine.py SubagentStart || python ${CLAUDE_PROJECT_DIR}/.claude/skills/prompt-improver/scripts/engine.py SubagentStart"
-          }
-        ]
-      }
-    ]
+  "model": "claude-fable-5[1m]",
+  "worktree": {
+    "baseRef": "fresh"
   },
-  "language": "portuguese"
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "taste-skill@taste-skill": true,
+    "frontend-design-pro@frontend-design-pro": true
+  },
+  "extraKnownMarketplaces": {
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      }
+    },
+    "taste-skill": {
+      "source": {
+        "source": "github",
+        "repo": "Leonxlnx/taste-skill"
+      }
+    },
+    "frontend-design-pro": {
+      "source": {
+        "source": "github",
+        "repo": "claudekit/frontend-design-pro-demo"
+      }
+    }
+  },
+  "language": "portuguese",
+  "effortLevel": "xhigh",
+  "ultracode": true,
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark-daltonized",
+  "editorMode": "normal",
+  "verbose": true,
+  "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": false,
+  "preferFastMode": true
 }

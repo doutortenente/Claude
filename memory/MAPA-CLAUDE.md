@@ -1,41 +1,39 @@
 # MAPA — repo Claude
 
-> Gerado 24-jun-2026 por `memory/scripts/build_claude_index.py`
+> Gerado 22-jul-2026 por `scripts/build_claude_index.py`
 
-**Total:** 927 arquivos · 31.4 MB · 119,497 linhas · 542,903 tokens indexados · **76 skills**
+**Total:** 1859 arquivos · 57.8 MB · 185,817 linhas · 1,035,305 tokens indexados · **158 skills**
 
 ## Por categoria
 
 | Categoria | Arq | Tokens | O que é |
 |---|---:|---:|---|
+| `other` | 710 | 428,870 | Revisar |
 | `skill_design` | 263 | 234,980 | Arsenal `_design/` (ui-ux-pro-max, taste-skill…) |
 | `skill_anthropic` | 199 | 175,509 | Snapshot `_anthropic/` (docx, pdf, examples…) |
-| `other` | 65 | 66,352 | Revisar |
-| `skill_dev` | 21 | 30,059 | Superpowers + engenharia (TDD, plans, debugging…) |
-| `script` | 22 | 18,547 | Scripts executáveis em skills/ |
-| `skill_clinical` | 3 | 6,301 | Skills UTI (admissao, sasi-ingest, controles-vitais) |
-| `docs` | 1 | 3,698 | `docs/` |
-| `template` | 9 | 2,507 | Scaffolding — `templates/` |
-| `root` | 5 | 1,984 | CLAUDE.md, README, VENDOR.md |
-| `memory` | 2 | 1,703 | Este índice |
-| `agent` | 5 | 971 | Subagentes — `agents/*.md` |
-| `settings` | 2 | 292 | `settings/` + rules |
-| `vendor_blob` | 330 | 0 | Binários/pesados (só path, sem FTS) |
+| `skill_dev` | 116 | 107,164 | Superpowers + engenharia (TDD, plans, debugging…) |
+| `script` | 85 | 68,541 | Scripts executáveis em skills/ |
+| `skill_clinical` | 3 | 7,977 | Skills UTI (admissao, sasi-ingest, controles-vitais) |
+| `agent` | 11 | 4,679 | Subagentes — `agents/*.md` |
+| `root` | 5 | 4,208 | CLAUDE.md, README, VENDOR.md |
+| `memory` | 2 | 3,108 | Este índice |
+| `settings` | 2 | 269 | `settings/` + rules |
+| `vendor_blob` | 463 | 0 | Binários/pesados (só path, sem FTS) |
 
 ## Maiores arquivos (exceto vendor_blob)
 
+- `graphify-out/GRAPH_REPORT.md` — 16,093 tok (`other`)
 - `skills/_design/taste-skill/skills/taste-skill/SKILL.md` — 12,853 tok (`skill_design`)
 - `skills/skill-creator/SKILL.md` — 10,121 tok (`skill_dev`)
+- `graphify-out/2026-07-11/GRAPH_REPORT.md` — 7,788 tok (`other`)
+- `graphify-out/2026-07-10/GRAPH_REPORT.md` — 7,755 tok (`other`)
+- `graphify-out/2026-07-06/GRAPH_REPORT.md` — 7,746 tok (`other`)
+- `graphify-out/2026-07-16/GRAPH_REPORT.md` — 7,715 tok (`other`)
 - `skills/_design/taste-skill/skills/imagegen-frontend-mobile/SKILL.md` — 6,552 tok (`skill_design`)
 - `skills/_design/ui-ux-pro-max/.claude/skills/ui-ux-pro-max/SKILL.md` — 6,466 tok (`skill_design`)
 - `skills/skill-creator/workflows/wrapper-skill/patterns.md` — 6,455 tok (`other`)
+- `graphify-out/cache/ast/v0.9.5/56da2ca3d0a12457a33e7265307a39f54f6e6ef6a3205c57b8f1fdbd0f8492a7.json` — 6,272 tok (`other`)
 - `skills/_design/taste-skill/skills/image-to-code-skill/SKILL.md` — 5,820 tok (`skill_design`)
-- `skills/_design/taste-skill/skills/imagegen-frontend-web/SKILL.md` — 5,819 tok (`skill_design`)
-- `skills/writing-skills/anthropic-best-practices.md` — 5,764 tok (`other`)
-- `skills/_anthropic/examples/skill-creator/SKILL.md` — 5,205 tok (`skill_anthropic`)
-- `skills/_anthropic/examples/setup-writing-style/SKILL.md` — 4,289 tok (`skill_anthropic`)
-- `skills/_anthropic/examples/skill-creator/eval-viewer/viewer.html` — 4,213 tok (`skill_anthropic`)
-- `skills/skill-creator/eval-viewer/viewer.html` — 4,213 tok (`other`)
 
 ## Navegação rápida (obrigatório para agentes)
 
@@ -47,7 +45,7 @@
 Não usar `Glob **/skills/**` nem ler `_design/`/`_anthropic/` sem necessidade.
 
 ```bash
-python3 memory/scripts/query_claude_index.py skills --clinical
-python3 memory/scripts/query_claude_index.py find engine.py
-python3 memory/scripts/query_claude_index.py agents
+python3 scripts/query_claude_index.py skills --clinical
+python3 scripts/query_claude_index.py find engine.py
+python3 scripts/query_claude_index.py agents
 ```

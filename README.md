@@ -12,7 +12,7 @@ Claude/
 └── memory/      Índice FTS — SKILLS-CATALOGO.md, query_claude_index.py
 ```
 
-**Navegação:** `python3 memory/scripts/query_claude_index.py skills` — não varrer `skills/` à mão.
+**Navegação:** `python3 scripts/query_claude_index.py skills` — não varrer `skills/` à mão.
 
 ## Uso
 

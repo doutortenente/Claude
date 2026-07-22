@@ -27,10 +27,10 @@ Quando a missão envolver execução operacional, termine sua resposta com a lin
 | `~/dev/scripts/otimiza_notebook.sh` | Exige `sudo` → devolver pro OPERADOR rodar (`! sudo bash ...`) |
 | `~/dev/scripts/onedrive-index/` | Motor do acervo OneDrive **v2 por feature** (`build_v2.py` classifica/renomeia, `regen_index_v2.py` regenera `_INDEX.md`+`_index.json`, `exec_v2.py`, `gen_html_v2.py`; v1 `regen_index.py` = legado). Convenção v2: `categoria_assunto[_paciente][_AAAA-MM-DD].ext`, 7 pastas-feature (Clinico · Militar-FAB · Estudo · Dev-IA · Financeiro · Tese-Mae · Pessoal), data SÓ quando real |
 | `~/dev/scripts/mount-google-drive.sh` | rclone Google Drive (legado; OneDrive é a nuvem principal) |
-| `~/dev/memory/scripts/build_dev_index.py` / `query_dev_index.py` | Índice do `~/dev`. Build roda SOZINHO via hook Stop (`--if-stale`); query livre |
-| `~/dev/sasi/memory/scripts/build_sasi_index.py` / `query_sasi_index.py` | Índice do repo sasi |
+| `~/dev/scripts/build_dev_index.py` / `query_dev_index.py` | Índice do `~/dev`. Build roda SOZINHO via hook Stop (`--if-stale`); query livre |
+| `~/dev/sasi/scripts/build_sasi_index.py` / `query_sasi_index.py` | Índice do repo sasi |
 | `~/dev/sasi/scripts/audit_eventos.py` | Auditoria da fila de revisão de `eventos_clinicos` |
-| `~/dev/claude/memory/scripts/build_claude_index.py` / `query_claude_index.py` | Índice do repo claude (skills) |
+| `~/dev/claude/scripts/build_claude_index.py` / `query_claude_index.py` | Índice do repo claude (skills) |
 
 ## Padrão da casa para criar/alterar script
 
@@ -39,7 +39,7 @@ Quando a missão envolver execução operacional, termine sua resposta com a lin
 3. **Backup antes de gravar**: alvo ganha cópia `.bak-<YYYYmmdd-HHMMSS>` no mesmo diretório.
 4. Saída **em pt-BR**, curta, dizendo o que fez e o próximo passo (ex.: "agora rode /mcp").
 5. Docstring no topo: o que faz, por que existe, como usar, libs necessárias.
-6. Casa definitiva: `~/dev/scripts/` (geral) ou `<repo>/scripts|memory/scripts` (específico). NUNCA deixar script novo em `/tmp` ou `~/Downloads`.
+6. Casa definitiva: `~/dev/scripts/` (geral) ou `<repo>/scripts/` (específico) — **uma casa só por repo**, nunca enterrado em `memory/`. Exceção: script que É o corpo de uma skill fica em `skills/<nome>/scripts/`. NUNCA deixar script novo em `/tmp` ou `~/Downloads`.
 7. Script novo/alterado → teste de fumaça SEU antes de liberar pro caco.
 
 ## Travas invioláveis

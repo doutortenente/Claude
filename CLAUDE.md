@@ -23,11 +23,17 @@ Claude/
 ├── CLAUDE.md            Este arquivo (instruções para o agente)
 ├── README.md            Resumo curto do repo
 ├── .gitignore           Bloqueia segredos (.env), settings.local.json, logs
+├── scripts/             ⭐ CASA ÚNICA dos scripts de infra do repo
+│   ├── build_claude_index.py    Regenera índice + MAPA + SKILLS-CATALOGO
+│   └── query_claude_index.py    Consulta o índice
 ├── settings/
-│   └── settings.json    Template de permissões + hooks do prompt-improver (+ language: pt)
-└── skills/
+│   └── settings.json    Config VIVA do Claude Code (~/.claude/settings.json é symlink daqui)
+├── rules/               Regras path-scoped (~/dev/.claude/rules é symlink daqui)
+├── agents/              11 subagentes (~/.claude/agents é symlink daqui)
+├── memory/              Índice gerado: claude_index.db, MAPA-CLAUDE.md, SKILLS-CATALOGO.md
+└── skills/              (~/.claude/skills é symlink daqui)
     ├── VENDOR.md        ⭐ Procedência: upstreams, SHAs fixados, licenças, regras de re-sync
-    ├── <17 skills>/     Skills top-level achatadas, cada uma com SKILL.md
+    ├── <119 skills>/    Skills top-level achatadas, cada uma com SKILL.md
     ├── _vendor/         Licenças soltas (ex.: superpowers-LICENSE)
     ├── _design/         Arsenal de design auditado (~20 sub-skills, tree do upstream preservado)
     └── _anthropic/      Snapshot das skills do ambiente Claude Code (licença PROPRIETÁRIA)
@@ -37,15 +43,22 @@ Claude/
                          doc-coauthoring, theme-factory, web-artifacts-builder, skill-creator…
 ```
 
-### Skills top-level (17, achatadas em `.claude/skills/<nome>/`)
+### Onde mora script (regra da casa única)
 
-Fluxo de desenvolvimento (superpowers + daymade): `brainstorming`,
-`systematic-debugging`, `test-driven-development`, `writing-plans`,
-`executing-plans`, `requesting-code-review`, `receiving-code-review`,
-`verification-before-completion`, `using-superpowers`, `writing-skills`,
-`dispatching-parallel-agents`, `subagent-driven-development`,
-`finishing-a-development-branch`, `using-git-worktrees`, `skill-creator`,
-`prompt-improver` (com hooks ativos), `session-start-hook`.
+| Tipo de script | Casa |
+|---|---|
+| Infra deste repo (índice, build) | `claude/scripts/` |
+| Corpo de uma skill (a skill chama ele) | `skills/<nome>/scripts/` — **não mover daqui, quebra a skill** |
+| Manutenção do PC (fora deste repo) | `~/dev/scripts/` |
+
+Nunca enterrar script em `memory/` — `memory/` guarda só índice gerado.
+
+### Skills top-level (119, achatadas em `skills/<nome>/`)
+
+O número real está no índice, não nesta lista: `python3 scripts/query_claude_index.py skills`.
+Custo: cada skill instalada injeta `name` + `description` no prompt em **toda** mensagem
+(~42.600 caracteres hoje). Skill que não é usada é pedágio — desativar movendo para
+`skills/_off/` (o prefixo `_` tira da descoberta sem apagar nada).
 
 ## Convenções
 
@@ -68,19 +81,20 @@ Fluxo de desenvolvimento (superpowers + daymade): `brainstorming`,
 
 ## Navegação rápida (obrigatório — repo é pesado)
 
-Este repo tem **~900 arquivos** e **34 MB** em `skills/_design/` + `_anthropic/`.
+Este repo tem **1.414 arquivos** versionados e **45 MB** em `skills/`.
 **Não varrer** `skills/` com Glob nem Read em massa — é lento e queima contexto.
+Antes de grep, use o grafo: `graphify query "<pergunta>"` rodado de dentro do repo.
 
 | Precisa de | Use primeiro |
 |---|---|
 | Qual skill existe? | `memory/SKILLS-CATALOGO.md` |
-| Path de uma skill | `python3 memory/scripts/query_claude_index.py skill <nome>` |
-| Scripts (.py/.sh) | `python3 memory/scripts/query_claude_index.py scripts` |
-| Subagentes | `python3 memory/scripts/query_claude_index.py agents` |
-| Busca no repo | `python3 memory/scripts/query_claude_index.py search <termo>` |
+| Path de uma skill | `python3 scripts/query_claude_index.py skill <nome>` |
+| Scripts (.py/.sh) | `python3 scripts/query_claude_index.py scripts` |
+| Subagentes | `python3 scripts/query_claude_index.py agents` |
+| Busca no repo | `python3 scripts/query_claude_index.py search <termo>` |
 | Inventário | `memory/MAPA-CLAUDE.md` |
 
-Regenerar índice: `python3 memory/scripts/build_claude_index.py`.
+Regenerar índice: `python3 scripts/build_claude_index.py`.
 
 `_design/` e `_anthropic/` são **sob demanda** — só abrir quando a skill for acionada.
 
@@ -105,17 +119,22 @@ Skills daqui são **copiadas ou symlinkadas** para `.claude/skills/` do repo alv
 Para ativar uma sub-skill aninhada (`_design/…`), copie/symlinke a pasta que contém
 o `SKILL.md` específico para o `.claude/skills/` daquele projeto.
 
-### settings.json (permissões + hooks)
-`settings/settings.json` é o **template** copiado para `.claude/settings.json` dos
-projetos. Hoje: `defaultMode: bypassPermissions` (allow Bash/Read/Write/Edit/Glob/
-Grep), `language: portuguese`, e 3 hooks do **prompt-improver**:
-- `UserPromptSubmit`, `PreToolUse` (matcher `EnterPlanMode|Bash`), `SubagentStart`
-  → chamam `engine.py` (requer `python3` no PATH).
-- **Overhead** ~189 tokens/prompt; `engine.py` sai sempre com código 0 (defensivo).
-- **Bypass do nudge:** comece o prompt com `*`, `/` ou `#`.
-- **Desativar:** remova o bloco `hooks` de `.claude/settings.json`.
-- O `SessionStart` hook do superpowers **não** é religado (quebra ao achatar); as 14
-  skills são descobertas automaticamente como project skills mesmo assim.
+### settings.json — é a config VIVA, não um template
+
+`~/.claude/settings.json` é **symlink** para `settings/settings.json` daqui. Editar um
+edita o outro. Isso completa o padrão que `agents/` e `skills/` já seguiam: o repo é a
+fonte, o `~/.claude/` só aponta.
+
+| Onde | O quê | Versionado? |
+|---|---|---|
+| `claude/settings/settings.json` | config global (modelo, tema, plugins, idioma) | sim |
+| `~/dev/.claude/settings.json` | hooks do workspace (graphify, reindex no Stop) | não (fora deste repo) |
+| `**/settings.local.json` | scratch de sessão (permissões pontuais) | **não** — no `.gitignore` |
+
+Os 3 hooks do **prompt-improver** foram removidos (22-jul-2026): apontavam para
+`.claude/skills/prompt-improver/scripts/engine.py`, caminho que não existe — a skill
+mora em `skills/prompt-improver/`. Cobravam ~189 tokens por prompt sem nunca rodar.
+A skill continua no repo, invocável à mão.
 
 ## Licenças (⚠️ ler antes de redistribuir)
 

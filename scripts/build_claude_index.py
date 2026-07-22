@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Indexa o repo Claude → memory/claude_index.db + MAPA-CLAUDE.md + SKILLS-CATALOGO.md.
 
-Uso (raiz do repo): python3 memory/scripts/build_claude_index.py
+Uso (raiz do repo): python3 scripts/build_claude_index.py
 """
 import datetime
 import hashlib
@@ -9,7 +9,7 @@ import os
 import re
 import sqlite3
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB = os.path.join(ROOT, "memory", "claude_index.db")
 MAPA = os.path.join(ROOT, "memory", "MAPA-CLAUDE.md")
 CATALOGO = os.path.join(ROOT, "memory", "SKILLS-CATALOGO.md")
@@ -195,7 +195,7 @@ def write_catalogo(c, today):
         "# Catálogo de Skills — Claude",
         "",
         f"> Gerado {today} · **leia isto antes de varrer `skills/` com Read/Glob.**",
-        "> Regenerar: `python3 memory/scripts/build_claude_index.py`",
+        "> Regenerar: `python3 scripts/build_claude_index.py`",
         "",
         "## Clínicas (UTI)",
         "",
@@ -232,10 +232,10 @@ def write_catalogo(c, today):
         "## Consulta rápida",
         "",
         "```bash",
-        "python3 memory/scripts/query_claude_index.py skills",
-        "python3 memory/scripts/query_claude_index.py skill sasi-ingest-export",
-        "python3 memory/scripts/query_claude_index.py scripts",
-        "python3 memory/scripts/query_claude_index.py search zero alucinação",
+        "python3 scripts/query_claude_index.py skills",
+        "python3 scripts/query_claude_index.py skill sasi-ingest-export",
+        "python3 scripts/query_claude_index.py scripts",
+        "python3 scripts/query_claude_index.py search zero alucinação",
         "```",
     ]
     with open(CATALOGO, "w", encoding="utf-8") as f:
@@ -256,7 +256,7 @@ def write_mapa(c, today):
     lines = [
         "# MAPA — repo Claude",
         "",
-        f"> Gerado {today} por `memory/scripts/build_claude_index.py`",
+        f"> Gerado {today} por `scripts/build_claude_index.py`",
         "",
         f"**Total:** {tot[0]} arquivos · {tot[1]/1024/1024:.1f} MB · {tot[2]:,} linhas · "
         f"{tot[3]:,} tokens indexados · **{n_skills} skills**",
@@ -285,9 +285,9 @@ def write_mapa(c, today):
         "Não usar `Glob **/skills/**` nem ler `_design/`/`_anthropic/` sem necessidade.",
         "",
         "```bash",
-        "python3 memory/scripts/query_claude_index.py skills --clinical",
-        "python3 memory/scripts/query_claude_index.py find engine.py",
-        "python3 memory/scripts/query_claude_index.py agents",
+        "python3 scripts/query_claude_index.py skills --clinical",
+        "python3 scripts/query_claude_index.py find engine.py",
+        "python3 scripts/query_claude_index.py agents",
         "```",
     ]
     with open(MAPA, "w", encoding="utf-8") as f:
