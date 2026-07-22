@@ -26,12 +26,9 @@ Claude/
 ├── scripts/             ⭐ CASA ÚNICA dos scripts de infra do repo
 │   ├── build_claude_index.py    Regenera índice + MAPA + SKILLS-CATALOGO
 │   └── query_claude_index.py    Consulta o índice
-├── settings/
-│   └── settings.json    Config VIVA do Claude Code (~/.claude/settings.json é symlink daqui)
-├── rules/               Regras path-scoped (~/dev/.claude/rules é symlink daqui)
-├── agents/              11 subagentes (~/.claude/agents é symlink daqui)
+├── agents/              11 subagentes
 ├── memory/              Índice gerado: claude_index.db, MAPA-CLAUDE.md, SKILLS-CATALOGO.md
-└── skills/              (~/.claude/skills é symlink daqui)
+└── skills/              Skills
     ├── VENDOR.md        ⭐ Procedência: upstreams, SHAs fixados, licenças, regras de re-sync
     ├── <119 skills>/    Skills top-level achatadas, cada uma com SKILL.md
     ├── _vendor/         Licenças soltas (ex.: superpowers-LICENSE)
@@ -119,17 +116,20 @@ Skills daqui são **copiadas ou symlinkadas** para `.claude/skills/` do repo alv
 Para ativar uma sub-skill aninhada (`_design/…`), copie/symlinke a pasta que contém
 o `SKILL.md` específico para o `.claude/skills/` daquele projeto.
 
-### settings.json — é a config VIVA, não um template
+### Onde mora config (uma casa só, sem cópia)
 
-`~/.claude/settings.json` é **symlink** para `settings/settings.json` daqui. Editar um
-edita o outro. Isso completa o padrão que `agents/` e `skills/` já seguiam: o repo é a
-fonte, o `~/.claude/` só aponta.
+Config e regra moram **onde o Claude Code lê**, nunca duplicadas neste repo.
+Cópia num segundo lugar apodrece — foi o que aconteceu até 22-jul-2026, quando
+`claude/settings/` e `claude/rules/` eram cópias mortas que ninguém carregava.
 
-| Onde | O quê | Versionado? |
-|---|---|---|
-| `claude/settings/settings.json` | config global (modelo, tema, plugins, idioma) | sim |
-| `~/dev/.claude/settings.json` | hooks do workspace (graphify, reindex no Stop) | não (fora deste repo) |
-| `**/settings.local.json` | scratch de sessão (permissões pontuais) | **não** — no `.gitignore` |
+| Onde | O quê |
+|---|---|
+| `~/.claude/settings.json` | config global: modelo, tema, plugins, idioma |
+| `~/dev/.claude/settings.json` | hooks do workspace (graphify, reindex no Stop) |
+| `<repo>/.claude/rules/*.md` | regra path-scoped — só carrega dentro do repo que ela governa |
+| `**/settings.local.json` | scratch de sessão (permissões pontuais) — no `.gitignore` |
+
+Regra de Supabase do SASI mora em `sasi/.claude/rules/supabase.md`. Não replicar aqui.
 
 Os 3 hooks do **prompt-improver** foram removidos (22-jul-2026): apontavam para
 `.claude/skills/prompt-improver/scripts/engine.py`, caminho que não existe — a skill
