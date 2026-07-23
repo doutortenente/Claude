@@ -63,7 +63,7 @@ description: >
 
 ## Regras
 - Arquivo de trabalho em `$CLAUDE_JOB_DIR/tmp` (ou tmp da sessão) — nunca poluir
-  `~/dev` nem Downloads.
+  `~/projetos` nem Downloads.
 - Supabase DENTRO do pipeline (ordem do operador, 18-jul-2026: "inclua já colocar
   no supabase") — a gravação via `sasi_deploy_ingest` é etapa padrão; falha de
   MCP não bloqueia as etapas 1-4 (OneDrive primeiro, banco depois).

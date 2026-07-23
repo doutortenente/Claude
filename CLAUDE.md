@@ -39,12 +39,12 @@ Claude/
 
 ### Onde mora script (casa única, travada 22-jul-2026)
 
-Este repo **não tem** pasta `scripts/`. Todo script de infra mora em `~/dev/scripts/`,
+Este repo **não tem** pasta `scripts/`. Todo script de infra mora em `~/projetos/scripts/`,
 em gavetas por assunto. O índice deste repo é gerado de fora:
 
 ```bash
-python3 ~/dev/scripts/indices/build_claude_index.py    # regenera índice + MAPA + CATÁLOGO
-python3 ~/dev/scripts/indices/query_claude_index.py    # consulta
+python3 ~/projetos/scripts/indices/build_claude_index.py    # regenera índice + MAPA + CATÁLOGO
+python3 ~/projetos/scripts/indices/query_claude_index.py    # consulta
 ```
 
 Única exceção: script que **é o corpo de uma skill** fica em `skills/<nome>/scripts/`
@@ -52,7 +52,7 @@ python3 ~/dev/scripts/indices/query_claude_index.py    # consulta
 
 ### Skills top-level (119, achatadas em `skills/<nome>/`)
 
-O número real está no índice, não nesta lista: `python3 ~/dev/scripts/indices/query_claude_index.py skills`.
+O número real está no índice, não nesta lista: `python3 ~/projetos/scripts/indices/query_claude_index.py skills`.
 Custo: cada skill instalada injeta `name` + `description` no prompt em **toda** mensagem
 (~42.600 caracteres hoje). Skill que não é usada é pedágio — desativar movendo para
 `skills/_off/` (o prefixo `_` tira da descoberta sem apagar nada).
@@ -85,13 +85,13 @@ Antes de grep, use o grafo: `graphify query "<pergunta>"` rodado de dentro do re
 | Precisa de | Use primeiro |
 |---|---|
 | Qual skill existe? | `memory/SKILLS-CATALOGO.md` |
-| Path de uma skill | `python3 ~/dev/scripts/indices/query_claude_index.py skill <nome>` |
-| Scripts (.py/.sh) | `python3 ~/dev/scripts/indices/query_claude_index.py scripts` |
-| Subagentes | `python3 ~/dev/scripts/indices/query_claude_index.py agents` |
-| Busca no repo | `python3 ~/dev/scripts/indices/query_claude_index.py search <termo>` |
+| Path de uma skill | `python3 ~/projetos/scripts/indices/query_claude_index.py skill <nome>` |
+| Scripts (.py/.sh) | `python3 ~/projetos/scripts/indices/query_claude_index.py scripts` |
+| Subagentes | `python3 ~/projetos/scripts/indices/query_claude_index.py agents` |
+| Busca no repo | `python3 ~/projetos/scripts/indices/query_claude_index.py search <termo>` |
 | Inventário | `memory/MAPA-CLAUDE.md` |
 
-Regenerar índice: `python3 ~/dev/scripts/indices/build_claude_index.py`.
+Regenerar índice: `python3 ~/projetos/scripts/indices/build_claude_index.py`.
 
 `_design/` e `_anthropic/` são **sob demanda** — só abrir quando a skill for acionada.
 
@@ -125,7 +125,7 @@ Cópia num segundo lugar apodrece — foi o que aconteceu até 22-jul-2026, quan
 | Onde | O quê |
 |---|---|
 | `~/.claude/settings.json` | config global: modelo, tema, plugins, idioma |
-| `~/dev/.claude/settings.json` | hooks do workspace (graphify, reindex no Stop) |
+| `~/projetos/.claude/settings.json` | hooks do workspace (graphify, reindex no Stop) |
 | `<repo>/.claude/rules/*.md` | regra path-scoped — só carrega dentro do repo que ela governa |
 | `**/settings.local.json` | scratch de sessão (permissões pontuais) — no `.gitignore` |
 
@@ -158,6 +158,6 @@ tela com dado real.
   `chore:`) — ver `git log`.
 - Desenvolva em branch de feature; não faça push direto em `main` sem permissão.
 
-## Família de repos (`~/dev/`)
+## Família de repos (`~/projetos/`)
 
-SASI (produto) · **Claude** (este) · JARVIS · `~/dev/memory` (índice workspace).
+SASI (produto) · **Claude** (este) · JARVIS · `~/projetos/memory` (índice workspace).

@@ -12,9 +12,9 @@ Claude/
 └── memory/      Índice FTS — SKILLS-CATALOGO.md, query_claude_index.py
 ```
 
-**Navegação:** `python3 ~/dev/scripts/indices/query_claude_index.py skills` — não varrer `skills/` à mão.
+**Navegação:** `python3 ~/projetos/scripts/indices/query_claude_index.py skills` — não varrer `skills/` à mão.
 
 ## Uso
 
 Skills e settings daqui são copiados/symlinkados para `.claude/` de cada projeto.
-Não contém segredos. Workspace: `~/dev/` · índice em `memory/MAPA-DEV.md`.
+Não contém segredos. Workspace: `~/projetos/` · índice em `memory/MAPA-DEV.md`.

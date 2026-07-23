@@ -1,4 +1,4 @@
-# Frota de subagentes — fonte única (~/dev/claude/agents)
+# Frota de subagentes — fonte única (~/projetos/claude/agents)
 
 `~/.claude/agents` é symlink pra cá. Editar um agente = editar e commitar neste repo,
 nunca no symlink.
@@ -9,7 +9,7 @@ nunca no symlink.
 |---|---|---|---|
 | `batedor` | haiku | Reconhecimento barato — lê muito, devolve resumo curto | Mapear terreno antes de decidir (estrutura de repo, onde mora uma função, o que um log acusa) |
 | `caco` | haiku | Executor puro — roda script existente, reporta fiel | Rodar rotina já pronta (higiene do PC, fix de MCP, boletim) e devolver a saída |
-| `chefe` | opus | Engenheiro do arsenal `~/dev/scripts` — projeta/escreve/revisa | Criar ou alterar script de manutenção/automação; decidir qual script resolve um problema |
+| `chefe` | opus | Engenheiro do arsenal `~/projetos/scripts` — projeta/escreve/revisa | Criar ou alterar script de manutenção/automação; decidir qual script resolve um problema |
 | `residente` | sonnet | Implementador de código de produto já prescrito | Executar feature/fix/refactor no SASI ou outro repo — editar, testar, reportar |
 | `fiscal` | sonnet | Verificador adversarial — tenta refutar a entrega | Depois de qualquer entrega substantiva de outro subagente, antes de aceitar conclusão importante |
 | `secretaria` | sonnet | Mantém `comando.md` (memória do operador) | Fim de sessão, "atualiza a memória", "o que eu fiz", "anota isso" |
@@ -56,8 +56,8 @@ pasta vazia); o `batedor.md` já ganhou procedimentos de evidência (commit
 
 ## Rotina agendada (chefe/caco)
 
-- **Faxina do workspace** — `~/dev/scripts/pc/faxina_dev.py` (boletim leitura-pura:
-  raiz `~/dev`, `Downloads` envelhecido, repos sujos/à-frente-atrás/merge travado,
+- **Faxina do workspace** — `~/projetos/scripts/pc/faxina_dev.py` (boletim leitura-pura:
+  raiz `~/projetos`, `Downloads` envelhecido, repos sujos/à-frente-atrás/merge travado,
   worktrees órfãos, lixo comum). `caco` roda semanalmente ou quando o operador
   reclamar de bagunça ("tá tudo uma bagunça").
 

@@ -1,6 +1,6 @@
 # MAPA — repo Claude
 
-> Gerado 22-jul-2026 por `~/dev/scripts/indices/build_claude_index.py`
+> Gerado 22-jul-2026 por `~/projetos/scripts/indices/build_claude_index.py`
 
 **Total:** 1819 arquivos · 61.6 MB · 189,647 linhas · 1,042,482 tokens indexados · **158 skills**
 
@@ -44,7 +44,7 @@
 Não usar `Glob **/skills/**` nem ler `_design/`/`_anthropic/` sem necessidade.
 
 ```bash
-python3 ~/dev/scripts/indices/query_claude_index.py skills --clinical
-python3 ~/dev/scripts/indices/query_claude_index.py find engine.py
-python3 ~/dev/scripts/indices/query_claude_index.py agents
+python3 ~/projetos/scripts/indices/query_claude_index.py skills --clinical
+python3 ~/projetos/scripts/indices/query_claude_index.py find engine.py
+python3 ~/projetos/scripts/indices/query_claude_index.py agents
 ```

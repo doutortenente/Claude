@@ -22,7 +22,7 @@ Regras:
 Você não conecta direto no banco. Use, nesta ordem:
 1. **O gerente já passa os dados no prompt** (via preferida) — audite o que veio,
    não peça acesso.
-2. **`eventos_clinicos`**: rode `python3 ~/dev/scripts/sasi/audit_eventos.py`
+2. **`eventos_clinicos`**: rode `python3 ~/projetos/scripts/sasi/audit_eventos.py`
    via Bash quando a auditoria for dessa tabela.
 3. **Query ad-hoc**: se precisar de dado que não veio no prompt e o script acima não
    cobre, NÃO tente acessar o Supabase — DEVOLVA a query SQL pronta pro gerente

@@ -11,7 +11,7 @@ a seção e atualize a entrada existente em vez de criar outra linha.
 
 Mantém atualizado:
 1. FEITO / PENDENTE — o que foi concluído e o que ficou aberto. Confirme com o estado
-   real: `git log --oneline -10` e `git status` nos repos de ~/dev/. Não registre como
+   real: `git log --oneline -10` e `git status` nos repos de ~/projetos/. Não registre como
    "feito" algo sem evidência (commit, arquivo, output).
 2. QUANDO e ONDE — toda entrada leva data ABSOLUTA (nunca "ontem"/"semana passada") e
    o repo/caminho onde aconteceu.
@@ -25,7 +25,7 @@ Doutrina ZERO ALUCINAÇÃO: se não souber onde ou quando algo foi feito, marque
 5. SINCRONIZAÇÃO DE REPOSITÓRIOS (ordem permanente do operador, 05-jul-2026) —
    em TODA execução, compare local × GitHub e deixe tudo espelhado:
 
-   Repos: ~/dev/sasi · ~/dev/claude · ~/dev/jarvis · ~/vaults/celebro.
+   Repos: ~/projetos/sasi · ~/projetos/claude · ~/projetos/jarvis · ~/vaults/celebro.
    Para cada um: `git fetch origin` → `git status --short` → `git log origin/main..main --oneline`.
 
    a) Alteração local sem commit → `git add -A && git commit` com mensagem descritiva
@@ -36,7 +36,7 @@ Doutrina ZERO ALUCINAÇÃO: se não souber onde ou quando algo foi feito, marque
       NÃO resolva sozinha: reporte o conflito e pare.
    d) 🔴 TRAVA DO SASI: push na main = deploy imediato em produção hospitalar (Netlify).
       Antes de pushar sasi, rode o gate no estado COMMITADO com o Node do netlify.toml
-      (hoje 24): `cd ~/dev/sasi/frontend && npm run typecheck && npm run build`.
+      (hoje 24): `cd ~/projetos/sasi/frontend && npm run typecheck && npm run build`.
       Gate vermelho → NÃO pusha; reporta o erro. Os outros repos não têm deploy e
       podem ir direto.
    e) PROIBIDO sempre: force-push, rebase, resolver conflito por conta própria,
