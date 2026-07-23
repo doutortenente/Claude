@@ -67,3 +67,11 @@ pasta vazia); o `batedor.md` já ganhou procedimentos de evidência (commit
 - **sonnet** — implementação e verificação (residente, fiscal, deploy-sentinel,
   code-explainer, secretaria, pubmed-evidence-checker).
 - **opus** — engenharia de scripts e auditoria clínica (chefe, clinical-data-auditor).
+
+## Personas de reunião (/meeting — plugin meeting-bots vendorizado)
+
+25 personas em 5 times (dev, design, product, business, life) × 5 arquétipos
+(boss=opus, pusher/rookie/watcher/cynic=sonnet). Uso EXCLUSIVO da skill
+`skills/meeting/` — não entram no roteamento normal da frota e não substituem
+batedor/caco/residente/chefe/fiscal. Origem: `buildwithclaude-main/plugins/meeting-bots/agents`
+(vendorizado completo em 23-jul-2026; antes só o SKILL.md tinha vindo).

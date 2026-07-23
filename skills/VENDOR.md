@@ -184,6 +184,7 @@ não sobrescrita).
 | `session-report/` | `buildwithclaude-main/plugins/gsd/skills/session-report` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `ship/` | `buildwithclaude-main/plugins/gsd/skills/ship` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `meeting/` | `buildwithclaude-main/plugins/meeting-bots` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
+| `agents/*-{boss,pusher,rookie,watcher,cynic}.md` (25 personas) | `buildwithclaude-main/plugins/meeting-bots/agents` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `thumbgate/` | `buildwithclaude-main/plugins/thumbgate` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `public-plugin-builder/` | `buildwithclaude-main/plugins/public-plugin-builder` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
 | `ralph-review-trio/` | `buildwithclaude-main/plugins/ralph-review-trio` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
