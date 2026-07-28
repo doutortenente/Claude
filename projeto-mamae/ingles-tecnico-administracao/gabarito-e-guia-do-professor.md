@@ -40,9 +40,9 @@ diagnóstico meça **compreensão e estrutura**, não memorização de palavras.
 | Tempo | Etapa |
 |---|---|
 | 0–5 min | Instruções, entrega, destacar o glossário |
-| 5–20 min | **Bloco 1** — leitura e interpretação (29 pts) |
-| 20–48 min | **Bloco 2** — gramática (46 pts) |
-| 48–58 min | **Bloco 3** — telefone (25 pts) |
+| 5–20 min | Bloco 1 — leitura e interpretação (29 pts) |
+| 20–48 min | Bloco 2 — gramática (46 pts) |
+| 48–58 min | Bloco 3 — telefone (25 pts) |
 | 58–60 min | Autoavaliação e entrega |
 
 ---
@@ -169,11 +169,11 @@ mais importante a retomar.*
 | 1–6 | Leitura / *skimming* e *scanning* | Responde pelo "chute" a partir de palavras soltas; não localiza informação explícita | Estratégias de leitura: cognatos, localizar números e nomes próprios, ler a pergunta antes do texto |
 | 7 | Greetings | Usa *good night* para se despedir à tarde; confunde *how are you?* com *how do you do?* | Cumprimentos por faixa de horário + registro formal/informal em atendimento |
 | 8 | Horas | Inverte *past/to*; não sabe *quarter/half* | Relógio analógico vs. digital; horários de reunião e expediente |
-| 9 | Simple present | Esquece o **-s** da 3ª pessoa; usa *don't* com *he/she* | Rotina de trabalho: presente simples + advérbios de frequência |
+| 9 | Simple present | Esquece o -s da 3ª pessoa; usa *don't* com *he/she* | Rotina de trabalho: presente simples + advérbios de frequência |
 | 10 | Simple past | Aplica *-ed* em verbo irregular (*sended*); mantém passado depois de *didn't* (*didn't received*) | Lista dos 20 irregulares mais úteis no escritório + regra "auxiliar no passado, verbo no infinitivo" |
 | 11 | Modais | Coloca *to* depois do modal (*must to*); confunde *can* e *may* | Modais no contexto de normas internas, pedidos e ofertas |
 | 12 | Auxiliar *do* | Não faz concordância *do/does*; usa *do* no passado | Quadro único do auxiliar: presente × passado, afirmativa × negativa × pergunta |
-| 13 | Negativas e interrogativas | Usa *do* com *to be* e com modais | **Prioridade máxima:** distinguir verbo principal de verbo auxiliar antes de avançar |
+| 13 | Negativas e interrogativas | Usa *do* com *to be* e com modais | Prioridade máxima: distinguir verbo principal de verbo auxiliar antes de avançar |
 | 14–16 | Telefonema | Traduz o português ao pé da letra (*"Who are you?"* em vez de *"Who is calling?"*) | Roteiro de atendimento: abrir → identificar → transferir/anotar recado → encerrar; *role-play* em duplas |
 
 ---
@@ -182,10 +182,10 @@ mais importante a retomar.*
 
 | Faixa | Interpretação | Encaminhamento sugerido |
 |---|---|---|
-| **0–39** | Base muito frágil: alfabetização em inglês ainda incompleta | Começar por vocabulário de escritório + verbo *to be* antes de qualquer tempo verbal |
-| **40–69** | Reconhece vocabulário, mas não domina estrutura | Foco em auxiliares (*do/does/did*) e negativa/interrogativa — destrava tudo o mais |
-| **70–89** | Boa base; falhas pontuais | Avançar para produção: *role-play* de telefonema, e-mail comercial |
-| **90–100** | Domina o conteúdo diagnosticado | Ampliar: *small talk*, agendamento de reunião, vocabulário do setor da empresa |
+| 0–39 | Base muito frágil: alfabetização em inglês ainda incompleta | Começar por vocabulário de escritório + verbo *to be* antes de qualquer tempo verbal |
+| 40–69 | Reconhece vocabulário, mas não domina estrutura | Foco em auxiliares (*do/does/did*) e negativa/interrogativa — destrava tudo o mais |
+| 70–89 | Boa base; falhas pontuais | Avançar para produção: *role-play* de telefonema, e-mail comercial |
+| 90–100 | Domina o conteúdo diagnosticado | Ampliar: *small talk*, agendamento de reunião, vocabulário do setor da empresa |
 
 **Sugestão de uso em sala:** montar a próxima aula em **três estações** com base nas
 faixas acima, deixando os alunos de 70+ como monitores nas duplas de *role-play*.
@@ -212,9 +212,9 @@ até acertou — vale cruzar as duas informações antes de fechar o plano.
 Preencher uma linha por aluno para enxergar o padrão coletivo — a coluna com mais erros
 define o conteúdo da próxima aula.
 
-| Aluno | B1 Leitura (29) | Greet. (5) | Horas (7) | S. Present (6) | S. Past (7) | Modais (6) | *do* (7) | Neg/Int (8) | Telefone (25) | **Total** |
+| Aluno | B1 Leitura (29) | Greet. (5) | Horas (7) | S. Present (6) | S. Past (7) | Modais (6) | *do* (7) | Neg/Int (8) | Telefone (25) | Total |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 | | | | | | | | | | | |
 | | | | | | | | | | | |
 | | | | | | | | | | | |
-| **Média da turma** | | | | | | | | | | |
+| Média da turma | | | | | | | | | | |

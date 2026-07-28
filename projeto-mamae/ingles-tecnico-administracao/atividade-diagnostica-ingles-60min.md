@@ -66,10 +66,10 @@ ________________________________________________________________________________
 
 **2.** (4 pontos) A que horas Bianca chega ao escritório? Marque a alternativa correta.
 
-( ) a) At 8:00 a.m.
-( ) b) At 7:50 a.m.
-( ) c) At 8:15 a.m.
-( ) d) At 8:30 a.m.
+- ( ) a) At 8:00 a.m.
+- ( ) b) At 7:50 a.m.
+- ( ) c) At 8:15 a.m.
+- ( ) d) At 8:30 a.m.
 
 **3.** (6 pontos · 3 por item) Escreva **T** (true / verdadeiro) ou **F** (false / falso) e **copie do texto**
 o trecho em inglês que justifica sua resposta.
@@ -95,11 +95,11 @@ ________________________________________________________________________________
 
 **6.** (4 pontos · 2 por acerto) Marque **as duas** tarefas que, segundo o texto, são responsabilidade de Bianca.
 
-( ) a) Organizar os arquivos.
-( ) b) Pagar os fornecedores.
-( ) c) Confirmar as reuniões com um dia de antecedência.
-( ) d) Contratar novos funcionários.
-( ) e) Fechar o balanço financeiro.
+- ( ) a) Organizar os arquivos.
+- ( ) b) Pagar os fornecedores.
+- ( ) c) Confirmar as reuniões com um dia de antecedência.
+- ( ) d) Contratar novos funcionários.
+- ( ) e) Fechar o balanço financeiro.
 
 ---
 
@@ -108,15 +108,21 @@ ________________________________________________________________________________
 
 ## 7. Greetings — cumprimentos (5 pontos · 1 ponto por item)
 
-Ligue cada situação (coluna A) à expressão adequada (coluna B).
+Escreva, dentro dos parênteses, a letra da expressão adequada a cada situação.
 
-| Coluna A — situação | | Coluna B — expressão |
-|---|---|---|
-| 1. Você chega ao escritório às 8h da manhã. | ( ) | a) Good afternoon. |
-| 2. Você recebe um cliente às 15h. | ( ) | b) Nice to meet you. |
-| 3. Você sai do trabalho às 18h e se despede de um colega. | ( ) | c) Good morning. |
-| 4. Você é apresentado a um novo fornecedor. | ( ) | d) I'm fine, thank you. And you? |
-| 5. Alguém pergunta: "How are you?" | ( ) | e) Goodbye. See you tomorrow. |
+- 1. Você chega ao escritório às 8h da manhã. ( )
+- 2. Você recebe um cliente às 15h. ( )
+- 3. Você sai do trabalho às 18h e se despede de um colega. ( )
+- 4. Você é apresentado a um novo fornecedor. ( )
+- 5. Alguém pergunta: "How are you?" ( )
+
+Expressões:
+
+- a) Good afternoon.
+- b) Nice to meet you.
+- c) Good morning.
+- d) I'm fine, thank you. And you?
+- e) Goodbye. See you tomorrow.
 
 ## 8. Telling the time — que horas são (7 pontos · 1 ponto por item)
 
@@ -286,12 +292,12 @@ meeting. Would you like to leave a ______________ (4)?
 
 Numere de **1 a 6** as falas de um telefonema completo.
 
-( ) This is Ana Lima, from Vega Store.
-( ) Good morning, Almeida Logistics. Carlos speaking. How may I help you?
-( ) One moment, please. I will transfer your call.
-( ) Good morning. Could I speak to Mrs. Souza, please?
-( ) Thank you very much.
-( ) Certainly. May I ask who is calling?
+- ( ) This is Ana Lima, from Vega Store.
+- ( ) Good morning, Almeida Logistics. Carlos speaking. How may I help you?
+- ( ) One moment, please. I will transfer your call.
+- ( ) Good morning. Could I speak to Mrs. Souza, please?
+- ( ) Thank you very much.
+- ( ) Certainly. May I ask who is calling?
 
 ## 16. Produção escrita (12 pontos · 4 pontos por fala)
 
