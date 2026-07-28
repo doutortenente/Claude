@@ -18,3 +18,4 @@ memory/claude_index.db.bak
 
 # === Grafo graphify (regenerável: graphify update .) ===
 graphify-out/
+.forge/

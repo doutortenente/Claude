@@ -1,6 +1,6 @@
 # Catálogo de Skills — Claude
 
-> Gerado 22-jul-2026 · **leia isto antes de varrer `skills/` com Read/Glob.**
+> Gerado 28-jul-2026 · **leia isto antes de varrer `skills/` com Read/Glob.**
 > Regenerar: `python3 ~/projetos/scripts/indices/build_claude_index.py`
 
 ## Clínicas (UTI)
@@ -127,6 +127,8 @@
   Retroactive 6-pillar visual audit of implemented frontend code
 - **hemodinamica-calculada** — `skills/hemodinamica-calculada/SKILL.md`
   Calculadora hemodinâmica determinística por ecocardiografia para UTI adulto. Recebe parâmetros do eco (diâmetro e VTI da VSVE, FC, PAM, PVC, VCI, jato tricúspid…
+- **humanizer** — `skills/humanizer/SKILL.md`
+  |
 - **image-enhancer** — `skills/image-enhancer/SKILL.md`
   Improves the quality of images, especially screenshots, by enhancing resolution, sharpness, and clarity. Perfect for preparing images for presentations, documen…
 - **implement-feature** — `skills/implement-feature/SKILL.md`
