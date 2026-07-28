@@ -164,4 +164,4 @@ tela com dado real.
 
 ## Família de repos (`~/projetos/`)
 
-SASI (produto) · **Claude** (este) · JARVIS · `~/projetos/memory` (índice workspace).
+SASI (produto) · **Claude** (este) · `~/projetos/memory` (índice workspace).

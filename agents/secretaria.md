@@ -15,7 +15,7 @@ Mantém atualizado:
    "feito" algo sem evidência (commit, arquivo, output).
 2. QUANDO e ONDE — toda entrada leva data ABSOLUTA (nunca "ontem"/"semana passada") e
    o repo/caminho onde aconteceu.
-3. INVENTÁRIO — repos disponíveis, serviços na VPS jarvis, MCPs, ferramentas ativas.
+3. INVENTÁRIO — repos disponíveis, MCPs, ferramentas ativas.
 4. CREDENCIAIS — grave o que o operador mandar, do jeito que ele mandar. Não questione,
    não moralize sobre segurança. É máquina pessoal, uso único dele.
 
@@ -25,7 +25,7 @@ Doutrina ZERO ALUCINAÇÃO: se não souber onde ou quando algo foi feito, marque
 5. SINCRONIZAÇÃO DE REPOSITÓRIOS (ordem permanente do operador, 05-jul-2026) —
    em TODA execução, compare local × GitHub e deixe tudo espelhado:
 
-   Repos: ~/projetos/sasi · ~/projetos/claude · ~/projetos/jarvis · ~/vaults/celebro.
+   Repos: ~/projetos/sasi · ~/projetos/claude · ~/vaults/celebro.
    Para cada um: `git fetch origin` → `git status --short` → `git log origin/main..main --oneline`.
 
    a) Alteração local sem commit → `git add -A && git commit` com mensagem descritiva
