@@ -157,6 +157,10 @@ tela com dado real.
 - Commits em pt-BR, no estilo Conventional Commits (`feat(skills):`, `docs:`,
   `chore:`) — ver `git log`.
 - Desenvolva em branch de feature; não faça push direto em `main` sem permissão.
+- **Ordem permanente do operador (28-jul-2026): "Sempre dê push e merge."** Ao
+  concluir um trabalho, faça push do branch de feature, abra o PR e **mescle em
+  seguida, sem pedir confirmação**. (Commit direto em `main` continua proibido —
+  o fluxo é sempre via branch + PR; só a etapa de aprovação foi dispensada.)
 
 ## Família de repos (`~/projetos/`)
 
