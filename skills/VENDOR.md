@@ -12,6 +12,7 @@ paciente, então mudanças de upstream devem ser revisadas antes de re-sincroniz
 | 14 skills do superpowers (`brainstorming/`, `systematic-debugging/`, `test-driven-development/`, `requesting-code-review/`, `receiving-code-review/`, `writing-plans/`, `executing-plans/`, `verification-before-completion/`, `using-superpowers/`, `writing-skills/`, `dispatching-parallel-agents/`, `subagent-driven-development/`, `executing-plans/`, `finishing-a-development-branch/`, `using-git-worktrees/`) | https://github.com/obra/superpowers | `6fd4507659784c351abbd2bc264c7162cfd386dc` | MIT — `_vendor/superpowers-LICENSE` | conteúdo de `skills/*` achatado para `.claude/skills/<nome>/` |
 | `prompt-improver/` | https://github.com/severity1/claude-code-prompt-improver | `306c325b7c152b537ede6a95ad1a8fc199f637eb` | MIT — `prompt-improver/LICENSE` | `skills/prompt-improver/` + `scripts/` + `nudges/` |
 | `supabase/` (v0.1.2) + `supabase-postgres-best-practices/` (v1.1.1) | https://github.com/supabase/agent-skills (oficial Supabase) | sem SHA — instaladas 03-jul-2026 pelo operador via `npx skills add` (caíram em `~/.agents/skills/`, sem `.git`); versões fixadas no frontmatter de cada SKILL.md | MIT (declarada no frontmatter da `supabase-postgres-best-practices`; `supabase` mesmo autor oficial) | tree completo das 2 skills (SKILL.md + `references/` + `assets/`) |
+| `humanizer/` (v2.9.1) | https://github.com/blader/humanizer | `523374dee72d67c7b2b5f858ea0094ffda49c3ac` | MIT — `humanizer/LICENSE` | Editor de texto que remove os 33 padrões de "cheiro de IA" da escrita (travessões em excesso, regra de três, vocabulário inflado, tom promocional…), baseado no guia "Signs of AI writing" da Wikipedia (WikiProject AI Cleanup). Só Markdown — nenhum hook necessário. Copiado: `SKILL.md`, `README.md`, `LICENSE`, `AGENTS.md`, `agents/openai.yaml`, `scripts/validate-package.py` (validador local do pacote, sem dependências e sem rede — auditado), `.claude-plugin/` (manifests de plugin, inertes aqui). Excluído: `.git/`, `.github/` (CI do upstream). Vendorada 28-jul-2026 a pedido do operador — reverte o descarte anterior (ver §Descartadas). |
 | `book-to-skill/` (v1.2.0) | https://github.com/virgiliojr94/book-to-skill | zip GitHub `master` de ~03-jul-2026, sem SHA | MIT — `book-to-skill/LICENSE.md` | Converte livro/documento (PDF, EPUB, DOCX, HTML, Markdown, texto, RTF, MOBI/AZW via Calibre) em skill de agente estruturada, extraindo frameworks/modelos mentais/princípios/técnicas/anti-padrões — 100% local, sem API; deps opcionais via pip conforme formato (`epub`→ebooklib+beautifulsoup4, `pdf`→pypdf+pdfminer.six, `docx`→python-docx, `rtf`→striprtf, `technical`→docling). Copiado: `SKILL.md`, `README.md`, `LICENSE.md`, `book_to_skill/` (pacote Python completo), `tools/` (discovery_tax.py, validate_skill.py), `scripts/` (extract.py + banner.txt, sem `__pycache__`). Excluído: `tests/`, `.github/`, `docs/`, `mkdocs.yml`, `.gitignore`, `BACKERS.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `.git/`. |
 
 ### Arsenal de design (`_design/`) — vendorado 19-Jun-2026
@@ -92,9 +93,11 @@ necessário — todas as 14 skills são descobertas automaticamente como project
 `using-superpowers`. Para religar manualmente, veja `hooks/hooks.json` no upstream.
 
 ### Descartadas na avaliação
-`humanizer` (blader) e `fact-check` (petar-nauka) foram avaliadas e **não** incluídas: a primeira é
-para prosa estilo marketing (saídas clínicas aqui são dados estruturados); a segunda é checagem de
-desinformação de mídia (SIFT/CRAAP), não fato clínico — arriscada em contexto médico.
+`fact-check` (petar-nauka) foi avaliada e **não** incluída: é checagem de desinformação de mídia
+(SIFT/CRAAP), não fato clínico — arriscada em contexto médico. `humanizer` (blader) também tinha
+ficado de fora nessa rodada ("prosa estilo marketing; saídas clínicas aqui são dados estruturados"),
+mas o descarte foi **revertido em 28-jul-2026 a pedido do operador** — agora vendorada na tabela
+principal acima (v2.9.1, SHA fixado).
 
 ## Assimilação em massa dos zips — 16-jul-2026
 
