@@ -204,6 +204,7 @@ não sobrescrita).
 | `prompt/` | `mcp-steroid-main/prompts/src/main/prompts/prompt` | Apache-2.0 (JetBrains) |
 | `link-workspace-packages/` | `supabase-js-master/.agents/skills` | MIT |
 | `slack-message-formatter/` | `buildwithclaude-main/plugins/all-skills/skills/slack-message-formatter` | varia por skill (marketplace davepoon) — ver LICENSE.txt na pasta, quando presente |
+| `ide-index-mcp/` | guia gerado pelo plugin de IDE "Index MCP Server" (`com.github.hechtcarmel.jetbrainsindexmcpplugin`); morava em `~/projetos/.claude/skills`, adotado aqui 29-jul-2026 | não declarada no material copiado — conferir no plugin antes de redistribuir |
 
 
 **Notas:**
