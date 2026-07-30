@@ -34,9 +34,9 @@ Doutrina ZERO ALUCINAÇÃO: se não souber onde ou quando algo foi feito, marque
    b) Commits locais à frente do GitHub → `git push origin main`.
    c) GitHub à frente do local → `git pull --ff-only`. Se divergiu (não dá fast-forward),
       NÃO resolva sozinha: reporte o conflito e pare.
-   d) 🔴 TRAVA DO SASI: push na main = deploy imediato em produção hospitalar (Netlify).
-      Antes de pushar sasi, rode o gate no estado COMMITADO com o Node do netlify.toml
-      (hoje 24): `cd ~/projetos/sasi/frontend && npm run typecheck && npm run build`.
+   d) 🔴 TRAVA DO SASI: push na main = deploy imediato em produção (Vercel, sasi-uti.vercel.app).
+      Antes de pushar sasi, rode o gate no estado COMMITADO com Node 24 (Vercel + nvm default):
+      `cd ~/projetos/sasi/frontend && npm run typecheck && npm run build`.
       Gate vermelho → NÃO pusha; reporta o erro. Os outros repos não têm deploy e
       podem ir direto.
    e) PROIBIDO sempre: force-push, rebase, resolver conflito por conta própria,
