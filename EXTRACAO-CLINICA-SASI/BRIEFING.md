@@ -5,15 +5,16 @@
 > sem preâmbulo, sem elogio. Só dado clínico limpo.
 
 ## 0. As 3 leis mais quebradas
+
 1. **MODO EXTRAÇÃO PURA — zero explicação dentro do bloco clínico.** Nada de
-   "(recalculado…)", "(soma das células…)", "(revisar)", "(em queda)" no meio. Toda
-   observação/conferência/divergência vai FORA, num rodapé ("Flags táticos"). O bloco
-   que ele cola no prontuário é limpo.
-2. **Diurese e BH: some as células, NUNCA o total escrito à mão.** A última célula
-   não é a diurese total. Motor: build_passagem.py.
+   "(recalculado…)", "(soma das células…)", "(revisar)", "(em queda)" no meio. Toda observação/conferência/divergência
+   vai FORA, num rodapé ("Flags táticos"). O bloco que ele cola no prontuário é limpo.
+2. **Diurese e BH: some as células, NUNCA o total escrito à mão.** A última célula não é a diurese total. Motor:
+   build_passagem.py.
 3. **Laboratório é SEÇÃO PRÓPRIA, com séries (`->`).** Nunca embutir lab no exame físico.
 
 ## 1. Estrutura por leito (ordem fixa)
+
 ```
 LEITO XX — Nome Completo (INICIAIS) — DH Nº — DD/MM TURNO
 
@@ -71,6 +72,7 @@ Renal: ...
 ```
 
 ## 2. Formatação inegociável
+
 - Máx – Mín com `" - "` (espaço-hífen-espaço). NUNCA `–` nem `—`. SpO2 incluso (max primeiro).
 - Sup O2: AA/cateter → entre parênteses no fim do SpO2. VM → linha própria após Dx. NUNCA na diurese.
 - Labs seriais com `" -> "`. Só com valores REAIS da fonte — não inventar coleta anterior.
@@ -81,7 +83,9 @@ Renal: ...
 - Campo sem fonte → OMITE a linha. Nunca inventa.
 
 ## 3. Plano terapêutico é a ALMA — não seja raso
+
 Padrão-ouro (mão do próprio Dr.):
+
 ```
 ## Plano terapeutico e Condutas:
 1. Neurológico:
@@ -96,17 +100,19 @@ Padrão-ouro (mão do próprio Dr.):
 4. Metabólico: Correção hipoMg (1,4).
 5. Seguimento especialidades: Neuro-clínica e Cardiologia.
 ```
-Verbo de comando (Solicito/Mantida/Correção/Aguarda), contingência (Se X → Y), meta
-numérica quando cabível, profilaxias sempre (TEV/LAMG/cabeceira). Cada problema da
-Impressão tem sua conduta. Raso = reprovado.
+
+Verbo de comando (Solicito/Mantida/Correção/Aguarda), contingência (Se X → Y), meta numérica quando cabível, profilaxias
+sempre (TEV/LAMG/cabeceira). Cada problema da Impressão tem sua conduta. Raso = reprovado.
 
 ## 4. Diurese/BH
+
 - Some TODAS as células de diurese (não a última). BH = Σganhos − Σperdas.
 - Nunca confie no total manuscrito. Conferir com build_passagem.py.
-- Caso 04/07 L04: última célula 600, mas diurese total 780 (100+30+10+40+600) → BH +1369
-  (folha escreveu +1449 com perdas 700). No bloco vai só 780/+1369; divergência no rodapé.
+- Caso 04/07 L04: última célula 600, mas diurese total 780 (100+30+10+40+600) → BH +1369 (folha escreveu +1449 com
+  perdas 700). No bloco vai só 780/+1369; divergência no rodapé.
 
 ## 5. Checklist final (todos ou refaz)
+
 - [ ] `" - "` nos vitais (SpO2 incluso). [ ] Sup O2 no lugar certo, nunca na diurese.
 - [ ] Laboratório seção própria, séries `->` onde há. [ ] Diurese somada célula-a-célula.
 - [ ] Zero explicação no bloco (obs no rodapé). [ ] Impressão sem setinhas.

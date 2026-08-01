@@ -1,1 +1,1 @@
-../skills/sasi-ingest-export/scripts/build_passagem.py
+../skills-que-prestam/01-pacote-skills-medicas/sasi-ingest-export/scripts/build_passagem.py

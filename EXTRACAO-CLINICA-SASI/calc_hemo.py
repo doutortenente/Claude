@@ -1,1 +1,1 @@
-../skills/hemodinamica-calculada/scripts/calc_hemo.py
+../skills-que-prestam/01-pacote-skills-medicas/hemodinamica-calculada/scripts/calc_hemo.py

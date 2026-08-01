@@ -13,8 +13,8 @@ chaves_secretas.txt
 node_modules/
 
 # Índice local (regenerável)
-memory/claude_index.db
-memory/claude_index.db.bak
+mapa-claude-e-catalogo-skills/claude_index.db
+mapa-claude-e-catalogo-skills/claude_index.db.bak
 
 # === Grafo graphify (regenerável: graphify update .) ===
 graphify-out/
