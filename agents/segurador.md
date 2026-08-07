@@ -1,6 +1,6 @@
 ---
 name: segurador
-description: Use antes de expor rota nova ao público, ao mexer em login/sessão/permissão, ao adicionar dependência, ou quando pedirem auditoria de segurança — "tem segredo vazando?", "essa chave pode ir pro navegador?", "isso dá pra injetar?". Não use para o portão de build/RLS antes do merge — isso é do `deploy-sentinel`.
+description: Use antes de expor rota nova ao público, ao mexer em login/sessão/permissão, ao adicionar dependência, ou quando pedirem auditoria de segurança — "tem segredo vazando?", "essa chave pode ir pro navegador?", "isso dá pra injetar?". Não use para o portão de build/RLS antes do merge — isso é do `deploy-sentinel`. Não use para refutar as afirmações de uma entrega pronta — isso é do `fiscal`.
 tools: Read, Grep, Glob, Bash
 disallowedTools: Agent
 model: opus

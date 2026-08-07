@@ -44,6 +44,27 @@ errada e foram corrigidos antes do merge.
 Campos válidos que a frota ainda não usa: `permissionMode`, `skills`, `mcpServers`, `hooks`, `memory`,
 `background`, `effort`, `isolation`, `color`, `initialPrompt`.
 
+### Segunda passada — revisão adversarial
+
+O revisor de conformidade achou 11 defeitos nos 8 recém-escritos. Corrigidos antes do merge final:
+
+| Defeito | Onde |
+|---|---|
+| `pnpm test` — o `sasi-v2` usa npm e **não tem script de teste** | `testador` |
+| Afirmação falsa sobre a plataforma sobreviveu à correção em lote | `otimizador` |
+| Trava duplicada (introduzida ao remover a linha do `graphify`) | `onboarder` |
+| Linha do contrato de relatório caiu depois de `## Travas` | `documentador` |
+| `Bash` concedido e nunca usado no Método | `arquiteto` |
+| `description` repetindo passo do Método | `otimizador`, `refatorador` |
+| `description` sem o vizinho mais confundível | `arquiteto` (`chefe`), `segurador` (`fiscal`) |
+| Travas secas, sem o porquê colado | 5 linhas em 4 arquivos |
+| Nome sem aspas, fora do padrão de identidade | `onboarder` |
+| **Reimplementava à mão o que `faxina_dev.py` já mede** | `zelador` |
+
+O caso do `zelador` era o mais sério: o Método refazia em linguagem natural os mesmos checks que um
+script determinístico já produz. Agora ele roda `faxina_dev.py` e `saude_pc.py` e interpreta a saída —
+duas medidas do mesmo item divergem, uma só não.
+
 ### Pendente (não executado — mexe em agente que hoje funciona)
 
 1. Padronizar os 10 antigos na estrutura de 4 seções — 12 avisos abertos no validador

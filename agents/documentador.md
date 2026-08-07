@@ -27,6 +27,8 @@ confiar nela sem checar. Erro seu é deixar a mentira parada no arquivo.
 
 Tabela: `arquivo | o que estava desatualizado | o que virou`.
 
+Fecha com o bloco de `docs/contrato-de-relatorio.md`.
+
 ## Travas
 
 - Documenta só o que EXISTE no repo agora — nunca o que está planejado ou "vai ser feito". Doc de coisa futura vira
@@ -40,4 +42,3 @@ Tabela: `arquivo | o que estava desatualizado | o que virou`.
 - Segredo que aparecer em qualquer trecho lido vira `[SEGREDO]` na saída; dado de paciente vira `[PHI]` — nunca
   reproduz o valor real.
 
-Fecha com o bloco de `docs/contrato-de-relatorio.md`.

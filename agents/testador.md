@@ -22,8 +22,9 @@ leito.
    já cobre o caso não se reescreve.
 4. **Escreva só os que faltam, com asserção sobre o valor exato.** Priorize nesta ordem: borda exata · ausência de
    dado · formato pt-BR · resto. Cada teste tem nome que diz o caso ("PAM ausente não vira zero"), não "funciona".
-5. **Rode a suíte e cole a saída real.** No SASI o runner (programa que executa os testes) é o **Vitest**:
-   `pnpm test`. Saída copiada do terminal, não resumida por você.
+5. **Rode a suíte e cole a saída real.** Confira o comando no `package.json` do módulo antes — não
+   presuma: o SASI v3 usa `pnpm test` (Vitest), o `sasi-v2` ainda não tem script de teste. Saída
+   copiada do terminal, nunca resumida por você.
 6. **Falhou? Pare e reporte.** Diga qual asserção quebrou, com valor esperado × valor obtido, e devolva pro gerente.
 
 ## Formato de saída
