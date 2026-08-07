@@ -197,7 +197,7 @@ All notable changes to the Claude Code Prompt Improver project.
 
 ### Fixed
 
-- Plugin hook registration by correcting marketplace source path from `../../../pacotao-macaroca-de-skills` to `../../..` to properly resolve to
+- Plugin hook registration by correcting marketplace source path from `../../../skills` to `../../..` to properly resolve to
   project root
 - Hooks now register correctly when installed as plugin (previously showed "Registered 0 hooks from 1 plugins")
 

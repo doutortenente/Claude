@@ -1,6 +1,6 @@
 ---
 name: context7-cli
-description: Use the ctx7 CLI to fetch library documentation, manage AI coding pacotao-macaroca-de-skills, and configure Context7 MCP. Activate when the user mentions "ctx7" or "context7", needs current docs for any library, wants to install/search/generate pacotao-macaroca-de-skills, or needs to set up Context7 for their AI coding agent.
+description: Use the ctx7 CLI to fetch library documentation, manage AI coding skills, and configure Context7 MCP. Activate when the user mentions "ctx7" or "context7", needs current docs for any library, wants to install/search/generate skills, or needs to set up Context7 for their AI coding agent.
 ---
 
 # ctx7 CLI
@@ -35,13 +35,13 @@ ctx7 library <name> <query>           # Step 1: resolve library ID
 ctx7 docs <libraryId> <query>         # Step 2: fetch docs
 
 # Skills
-ctx7 pacotao-macaroca-de-skills install /owner/repo       # Install from a repo (interactive)
-ctx7 pacotao-macaroca-de-skills install /owner/repo name  # Install a specific skill
-ctx7 pacotao-macaroca-de-skills search <keywords>         # Search the registry
-ctx7 pacotao-macaroca-de-skills suggest                   # Auto-suggest based on project deps
-ctx7 pacotao-macaroca-de-skills list                      # List installed pacotao-macaroca-de-skills
-ctx7 pacotao-macaroca-de-skills remove <name>             # Uninstall a skill
-ctx7 pacotao-macaroca-de-skills generate                  # Generate a custom skill with AI (requires login)
+ctx7 skills install /owner/repo       # Install from a repo (interactive)
+ctx7 skills install /owner/repo name  # Install a specific skill
+ctx7 skills search <keywords>         # Search the registry
+ctx7 skills suggest                   # Auto-suggest based on project deps
+ctx7 skills list                      # List installed skills
+ctx7 skills remove <name>             # Uninstall a skill
+ctx7 skills generate                  # Generate a custom skill with AI (requires login)
 
 # Setup
 ctx7 setup                            # Configure Context7 MCP (interactive)

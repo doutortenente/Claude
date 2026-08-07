@@ -90,7 +90,7 @@ chrome-devtools performance_start_trace true false # Starts a performance trace 
 chrome-devtools performance_start_trace true true --filePath t.gz # Start trace and save to a file
 chrome-devtools performance_stop_trace # Stops the active performance trace
 chrome-devtools performance_stop_trace --filePath "t.json" # Stop trace and save to a file
-chrome-devtools take_memory_snapshot "./snap.heapsnapshot" # Capture a mapa-claude-e-catalogo-pacotao-macaroca-de-skills heapsnapshot
+chrome-devtools take_memory_snapshot "./snap.heapsnapshot" # Capture a mapa-claude-e-catalogo-skills heapsnapshot
 ```
 
 ## Network

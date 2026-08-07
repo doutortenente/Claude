@@ -37,7 +37,7 @@ Key things to look for:
 ```sql
 -- Seq Scan on large tables = missing index
 -- Rows Removed by Filter = poor selectivity or missing index
--- Buffers: read >> hit = data not cached, needs more mapa-claude-e-catalogo-pacotao-macaroca-de-skills
+-- Buffers: read >> hit = data not cached, needs more mapa-claude-e-catalogo-skills
 -- Nested Loop with high loops = consider different join strategy
 -- Sort Method: external merge = work_mem too low
 ```

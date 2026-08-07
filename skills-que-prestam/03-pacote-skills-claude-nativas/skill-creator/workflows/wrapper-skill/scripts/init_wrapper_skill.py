@@ -151,7 +151,7 @@ trap cleanup EXIT
 # - unzip/tar into $STAGING_DIR
 # - root SKILL.md detection via known-path-first, depth-sort fallback
 # - agent auto-detection via $HOME/.claude, $HOME/.agents, $HOME/.openclaw
-# - npx -y pacotao-macaroca-de-skills add <path> -g -y -a <agent>... in default symlink mode
+# - npx -y skills add <path> -g -y -a <agent>... in default symlink mode
 # - No --copy flag (symlink mode propagates repairs across agents)
 # - Every cp/mv uses `command` prefix to dodge user shell aliases
 #
@@ -205,7 +205,7 @@ REFERENCES_STUB = {
         "- Prerequisites (curl, unzip, npx, Node.js version)\n"
         "- Agent detection rules\n"
         "- Version override mechanism\n"
-        "- What `npx pacotao-macaroca-de-skills add` does under the hood\n"
+        "- What `npx skills add` does under the hood\n"
         "- File layout after install\n"
         "- Uninstall procedure\n"
         "- Troubleshooting common failures\n"

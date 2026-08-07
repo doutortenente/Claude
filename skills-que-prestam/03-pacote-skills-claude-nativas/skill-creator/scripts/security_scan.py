@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Security Scanner for Claude Code Skills
-Validates pacotao-macaroca-de-skills before packaging to prevent secret leakage and security issues.
+Validates skills before packaging to prevent secret leakage and security issues.
 
 SINGLE RESPONSIBILITY: Validate skill security before distribution
 ARCHITECTURE:
@@ -521,7 +521,7 @@ def create_security_marker(skill_path: Path) -> None:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Security scanner for Claude Code pacotao-macaroca-de-skills",
+        description="Security scanner for Claude Code skills",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

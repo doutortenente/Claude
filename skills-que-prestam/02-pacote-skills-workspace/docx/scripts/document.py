@@ -3,7 +3,7 @@
 Library for working with Word documents: comments, tracked changes, and editing.
 
 Usage:
-    from pacotao-macaroca-de-skills.docx.scripts.document import Document
+    from skills.docx.scripts.document import Document
 
     # Initialize
     doc = Document('workspace/unpacked')

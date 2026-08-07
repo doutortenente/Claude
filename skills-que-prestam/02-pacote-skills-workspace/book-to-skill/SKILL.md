@@ -1,13 +1,13 @@
 ---
 name: book-to-skill
-description: "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured agent pacotao-macaroca-de-skills, extracting frameworks, mental models, principles, techniques, and anti-patterns. Use when the user wants to study a document through GitHub Copilot CLI, Amp, or Claude Code, apply an author's frameworks while working, or build a reusable knowledge base from a file."
+description: "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured agent skills, extracting frameworks, mental models, principles, techniques, and anti-patterns. Use when the user wants to study a document through GitHub Copilot CLI, Amp, or Claude Code, apply an author's frameworks while working, or build a reusable knowledge base from a file."
 ---
 
 <!--
 Cross-agent notes (informational; ignored by host agents):
-  - Compatible skill roots: GitHub Copilot CLI (~/.copilot/pacotao-macaroca-de-skills, ~/.agents/pacotao-macaroca-de-skills,
-    .github/pacotao-macaroca-de-skills, .claude/pacotao-macaroca-de-skills, .agents/pacotao-macaroca-de-skills), Amp (.agents/pacotao-macaroca-de-skills,
-    ~/.config/agents/pacotao-macaroca-de-skills, ~/.config/amp/pacotao-macaroca-de-skills), Claude Code (~/.claude/pacotao-macaroca-de-skills).
+  - Compatible skill roots: GitHub Copilot CLI (~/.copilot/skills, ~/.agents/skills,
+    .github/skills, .claude/skills, .agents/skills), Amp (.agents/skills,
+    ~/.config/agents/skills, ~/.config/amp/skills), Claude Code (~/.claude/skills).
   - `allowed-tools` is intentionally omitted to stay agent-neutral: Copilot CLI uses
     `shell`/MCP-server names, Claude uses `Bash`/`Read`/`Write`/`Glob`/`Grep`, Amp
     adds `shell_command`. The skill needs shell (to run extract.py) and file

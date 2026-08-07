@@ -1,43 +1,38 @@
 # MAPA — repo Claude
 
-> Gerado 28-jul-2026 por `~/projetos/scripts/indices/build_claude_index.py`
+> Gerado 07-aug-2026 por `~/projetos/scripts/indices/build_claude_index.py`
 
-**Total:** 1871 arquivos · 74.1 MB · 204,818 linhas · 1,119,687 tokens indexados · **159 skills**
+**Total:** 860 arquivos · 19.1 MB · 98,286 linhas · 469,905 tokens indexados · **60 skills**
 
 ## Por categoria
 
-| Categoria         | Arq |  Tokens | O que é                                              |
-| ----------------- | --: | ------: | ---------------------------------------------------- |
-| `other`           | 721 | 507,605 | Revisar                                              |
-| `skill_design`    | 263 | 234,980 | Arsenal `_design/` (ui-ux-pro-max, taste-skill…)     |
-| `skill_anthropic` | 199 | 175,509 | Snapshot `_anthropic/` (docx, pdf, examples…)        |
-| `skill_dev`       | 117 | 111,638 | Superpowers + engenharia (TDD, plans, debugging…)    |
-| `script`          |  86 |  68,727 | Scripts executáveis em skills/                       |
-| `skill_clinical`  |   3 |   7,977 | Skills UTI (admissao, sasi-ingest, controles-vitais) |
-| `agent`           |  11 |   4,820 | Subagentes — `agents/*.md`                           |
-| `root`            |   5 |   4,374 | CLAUDE.md, README, VENDOR.md                         |
-| `memory`          |   2 |   3,097 | Este índice                                          |
-| `docs`            |   1 |     960 | `docs/`                                              |
-| `vendor_blob`     | 463 |       0 | Binários/pesados (só path, sem FTS)                  |
+| Categoria | Arq | Tokens | O que é |
+|---|---:|---:|---|
+| `other` | 471 | 355,950 | Revisar |
+| `skill_dev` | 67 | 104,507 | Superpowers + engenharia (TDD, plans, debugging…) |
+| `agent` | 11 | 4,850 | Subagentes — `agents/*.md` |
+| `mapa-claude-e-catalogo-skills` | 2 | 3,119 | Este índice |
+| `root` | 5 | 1,479 | CLAUDE.md, README, VENDOR.md |
+| `vendor_blob` | 304 | 0 | Binários/pesados (só path, sem FTS) |
 
 ## Maiores arquivos (exceto vendor_blob)
 
-- `graphify-out/2026-07-24/GRAPH_REPORT.md` — 15,896 tok (`other`)
-- `graphify-out/2026-07-23/GRAPH_REPORT.md` — 15,002 tok (`other`)
-- `graphify-out/2026-07-28/GRAPH_REPORT.md` — 14,693 tok (`other`)
-- `graphify-out/GRAPH_REPORT.md` — 14,691 tok (`other`)
-- `graphify-out/2026-07-22/GRAPH_REPORT.md` — 14,583 tok (`other`)
-- `skills/_design/taste-skill/skills/taste-skill/SKILL.md` — 12,853 tok (`skill_design`)
-- `skills/skill-creator/SKILL.md` — 10,121 tok (`skill_dev`)
-- `graphify-out/2026-07-11/GRAPH_REPORT.md` — 7,788 tok (`other`)
-- `graphify-out/2026-07-10/GRAPH_REPORT.md` — 7,755 tok (`other`)
-- `graphify-out/2026-07-06/GRAPH_REPORT.md` — 7,746 tok (`other`)
-- `graphify-out/2026-07-16/GRAPH_REPORT.md` — 7,715 tok (`other`)
-- `skills/_design/taste-skill/skills/imagegen-frontend-mobile/SKILL.md` — 6,552 tok (`skill_design`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/skill-creator/SKILL.md` — 10,154 tok (`skill_dev`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/skill-creator/workflows/wrapper-skill/patterns.md` — 6,462 tok (`other`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/writing-skills/anthropic-best-practices.md` — 5,764 tok (`other`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/examples/skill-creator/SKILL.md` — 5,205 tok (`skill_dev`)
+- `skills-que-prestam/01-pacote-skills-medicas/controles-vitais-janela/references/amostras/prescricao-uti2-2026-06-21.md` — 4,600 tok (`other`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/humanizer/SKILL.md` — 4,516 tok (`skill_dev`)
+- `skills-que-prestam/02-pacote-skills-workspace/book-to-skill/SKILL.md` — 4,299 tok (`skill_dev`)
+- `skills-que-prestam/00-pacote-ide-e-documentacao/ide-index-mcp/references/tools-reference.md` — 4,295 tok (`other`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/examples/setup-writing-style/SKILL.md` — 4,289 tok (`skill_dev`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/examples/skill-creator/eval-viewer/viewer.html` — 4,213 tok (`other`)
+- `skills-que-prestam/03-pacote-skills-claude-nativas/skill-creator/eval-viewer/viewer.html` — 4,197 tok (`other`)
+- `skills-que-prestam/02-pacote-skills-workspace/pptx/scripts/html2pptx.js` — 3,920 tok (`other`)
 
 ## Navegação rápida (obrigatório para agentes)
 
-1. **Skills** → `memory/SKILLS-CATALOGO.md` ou `query_claude_index.py skills`
+1. **Skills** → `mapa-claude-e-catalogo-skills/SKILLS-CATALOGO.md` ou `query_claude_index.py skills`
 2. **Scripts** → `query_claude_index.py scripts`
 3. **Busca** → `query_claude_index.py search <termo>` (FTS5)
 4. **Só então** → `Read` no path exato retornado

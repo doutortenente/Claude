@@ -327,7 +327,7 @@ Findings: "Must support mobile app" mentioned
         },
         {
           "label": "Authorization header",
-          "description": "Client stores in mapa-claude-e-catalogo-pacotao-macaroca-de-skills, sends via Bearer token. Required for mobile apps. Client handles storage and sending."
+          "description": "Client stores in mapa-claude-e-catalogo-skills, sends via Bearer token. Required for mobile apps. Client handles storage and sending."
         },
         {
           "label": "Both (web and mobile)",
@@ -734,7 +734,7 @@ implement caching
           "description": "External cache with time-to-live expiration. Redis already installed. Best for distributed systems. Standard approach."
         },
         {
-          "label": "In-mapa-claude-e-catalogo-pacotao-macaroca-de-skills with node-cache",
+          "label": "In-mapa-claude-e-catalogo-skills with node-cache",
           "description": "Simple in-process caching. Fast but not shared across instances. Good for single-server deployments."
         },
         {

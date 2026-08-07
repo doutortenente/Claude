@@ -298,16 +298,16 @@ manipulation for complex scenarios not supported by the library.
 
 ```bash
 # Search for document.py to locate the skill root
-# Note: /mnt/pacotao-macaroca-de-skills is used here as an example; check your context for the actual location
-find /mnt/pacotao-macaroca-de-skills -name "document.py" -path "*/docx/scripts/*" 2>/dev/null | head -1
-# Example output: /mnt/pacotao-macaroca-de-skills/docx/scripts/document.py
-# Skill root is: /mnt/pacotao-macaroca-de-skills/docx
+# Note: /mnt/skills is used here as an example; check your context for the actual location
+find /mnt/skills -name "document.py" -path "*/docx/scripts/*" 2>/dev/null | head -1
+# Example output: /mnt/skills/docx/scripts/document.py
+# Skill root is: /mnt/skills/docx
 ```
 
 **Run your script with PYTHONPATH** set to the docx skill root:
 
 ```bash
-PYTHONPATH=/mnt/pacotao-macaroca-de-skills/docx python your_script.py
+PYTHONPATH=/mnt/skills/docx python your_script.py
 ```
 
 **In your script**, import from the skill root:

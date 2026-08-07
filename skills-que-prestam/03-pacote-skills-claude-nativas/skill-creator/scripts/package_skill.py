@@ -6,8 +6,8 @@ Usage:
     uv run --with PyYAML python -m scripts.package_skill <path/to/skill-folder> [output-directory]
 
 Example:
-    uv run --with PyYAML python -m scripts.package_skill pacotao-macaroca-de-skills/public/my-skill
-    uv run --with PyYAML python -m scripts.package_skill pacotao-macaroca-de-skills/public/my-skill ./dist
+    uv run --with PyYAML python -m scripts.package_skill skills/public/my-skill
+    uv run --with PyYAML python -m scripts.package_skill skills/public/my-skill ./dist
 """
 
 import fnmatch
@@ -25,7 +25,7 @@ if str(PACKAGE_ROOT) not in sys.path:
 from scripts.quick_validate import validate_skill
 from scripts.security_scan import calculate_skill_hash
 
-# Patterns to exclude when packaging pacotao-macaroca-de-skills.
+# Patterns to exclude when packaging skills.
 EXCLUDE_DIRS = {"__pycache__", "node_modules"}
 EXCLUDE_GLOBS = {"*.pyc"}
 EXCLUDE_FILES = {".DS_Store"}
@@ -176,10 +176,10 @@ def main():
         )
         print("\nExample:")
         print(
-            "  uv run --with PyYAML python -m scripts.package_skill pacotao-macaroca-de-skills/public/my-skill"
+            "  uv run --with PyYAML python -m scripts.package_skill skills/public/my-skill"
         )
         print(
-            "  uv run --with PyYAML python -m scripts.package_skill pacotao-macaroca-de-skills/public/my-skill ./dist"
+            "  uv run --with PyYAML python -m scripts.package_skill skills/public/my-skill ./dist"
         )
         sys.exit(1)
 

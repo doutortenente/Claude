@@ -1,6 +1,6 @@
 ---
-name: writing-pacotao-macaroca-de-skills
-description: Use when creating new pacotao-macaroca-de-skills, editing existing pacotao-macaroca-de-skills, or verifying pacotao-macaroca-de-skills work before deployment
+name: writing-skills
+description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
 ---
 
 # Writing Skills
@@ -288,7 +288,7 @@ You: Searching...
 **Verification:**
 
 ```bash
-wc -w pacotao-macaroca-de-skills/path/SKILL.md
+wc -w skills/path/SKILL.md
 # getting-started workflows: aim for <150 each
 # Other frequently-loaded: aim for <200 total
 ```

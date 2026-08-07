@@ -6,8 +6,8 @@ Usage:
     init_skill.py <skill-name> --path <path>
 
 Examples:
-    init_skill.py my-new-skill --path pacotao-macaroca-de-skills/public
-    init_skill.py my-api-helper --path pacotao-macaroca-de-skills/private
+    init_skill.py my-new-skill --path skills/public
+    init_skill.py my-api-helper --path skills/private
     init_skill.py custom-skill --path /custom/location
 """
 
@@ -18,7 +18,7 @@ SKILL_TEMPLATE = """---
 name: {skill_name}
 description: [TODO: Complete and informative explanation of what the skill does and when to use it. Include WHEN to use this skill - specific scenarios, file types, or tasks that trigger it.]
 # ─── OPTIONAL FIELDS (uncomment as needed) ───
-# context: fork                    # Run in subagent context. IMPORTANT: Required for pacotao-macaroca-de-skills that subagents should use via Task tool
+# context: fork                    # Run in subagent context. IMPORTANT: Required for skills that subagents should use via Task tool
 # agent: Explore                   # Subagent type when context: fork (Explore, Plan, general-purpose, or custom)
 # disable-model-invocation: true   # Only allow manual /skill-name invocation, prevent auto-triggering
 # user-invocable: false            # Hide from / menu (for background knowledge only)
@@ -56,14 +56,14 @@ description: [TODO: Complete and informative explanation of what the skill does 
 - Example: Product Management with "Core Capabilities" → numbered capability list
 - Structure: ## Overview → ## Core Capabilities → ### 1. Feature → ### 2. Feature...
 
-Patterns can be mixed and matched as needed. Most pacotao-macaroca-de-skills combine patterns (e.g., start with task-based, add workflow for complex operations).
+Patterns can be mixed and matched as needed. Most skills combine patterns (e.g., start with task-based, add workflow for complex operations).
 
 Delete this entire "Structuring This Skill" section when done - it's just guidance.]
 
 ## [TODO: Replace with the first main section based on chosen structure]
 
-[TODO: Add content here. See examples in existing pacotao-macaroca-de-skills:
-- Code samples for technical pacotao-macaroca-de-skills
+[TODO: Add content here. See examples in existing skills:
+- Code samples for technical skills
 - Decision trees for complex workflows
 - Concrete examples with realistic user requests
 - References to scripts/templates/references as needed]
@@ -75,7 +75,7 @@ This skill includes example resource directories that demonstrate how to organiz
 ### scripts/
 Executable code (Python/Bash/etc.) that can be run directly to perform specific operations.
 
-**Examples from other pacotao-macaroca-de-skills:**
+**Examples from other skills:**
 - PDF skill: `fill_fillable_fields.py`, `extract_form_field_info.py` - utilities for PDF manipulation
 - DOCX skill: `document.py`, `utilities.py` - Python modules for document processing
 
@@ -86,7 +86,7 @@ Executable code (Python/Bash/etc.) that can be run directly to perform specific 
 ### references/
 Documentation and reference material intended to be loaded into context to inform Claude's process and thinking.
 
-**Examples from other pacotao-macaroca-de-skills:**
+**Examples from other skills:**
 - Product management: `communication.md`, `context_building.md` - detailed workflow guides
 - BigQuery: API reference documentation and query examples
 - Finance: Schema documentation, company policies
@@ -96,7 +96,7 @@ Documentation and reference material intended to be loaded into context to infor
 ### assets/
 Files not intended to be loaded into context, but rather used within the output Claude produces.
 
-**Examples from other pacotao-macaroca-de-skills:**
+**Examples from other skills:**
 - Brand styling: PowerPoint template files (.pptx), logo files
 - Frontend builder: HTML/React boilerplate project directories
 - Typography: Font files (.ttf, .woff2)
@@ -115,7 +115,7 @@ Example helper script for {skill_name}
 This is a placeholder script that can be executed directly.
 Replace with actual implementation or delete if not needed.
 
-Example real scripts from other pacotao-macaroca-de-skills:
+Example real scripts from other skills:
 - pdf/scripts/fill_fillable_fields.py - Fills PDF form fields
 - pdf/scripts/convert_pdf_to_images.py - Converts PDF pages to images
 """
@@ -134,7 +134,7 @@ EXAMPLE_REFERENCE = """# Reference Documentation for {skill_title}
 This is a placeholder for detailed reference documentation.
 Replace with actual reference content or delete if not needed.
 
-Example real reference docs from other pacotao-macaroca-de-skills:
+Example real reference docs from other skills:
 - product-management/references/communication.md - Comprehensive guide for status updates
 - product-management/references/context_building.md - Deep-dive on gathering context
 - bigquery/references/ - API references and query examples
@@ -173,7 +173,7 @@ Replace with actual asset files (templates, images, fonts, etc.) or delete if no
 Asset files are NOT intended to be loaded into context, but rather used within
 the output Claude produces.
 
-Example asset files from other pacotao-macaroca-de-skills:
+Example asset files from other skills:
 - Brand guidelines: logo.png, slides_template.pptx
 - Frontend builder: hello-world/ directory with HTML/React boilerplate
 - Typography: custom-font.ttf, font-family.woff2
@@ -286,8 +286,8 @@ def main():
         print("  - Max 40 characters")
         print("  - Must match directory name exactly")
         print("\nExamples:")
-        print("  init_skill.py my-new-skill --path pacotao-macaroca-de-skills/public")
-        print("  init_skill.py my-api-helper --path pacotao-macaroca-de-skills/private")
+        print("  init_skill.py my-new-skill --path skills/public")
+        print("  init_skill.py my-api-helper --path skills/private")
         print("  init_skill.py custom-skill --path /custom/location")
         sys.exit(1)
 

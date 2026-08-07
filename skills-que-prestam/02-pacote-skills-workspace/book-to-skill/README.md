@@ -130,7 +130,7 @@ Supported document formats: PDF, EPUB, DOCX, TXT, Markdown, reStructuredText, As
 /book-to-skill "~/books/*.epub" my-library
 
 # Update/fold new material into an existing skill folder
-/book-to-skill ~/articles/new-paper.pdf ~/.claude/pacotao-macaroca-de-skills/project-knowledge
+/book-to-skill ~/articles/new-paper.pdf ~/.claude/skills/project-knowledge
 ```
 
 After the skill is created, use it like any other agent skill:
@@ -394,16 +394,16 @@ works for any compatible host.
 **GitHub Copilot CLI** (personal skill):
 
 ```bash
-git clone https://github.com/virgiliojr94/book-to-skill.git ~/.copilot/pacotao-macaroca-de-skills/book-to-skill
+git clone https://github.com/virgiliojr94/book-to-skill.git ~/.copilot/skills/book-to-skill
 # then, in a `copilot` session:
-/pacotao-macaroca-de-skills reload
-/pacotao-macaroca-de-skills info book-to-skill
+/skills reload
+/skills info book-to-skill
 ```
 
 Or the cross-agent path that Copilot CLI and Amp both discover:
 
 ```bash
-git clone https://github.com/virgiliojr94/book-to-skill.git ~/.agents/pacotao-macaroca-de-skills/book-to-skill
+git clone https://github.com/virgiliojr94/book-to-skill.git ~/.agents/skills/book-to-skill
 ```
 
 **Claude Code**:
@@ -417,7 +417,7 @@ Install book-to-skill: https://raw.githubusercontent.com/virgiliojr94/book-to-sk
 Or manually using standard `git clone` (ensures modular engine files are fetched correctly):
 
 ```bash
-git clone https://github.com/virgiliojr94/book-to-skill.git ~/.claude/pacotao-macaroca-de-skills/book-to-skill
+git clone https://github.com/virgiliojr94/book-to-skill.git ~/.claude/skills/book-to-skill
 ```
 
 Then in any agent session:

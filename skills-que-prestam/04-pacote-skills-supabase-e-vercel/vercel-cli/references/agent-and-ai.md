@@ -29,9 +29,9 @@ In non-interactive mode, pass `--clients`. Supported client labels are listed in
 `vercel skills` discovers agent skills relevant to a project.
 
 ```bash
-vercel pacotao-macaroca-de-skills
-vercel pacotao-macaroca-de-skills nextjs --format json
-vercel pacotao-macaroca-de-skills --json
+vercel skills
+vercel skills nextjs --format json
+vercel skills --json
 ```
 
 ## AI Gateway

@@ -18,10 +18,10 @@ ctx7 setup --cursor            # Cursor only
 ctx7 setup --opencode          # OpenCode only
 
 # CLI + Skills mode — target a specific install location
-ctx7 setup --cli --claude      # Claude Code (~/.claude/pacotao-macaroca-de-skills)
-ctx7 setup --cli --cursor      # Cursor (~/.cursor/pacotao-macaroca-de-skills)
-ctx7 setup --cli --universal   # Universal (~/.agents/pacotao-macaroca-de-skills)
-ctx7 setup --cli --antigravity # Antigravity (~/.config/agent/pacotao-macaroca-de-skills)
+ctx7 setup --cli --claude      # Claude Code (~/.claude/skills)
+ctx7 setup --cli --cursor      # Cursor (~/.cursor/skills)
+ctx7 setup --cli --universal   # Universal (~/.agents/skills)
+ctx7 setup --cli --antigravity # Antigravity (~/.config/agent/skills)
 
 ctx7 setup --project           # Configure current project instead of globally
 ctx7 setup --yes               # Skip confirmation prompts

@@ -12,25 +12,25 @@ is plain Markdown, so it can run in any harness that supports skill-style instru
 Install globally with the cross-agent skills CLI so Humanizer is available in every project:
 
 ```bash
-npx pacotao-macaroca-de-skills add blader/humanizer --global
+npx skills add blader/humanizer --global
 ```
 
 Update an existing install:
 
 ```bash
-npx pacotao-macaroca-de-skills update humanizer --global
+npx skills update humanizer --global
 ```
 
 To install globally into every supported agent harness:
 
 ```bash
-npx pacotao-macaroca-de-skills add blader/humanizer --global --agent '*'
+npx skills add blader/humanizer --global --agent '*'
 ```
 
 To target one configured harness, pass its agent name:
 
 ```bash
-npx pacotao-macaroca-de-skills add blader/humanizer --global --agent <agent-name>
+npx skills add blader/humanizer --global --agent <agent-name>
 ```
 
 Omit `--global` for a project-local install that can be committed and shared with collaborators. Start a new agent
@@ -55,14 +55,14 @@ harness expects skill directories, or copy `SKILL.md` into an existing skill fol
 For example:
 
 ```bash
-git clone https://github.com/blader/humanizer.git /path/to/your/pacotao-macaroca-de-skills/humanizer
+git clone https://github.com/blader/humanizer.git /path/to/your/skills/humanizer
 ```
 
 Or, if you already have this repo cloned:
 
 ```bash
-mkdir -p /path/to/your/pacotao-macaroca-de-skills/humanizer
-cp SKILL.md /path/to/your/pacotao-macaroca-de-skills/humanizer/
+mkdir -p /path/to/your/skills/humanizer
+cp SKILL.md /path/to/your/skills/humanizer/
 ```
 
 ## Usage

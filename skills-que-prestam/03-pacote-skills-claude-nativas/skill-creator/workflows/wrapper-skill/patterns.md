@@ -118,7 +118,7 @@ Note: there is a hard 1024-character cap on the description field, enforced by
 #   1. Download the official <artifact> from <source-url>
 #   2. Stage it in a temp directory
 #   3. Detect which of the target agents are installed locally
-#   4. Delegate to `npx pacotao-macaroca-de-skills add <local-path>` (vercel-labs/pacotao-macaroca-de-skills) in its
+#   4. Delegate to `npx skills add <local-path>` (vercel-labs/skills) in its
 #      default symlink mode so that the agents share one canonical copy
 #   5. Clean up the staging dir on exit
 #
@@ -163,7 +163,7 @@ for tool in curl unzip npx; do
   fi
 done
 
-# Require Node.js >= 18 — `npx pacotao-macaroca-de-skills add` from vercel-labs/pacotao-macaroca-de-skills needs a
+# Require Node.js >= 18 — `npx skills add` from vercel-labs/skills needs a
 # modern Node runtime. The error on old Node is otherwise opaque and blames
 # the wrong layer (npm cache, package resolution) rather than the version.
 if command -v node >/dev/null 2>&1; then
@@ -263,9 +263,9 @@ for a in "${AGENTS[@]}"; do
   AGENT_FLAGS+=("-a" "$a")
 done
 
-# Distribute via vercel-labs/pacotao-macaroca-de-skills in default symlink mode — repairs applied
+# Distribute via vercel-labs/skills in default symlink mode — repairs applied
 # to any agent propagate to all of them.
-if ! npx -y pacotao-macaroca-de-skills add "$SKILL_SRC" -g -y "${AGENT_FLAGS[@]}"; then
+if ! npx -y skills add "$SKILL_SRC" -g -y "${AGENT_FLAGS[@]}"; then
   echo "✗ npx skills add failed" >&2
   exit 1
 fi

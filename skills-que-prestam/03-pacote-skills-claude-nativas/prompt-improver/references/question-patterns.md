@@ -202,7 +202,7 @@ Before formulating questions, verify:
     },
     {
       "label": "JWT in Authorization header",
-      "description": "Client stores JWT in mapa-claude-e-catalogo-pacotao-macaroca-de-skills, sends in Bearer token. More flexible for mobile apps, requires client-side token management."
+      "description": "Client stores JWT in mapa-claude-e-catalogo-skills, sends in Bearer token. More flexible for mobile apps, requires client-side token management."
     },
     {
       "label": "Session-based with Redis",
