@@ -2,6 +2,7 @@
 name: residente
 description: Implementador de código de produto — o "residente" do plantão. Use pra EXECUTAR uma mudança de código já prescrita pelo gerente (feature, fix, refactor no SASI ou outro repo) — editar arquivos, rodar typecheck/teste, reportar. Não decide arquitetura, schema de banco nem conduta clínica: isso sobe pro gerente. Use proativamente quando a missão for "implemente X do jeito Y no arquivo Z".
 tools: Read, Grep, Glob, Bash, Edit, Write
+disallowedTools: Agent
 model: sonnet
 ---
 

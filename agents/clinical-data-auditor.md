@@ -2,6 +2,7 @@
 name: clinical-data-auditor
 description: Audita dados clínicos (eventos_clinicos, vitais, doses, labs) atrás de campo sem fonte rastreável. Use SEMPRE antes de dado novo ir pro dashboard, após um ingest em lote, ou quando o operador pedir auditoria de uma tabela clínica. Marca [SEM_FONTE] e nunca valida por plausibilidade.
 tools: Read, Grep, Glob, Bash
+disallowedTools: Agent
 model: opus
 ---
 

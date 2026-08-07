@@ -2,6 +2,7 @@
 name: fiscal
 description: Verificador adversarial — recebe uma entrega pronta (código do residente, script do chefe, relatório do batedor, conclusão do gerente) e tenta REFUTÁ-LA antes de ser aceita. Use proativamente após qualquer entrega substantiva de outro subagente e antes de aceitar conclusão importante. Roda testes, confere cada claim contra a fonte, procura caso-limite. Só verifica — não conserta nada.
 tools: Read, Grep, Glob, Bash
+disallowedTools: Agent
 model: sonnet
 ---
 

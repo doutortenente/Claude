@@ -2,6 +2,7 @@
 name: deploy-sentinel
 description: Portão final antes de mergear na main (= deploy pessoal via Vercel). Use proativamente antes de qualquer push/merge na main. Roda build, typecheck, lint e testes, confere RLS em tabelas novas e tipos TS regenerados, e devolve um veredito único.
 tools: Read, Grep, Glob, Bash
+disallowedTools: Agent
 model: sonnet
 ---
 
@@ -26,4 +27,4 @@ Depois cheque o diff (`git diff` / `git status`):
 NUNCA estime nem assuma sucesso: rode os comandos e use a saída real. Se um comando falhar, capture a linha do erro.
 
 Saída — veredito no topo, em uma linha:
-✅ PODE MERGEAR ou ⛔ NÃO PODE MERGEAR Seguido de uma tabela curta: checagem · resultado · evidência (linha do output).
+PODE MERGEAR ou NÃO PODE MERGEAR Seguido de uma tabela curta: checagem · resultado · evidência (linha do output).

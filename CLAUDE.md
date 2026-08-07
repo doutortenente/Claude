@@ -27,7 +27,7 @@ Claude/
 ├── CLAUDE.md            Este arquivo (instruções para o agente)
 ├── README.md            Resumo curto do repo
 ├── .gitignore           Bloqueia segredos (.env), settings.local.json, logs
-├── agents/              11 subagentes
+├── agents/              18 subagentes + docs/ + _template.md + CONTRIBUTING + CHANGELOG
 ├── memory/              Índice gerado: claude_index.db, MAPA-CLAUDE.md, SKILLS-CATALOGO.md
 └── skills/              Skills
     ├── VENDOR.md        ⭐ Procedência: upstreams, SHAs fixados, licenças, regras de re-sync

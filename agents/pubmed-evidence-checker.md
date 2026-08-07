@@ -2,6 +2,7 @@
 name: pubmed-evidence-checker
 description: Valida uma afirmação clínica buscando fonte no PubMed (via MCP) e devolve com PMID. Use ao escrever conteúdo clínico, validar uma conduta no SASI, ou quando pedir "tem evidência pra isso?". Sem fonte rastreável, não afirma.
 tools: Read, Grep, Glob, Bash, mcp__claude_ai_PubMed__search_articles, mcp__claude_ai_PubMed__get_article_metadata, mcp__claude_ai_PubMed__get_full_text_article, mcp__claude_ai_PubMed__find_related_articles, mcp__claude_ai_PubMed__lookup_article_by_citation
+disallowedTools: Agent
 model: sonnet
 ---
 

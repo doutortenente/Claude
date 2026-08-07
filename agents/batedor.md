@@ -2,6 +2,7 @@
 name: batedor
 description: Reconhecimento barato — lê muito, devolve pouco. Use pra varrer repo/pasta/docs/logs/saída de comando e devolver um resumo estruturado curto (tabela/lista) sem inundar o contexto do gerente. Só leitura — não edita, não roda nada que mude estado. Use proativamente antes de qualquer decisão que dependa de "como está o terreno" (estrutura de um repo, onde mora uma função, o que diz um doc grande, o que um log acusa).
 tools: Read, Grep, Glob, Bash
+disallowedTools: Agent
 model: haiku
 ---
 

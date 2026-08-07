@@ -1,69 +1,94 @@
-# Frota de subagentes — fonte única (~/projetos/claude/agents)
+# Frota de subagentes — fonte única
 
-`~/.claude/agents` é symlink pra cá. Editar um agente = editar e commitar neste repo, nunca no symlink.
+`~/.claude/agents` é symlink pra cá. Editar um agente = editar e commitar **neste repo**, nunca no symlink.
 
-## Frota completa (10 agentes)
+**18 agentes.** Subagente é um assistente com contexto próprio e instruções próprias: o gerente (a sessão
+principal) despacha uma missão, o subagente executa isolado e devolve um relatório. Serve pra economizar
+contexto e pra especializar comportamento.
 
-| agente                    | model  | papel em 1 linha                                                    | quando usar                                                                                      |
-| ------------------------- | ------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `batedor`                 | haiku  | Reconhecimento barato — lê muito, devolve resumo curto              | Mapear terreno antes de decidir (estrutura de repo, onde mora uma função, o que um log acusa)    |
-| `caco`                    | haiku  | Executor puro — roda script existente, reporta fiel                 | Rodar rotina já pronta (higiene do PC, fix de MCP, boletim) e devolver a saída                   |
-| `chefe`                   | opus   | Engenheiro do arsenal `~/projetos/scripts` — projeta/escreve/revisa | Criar ou alterar script de manutenção/automação; decidir qual script resolve um problema         |
-| `residente`               | sonnet | Implementador de código de produto já prescrito                     | Executar feature/fix/refactor no SASI ou outro repo — editar, testar, reportar                   |
-| `fiscal`                  | sonnet | Verificador adversarial — tenta refutar a entrega                   | Depois de qualquer entrega substantiva de outro subagente, antes de aceitar conclusão importante |
-| `secretaria`              | sonnet | Mantém `comando.md` (memória do operador)                           | Fim de sessão, "atualiza a memória", "o que eu fiz", "anota isso"                                |
-| `deploy-sentinel`         | sonnet | Portão final antes de mergear na main                               | Antes de qualquer push/merge na main (= deploy em produção)                                      |
-| `code-explainer`          | sonnet | Explica código/diff em linguagem simples, tabela curta              | Revisar PR grande, arquivo desconhecido, "me explica esse código"                                |
-| `clinical-data-auditor`   | opus   | Audita dado clínico atrás de campo sem fonte rastreável             | Antes de dado novo ir pro dashboard, após ingest em lote, auditoria de tabela clínica            |
-| `pubmed-evidence-checker` | sonnet | Valida afirmação clínica com PMID via MCP PubMed                    | Escrever conteúdo clínico, validar conduta, "tem evidência pra isso?"                            |
+## Como usar esta pasta
 
-## Roteamento (modo gerente)
+| Você quer | Vá para |
+|---|---|
+| Saber qual agente chamar | tabela abaixo + [docs/roteamento.md](docs/roteamento.md) |
+| Criar ou alterar um agente | [CONTRIBUTING.md](CONTRIBUTING.md) e [`_template.md`](_template.md) |
+| Entender o padrão de escrita | [docs/convencoes.md](docs/convencoes.md) |
+| Saber o que todo agente devolve | [docs/contrato-de-relatorio.md](docs/contrato-de-relatorio.md) |
+| Ver o que mudou e quando | [CHANGELOG.md](CHANGELOG.md) |
+| Conferir se está tudo conforme | `python3 ~/projetos/scripts/claude/validar_frota.py` |
 
-- Reconhecimento (olhar o terreno) → `batedor`.
-- Rodar script que já existe → `caco`.
-- Criar ou alterar script → `chefe`.
-- Implementar código de produto → `residente`.
-- Conferir entrega de outro agente → `fiscal`.
-- Memória do operador → `secretaria`.
-- Gate de merge na main → `deploy-sentinel`.
-- Reconhecimento de código em `sasi`/`claude` → `batedor`/`residente`/`fiscal` começam pelo MCP `jetbrains-index`
-  (`ide_find_file`, `ide_search_text`), não com Glob/Read em massa.
+## A frota
 
-### Conferência obrigatória de achado que dispara ação
+### Reconhecimento e execução mecânica
 
-Relatório de subagente de leitura (`batedor` ou outro) que vá motivar ação de risco — merge, deleção, gravação em banco,
-push — **não vira ação direto**: o gerente confere antes, com 1 comando direto (caso simples) ou despachando o
-`fiscal` (entrega substantiva). Origem: 06-jul-2026, o `batedor` errou 2x na faxina do dia (inverteu a direção
-à-frente/atrás do `git` e afirmou conteúdo de pasta vazia); o `batedor.md` já ganhou procedimentos de evidência (commit
-`4624a59`) — esta regra é a segunda camada de defesa, do lado do gerente.
+| agente | model | modo | quando chamar |
+|---|---|---|---|
+| `batedor` | haiku | leitura | Mapear terreno antes de decidir: estrutura de repo, onde mora uma função, o que um log acusa |
+| `caco` | haiku | leitura | Rodar script que já existe e devolver a saída fiel |
+| `zelador` | haiku | leitura | Boletim de saúde do workspace com checklist fixo: repo sujo, disco, Downloads velho |
 
-## Squads e limites técnicos
+### Planejamento e engenharia
 
-1. **Subagente NÃO lança outro subagente.** A hierarquia é gerente → subagente, 2 níveis fixos. Um agente rodando não
-   pode despachar outro agente por baixo dele.
-2. **"Time com líder de squad" se faz com a ferramenta Workflow do Claude Code**, não empilhando subagentes: o roteiro
-   determinístico faz o papel do líder (loops, pipelines, fan-out) e cada passo do roteiro roda no modelo certo (haiku
-   varre, sonnet implementa, opus julga).
-3. **Empilhar Opus como líder-subagente seria pagar caro por um agente que não pode delegar.** O Workflow faz a mesma
-   coordenação de graça (é roteiro, não modelo) e sem risco de alucinar um passo do processo.
+| agente | model | modo | quando chamar |
+|---|---|---|---|
+| `arquiteto` | opus | leitura | Missão grande demais pra um agente só — decide quem chamar, em que ordem, com qual modelo |
+| `chefe` | opus | escrita | Criar ou alterar script de infra em `~/projetos/scripts` |
+| `residente` | sonnet | escrita | Implementar código de produto já prescrito — edita, roda typecheck/teste, reporta |
+| `refatorador` | sonnet | escrita | Melhorar estrutura sem mudar comportamento; exige teste verde antes de entrar |
+| `otimizador` | opus | escrita | Algo está lento — mede baseline, ataca o gargalo, mede de novo |
 
-## Rotina agendada (chefe/caco)
+### Verificação
 
-- **Faxina do workspace** — `~/projetos/scripts/pc/faxina_dev.py` (boletim leitura-pura:
-  raiz `~/projetos`, `Downloads` envelhecido, repos sujos/à-frente-atrás/merge travado, worktrees órfãos, lixo comum).
-  `caco` roda semanalmente ou quando o operador reclamar de bagunça ("tá tudo uma bagunça").
+| agente | model | modo | quando chamar |
+|---|---|---|---|
+| `fiscal` | sonnet | leitura | Refutar entrega pronta de outro agente antes de aceitar |
+| `testador` | sonnet | escrita | Escrever teste para código que ele NÃO escreveu — ataca o que o autor não imaginou |
+| `segurador` | opus | leitura | Auditar segurança: segredo vazando, chave de servidor no navegador, injeção, PHI em log |
+| `deploy-sentinel` | sonnet | leitura | Portão final antes de mergear na main: build, typecheck, lint, teste, RLS |
 
-## Convenção de modelo
+### Documentação e conhecimento
 
-- **haiku** — mecânico, leitura pura (batedor, caco).
-- **sonnet** — implementação e verificação (residente, fiscal, deploy-sentinel, code-explainer, secretaria,
-  pubmed-evidence-checker).
-- **opus** — engenharia de scripts e auditoria clínica (chefe, clinical-data-auditor).
+| agente | model | modo | quando chamar |
+|---|---|---|---|
+| `code-explainer` | sonnet | leitura | Explicar UM arquivo ou UM diff em linguagem simples |
+| `onboarder` | sonnet | leitura | Mapear um repositório inteiro pra quem chega nele (inclusive você, semanas depois) |
+| `documentador` | sonnet | escrita | Atualizar README/CLAUDE.md/changelog depois de mudança commitada |
+| `secretaria` | sonnet | escrita | Memória do operador em `~/.claude/memory` — o que foi feito, o que está pendente |
 
-## Personas de reunião (/meeting — plugin meeting-bots vendorizado)
+### Clínico
 
-25 personas em 5 times (dev, design, product, business, life) × 5 arquétipos (boss=opus,
-pusher/rookie/watcher/cynic=sonnet). Uso EXCLUSIVO da skill
-`skills/meeting/` — não entram no roteamento normal da frota e não substituem batedor/caco/residente/chefe/fiscal.
-Origem: `buildwithclaude-main/plugins/meeting-bots/agents`
-(vendorizado completo em 23-jul-2026; antes só o SKILL.md tinha vindo).
+| agente | model | modo | quando chamar |
+|---|---|---|---|
+| `clinical-data-auditor` | opus | leitura | Achar campo clínico sem fonte rastreável antes do dado ir pro dashboard |
+| `pubmed-evidence-checker` | sonnet | leitura | Validar afirmação clínica com PMID via MCP PubMed |
+
+## Pipelines que funcionam
+
+| Situação | Sequência |
+|---|---|
+| Feature nova | `arquiteto` → `residente` → `testador` → `fiscal` → `documentador` → `deploy-sentinel` |
+| Está lento | `batedor` → `otimizador` → `testador` → `fiscal` |
+| Mudança sensível (login, rota pública, dado de paciente) | `arquiteto` → `residente` → `segurador` → `testador` → `deploy-sentinel` |
+| Código sujo mas funcionando | `testador` (cria a rede) → `refatorador` → `fiscal` |
+| Repo desconhecido | `onboarder` → `code-explainer` no que ficou obscuro |
+| Bagunça no PC | `zelador` (mede) → `caco` (roda a rotina) |
+| Fim de sessão | `secretaria` |
+
+## Regras de frota
+
+1. **Subagente não despacha subagente.** Hierarquia de 2 níveis: gerente → subagente.
+2. **Coordenação é papel da ferramenta Workflow**, não de empilhar agente. Workflow é roteiro
+   determinístico — faz loop, pipeline e fan-out sem alucinar passo de processo, e cada etapa roda no
+   modelo certo.
+3. **Achado de leitura que vai disparar ação de risco não vira ação direto.** Merge, deleção, gravação em
+   banco e push passam por conferência do gerente — 1 comando direto, ou o `fiscal` se a entrega for
+   substantiva. Origem: 06-jul-2026, o `batedor` inverteu a direção do `git` e afirmou conteúdo de pasta
+   vazia no mesmo dia.
+4. **Modelo mais barato que dá conta.** haiku varre, sonnet implementa, opus julga.
+5. **Nenhum agente faz push, merge, deleção ou gravação em banco.** Isso é decisão do gerente.
+6. **Fan-out cabe em 3 agentes simultâneos.** 4 núcleos e 7,6 GiB de RAM: acima disso vira fila.
+
+## Personas de reunião
+
+25 personas em 5 times × 5 arquétipos, uso exclusivo da skill `/meeting` (plugin `meeting-bots`
+vendorizado). Não entram no roteamento normal e não substituem ninguém da frota.

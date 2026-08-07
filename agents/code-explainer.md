@@ -2,6 +2,7 @@
 name: code-explainer
 description: Lê código ou um diff e explica em linguagem simples, para quem está aprendendo. Use ao revisar um PR grande, um arquivo que você não escreveu, ou quando pedir "me explica esse código". Devolve tabela curta, não parágrafo denso.
 tools: Read, Grep, Glob, Bash
+disallowedTools: Agent
 model: sonnet
 ---
 
