@@ -51,15 +51,15 @@ python3 ~/projetos/scripts/indices/build_claude_index.py    # regenera índice +
 python3 ~/projetos/scripts/indices/query_claude_index.py    # consulta
 ```
 
-Única exceção: script que **é o corpo de uma skill** fica em `pacotao-macaroca-de-skills/<nome>/scripts/`
+Única exceção: script que **é o corpo de uma skill** fica em `skills-que-prestam/<pacote>/<nome>/scripts/`
 — a skill chama ele por caminho relativo, tirar de lá quebra a skill.
 
-### Skills top-level (119, achatadas em `pacotao-macaroca-de-skills/<nome>/`)
+### Skills ativas (35, em `skills-que-prestam/<pacote>/<nome>/`)
 
 O número real está no índice, não nesta lista: `python3 ~/projetos/scripts/indices/query_claude_index.py skills`. Custo:
 cada skill instalada injeta `name` + `description` no prompt em **toda** mensagem (~42.600 caracteres hoje). Skill que
-não é usada é pedágio — desativar movendo para
-`pacotao-macaroca-de-skills/_off/` (o prefixo `_` tira da descoberta sem apagar nada).
+não é usada é pedágio — desativar removendo o symlink em `~/.claude/skills/` (a pasta continua no repo).
+Os 35 symlinks de `~/.claude/skills/` batem 1:1 com os 35 `SKILL.md` de `skills-que-prestam/`.
 
 ## Convenções
 
@@ -67,12 +67,13 @@ não é usada é pedágio — desativar movendo para
   `SKILL.md` tem frontmatter YAML (`name`, `description` — a `description` indica *quando* acionar) seguido do corpo em
   Markdown. Pode trazer `scripts/`,
   `references/`, `assets/`, `examples/`.
-- **Achatar vs. aninhar:** skills de uso geral ficam **achatadas** no top-level (`pacotao-macaroca-de-skills/<nome>/`). Coleções com nomes
-  genéricos que colidiriam (`design`,
-  `brand`, `design-system`) ficam **aninhadas** sob um parent (`_design/<plugin>/`)
-  com o tree do upstream preservado, facilitando re-sync.
-- **Prefixo `_`:** diretórios `_design/`, `_anthropic/`, `_vendor/` não são skills ativáveis diretamente — são
-  coleções/metadados. `VENDOR.md` é a fonte de verdade sobre procedência.
+- **Organização:** as skills ativas ficam em pacotes temáticos numerados sob `skills-que-prestam/`
+  (`00-pacote-ide-e-documentacao`, `01-pacote-skills-medicas`, `02-pacote-skills-workspace`,
+  `03-pacote-skills-claude-nativas`, `04-pacote-skills-supabase-e-vercel`). Cada skill é ligada individualmente
+  por symlink em `~/.claude/skills/`.
+- **Prefixo `_`:** diretórios `_anthropic/` não são skills ativáveis diretamente — são coleções/metadados.
+  A reserva fria de skills vendorizadas foi extraída em 07-ago-2026 para o repo **`doutortenente/pacotao-macaroca-de-skills`**
+  (privado); o `VENDOR.md` com procedência e licença de cada item mora lá, em `reference/VENDOR.md`.
 - **Idioma:** respostas em **português** (`"language": "portuguese"` em
   `settings.json`). Mantenha docs/commits em pt-BR, consistentes com o repo.
 - **Sem segredos:** nunca commitar `.env`, chaves ou dados de paciente. O
@@ -81,7 +82,8 @@ não é usada é pedágio — desativar movendo para
 
 ## Navegação rápida (obrigatório — repo é pesado)
 
-Este repo tem **1.414 arquivos** versionados e **45 MB** em `pacotao-macaroca-de-skills/`. **Não varrer** `pacotao-macaroca-de-skills/` com Glob nem Read em
+Este repo tem **867 arquivos** versionados e **39 MB** em disco (a reserva de 24 MB / 572 arquivos saiu em
+07-ago-2026 para `doutortenente/pacotao-macaroca-de-skills`). **Não varrer** `skills-que-prestam/` com Glob nem Read em
 massa — é lento e queima contexto. Antes de grep, use o grafo: `graphify query "<pergunta>"` rodado de dentro do repo.
 
 | Precisa de         | Use primeiro                                                              |
@@ -101,11 +103,12 @@ Regenerar índice: `python3 ~/projetos/scripts/indices/build_claude_index.py`.
 
 ### Adicionar / vendorar uma nova skill
 
-1. Copie a skill para `pacotao-macaroca-de-skills/<nome>/` (achatada) ou `pacotao-macaroca-de-skills/_design/<plugin>/`
-   (aninhada, preservando o tree do upstream). Exclua `.git/` e `node_modules/`.
+1. Skill que vai entrar em serviço: copie para `skills-que-prestam/<pacote>/<nome>/` e ligue o symlink em
+   `~/.claude/skills/`. Skill de reserva (não ligada): vai para o repo `doutortenente/pacotao-macaroca-de-skills`,
+   em `plugins/pacotao/skills/<nome>/`. Exclua `.git/` e `node_modules/`.
 2. Garanta um `SKILL.md` válido na raiz da pasta da skill.
-3. **Registre em `pacotao-macaroca-de-skills/VENDOR.md`:** upstream, commit SHA fixado, licença e o que foi copiado. Sem entrada em
-   `VENDOR.md`, a skill não é rastreável/auditável.
+3. **Registre em `reference/VENDOR.md` do repo `doutortenente/pacotao-macaroca-de-skills`:** upstream, commit SHA
+   fixado, licença e o que foi copiado. Sem entrada em `VENDOR.md`, a skill não é rastreável/auditável.
 4. Se a skill exigir hooks, fie-os em `~/.claude/settings.json` (ver abaixo).
 
 ### Re-sincronizar com o upstream
@@ -146,7 +149,7 @@ Cobravam ~189 tokens por prompt sem nunca rodar. A skill continua no repo, invoc
 - superpowers → MIT (`_vendor/superpowers-LICENSE`); `prompt-improver`,
   `skill-creator`, `taste-skill`, `ui-ux-pro-max` → MIT (LICENSE própria).
 - `frontend-design-pro` e `bencium-…` → sem LICENSE no upstream; rever antes de redistribuir.
-- Detalhes completos (tabelas, SHAs, exceções) em **`pacotao-macaroca-de-skills/VENDOR.md`**.
+- Detalhes completos (tabelas, SHAs, exceções) em **`reference/VENDOR.md`** do repo `doutortenente/pacotao-macaroca-de-skills`.
 
 ## Regra clínica (PHI)
 

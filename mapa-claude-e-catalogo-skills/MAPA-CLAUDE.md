@@ -45,7 +45,7 @@
 Não usar `Glob **/skills/**` nem ler `_design/`/`_anthropic/` sem necessidade.
 
 ```bash
-python3 ~/projetos/scripts/indices/query_claude_index.py pacotao-macaroca-de-skills --clinical
+python3 ~/projetos/scripts/indices/query_claude_index.py skills --clinical
 python3 ~/projetos/scripts/indices/query_claude_index.py find engine.py
 python3 ~/projetos/scripts/indices/query_claude_index.py agents
 ```

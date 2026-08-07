@@ -363,7 +363,7 @@
 ## Consulta rápida
 
 ```bash
-python3 ~/projetos/scripts/indices/query_claude_index.py pacotao-macaroca-de-skills
+python3 ~/projetos/scripts/indices/query_claude_index.py skills
 python3 ~/projetos/scripts/indices/query_claude_index.py skill sasi-ingest-export
 python3 ~/projetos/scripts/indices/query_claude_index.py scripts
 python3 ~/projetos/scripts/indices/query_claude_index.py search zero alucinação
