@@ -2,16 +2,16 @@
 
 > Gerado 07-aug-2026 por `~/projetos/scripts/indices/build_claude_index.py`
 
-**Total:** 860 arquivos · 19.1 MB · 98,286 linhas · 469,905 tokens indexados · **60 skills**
+**Total:** 859 arquivos · 19.1 MB · 98,052 linhas · 468,576 tokens indexados · **60 skills**
 
 ## Por categoria
 
 | Categoria | Arq | Tokens | O que é |
 |---|---:|---:|---|
-| `other` | 471 | 355,950 | Revisar |
+| `other` | 470 | 355,949 | Revisar |
 | `skill_dev` | 67 | 104,507 | Superpowers + engenharia (TDD, plans, debugging…) |
 | `agent` | 11 | 4,850 | Subagentes — `agents/*.md` |
-| `mapa-claude-e-catalogo-skills` | 2 | 3,119 | Este índice |
+| `mapa-claude-e-catalogo-skills` | 2 | 1,791 | Este índice |
 | `root` | 5 | 1,479 | CLAUDE.md, README, VENDOR.md |
 | `vendor_blob` | 304 | 0 | Binários/pesados (só path, sem FTS) |
 
