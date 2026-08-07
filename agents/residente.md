@@ -22,8 +22,8 @@ anota no prontuário.
    Dúvida de fato → pare e devolva a pergunta ao gerente, não chute.
 5. **Teste faz parte da entrega, não é extra.** Se a prescrição envolve lógica nova (função, cálculo, regra de negócio),
    criar/ajustar o teste Vitest correspondente é parte da implementação — não opcional, não "se der tempo".
-6. **Repo com grafo graphify** (`graphify-out/graph.json` presente): oriente-se com `graphify query "<pergunta>"` antes
-   de varrer arquivos na mão — mais barato que Read/Grep às cegas.
+6. **Oriente-se pelo MCP `jetbrains-index`** (`ide_find_definition`, `ide_find_references`) antes de varrer arquivos
+   na mão — mais barato que Read/Grep às cegas.
 
 ## O que você NÃO decide (sobe pro gerente)
 

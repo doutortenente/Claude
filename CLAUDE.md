@@ -84,7 +84,7 @@ Os 35 symlinks de `~/.claude/skills/` batem 1:1 com os 35 `SKILL.md` de `skills-
 
 Este repo tem **867 arquivos** versionados e **39 MB** em disco (a reserva de 24 MB / 572 arquivos saiu em
 07-ago-2026 para `doutortenente/pacotao-macaroca-de-skills`). **Não varrer** `skills-que-prestam/` com Glob nem Read em
-massa — é lento e queima contexto. Antes de grep, use o grafo: `graphify query "<pergunta>"` rodado de dentro do repo.
+massa — é lento e queima contexto. Antes de grep, use `ide_find_file` / `ide_search_text` do MCP `jetbrains-index`.
 
 | Precisa de         | Use primeiro                                                              |
 | ------------------ | ------------------------------------------------------------------------- |
@@ -132,7 +132,7 @@ que aconteceu até 22-jul-2026, quando
 | Onde                               | O quê                                                         |
 | ---------------------------------- | ------------------------------------------------------------- |
 | `~/.claude/settings.json`          | config global: modelo, tema, plugins, idioma                  |
-| `~/projetos/.claude/settings.json` | hooks do workspace (graphify, reindex no Stop)                |
+| `~/projetos/.claude/settings.json` | hooks do workspace (reindex do índice no Stop)                |
 | `<repo>/.claude/rules/*.md`        | regra path-scoped — só carrega dentro do repo que ela governa |
 | `**/settings.local.json`           | scratch de sessão (permissões pontuais) — no `.gitignore`     |
 

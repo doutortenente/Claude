@@ -1,8 +1,0 @@
-# Exclusões do grafo graphify (sintaxe = .gitignore; o .gitignore do repo já é respeitado)
-# vendor PROPRIETÁRIO (ver VENDOR.md) — não é código nosso, só inflaria o grafo
-skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/
-# plugins de design vendorizados (frontend-design-pro, taste-skill, ui-ux-pro-max) — vendor, não código do repo
-# índice SQLite binário do próprio repo — não é código-fonte
-memory/claude_index.db
-# caches / node_modules (se surgirem)
-node_modules/

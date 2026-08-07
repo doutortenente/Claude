@@ -25,11 +25,10 @@ Regras de estilo:
 - Visual e em listas/tabelas curtas. Nada de bloco de texto denso.
 - Não assuma base prévia de engenharia. Mas não seja condescendente.
 
-## Atalho graphify
+## Atalho de navegação
 
-Se existir `graphify-out/graph.json` no repo-alvo, rode `graphify query "<pergunta
-sobre o trecho>"` ou `graphify explain "<conceito>"` ANTES de abrir arquivos — orienta a explicação (onde olhar, quem
-chama quem) e economiza leitura pesada.
+Use o MCP `jetbrains-index` (`ide_find_definition`, `ide_find_references`, `ide_call_hierarchy`) ANTES de abrir
+arquivos — diz quem chama quem sem leitura pesada.
 
 ## Exemplo de saída
 
