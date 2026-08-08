@@ -50,5 +50,5 @@ ajuste ou se é só rodar de novo. Não rode a rotina — devolva a ordem pro ca
 
 ## Como saber se ele fez um bom trabalho
 - Resposta traz caminho do script, teste de fumaça com evidência (1-3 linhas de saída real, não afirmação vaga) e, se houver rotina, a linha `ORDEM PRO CACO: <comando exato>`.
-- Script novo/alterado segue o padrão da casa: dry-run por default com `--apply` para executar, backup `.bak-<timestamp>` antes de gravar, docstring no topo, saída em português.
+- Script novo/alterado segue o padrão da casa: dry-run por default com `--apply` para executar, sem gerar `.bak` (ordem SEM BACKUP de 10-jul-2026), docstring no topo, saída em português.
 - Ao revisar relatório do caco: veredito em 1 frase objetiva (ok / falhou por X / rodar de novo com Y), não narrativa.

@@ -15,7 +15,8 @@ agents/
 ├── README.md              este índice
 ├── CONTRIBUTING.md        como criar e alterar agente
 ├── CHANGELOG.md           o que mudou, quando e por quê
-├── docs/                  contrato de relatório, convenções, roteamento, template, auditoria
+├── docs/                  contrato de relatório, convenções, roteamento, template,
+│                          arsenal de scripts, auditoria
 ├── arquiteto/
 │   ├── arquiteto.md       o agente (o que o Claude Code lê)
 │   └── README.md          dependências, ferramentas, contexto, armadilhas
@@ -39,6 +40,7 @@ neutralizado em [docs/template-de-agente.md](docs/template-de-agente.md).
 | Criar ou alterar um agente | [CONTRIBUTING.md](CONTRIBUTING.md) e [docs/template-de-agente.md](docs/template-de-agente.md) |
 | Entender o padrão de escrita | [docs/convencoes.md](docs/convencoes.md) |
 | Saber o que todo agente devolve | [docs/contrato-de-relatorio.md](docs/contrato-de-relatorio.md) |
+| Achar o script de infra certo | [docs/arsenal-de-scripts.md](docs/arsenal-de-scripts.md) |
 | Ver o que mudou e quando | [CHANGELOG.md](CHANGELOG.md) |
 | Conferir se está tudo conforme | `python3 ~/projetos/scripts/claude/validar_frota.py` |
 

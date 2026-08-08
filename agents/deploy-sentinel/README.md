@@ -20,7 +20,7 @@ devolve veredito binário: PODE MERGEAR ou NÃO PODE MERGEAR.
 
 | Ferramenta | Para que serve aqui |
 |---|---|
-| `Bash` | Rodar `npm run typecheck`, `npm run lint`, `npm run build`, testes Vitest e `git diff`/`git status` — é o corpo do trabalho dele |
+| `Bash` | Rodar typecheck, lint, build e testes com o gerenciador que o repo usa (`pnpm` ou `npm`, decidido pelo lockfile), mais `git diff`/`git status` — é o corpo do trabalho dele |
 | `Read` | Ler arquivo de config (`package.json`, migration SQL) para confirmar o que o comando realmente checou |
 | `Grep` | Procurar `ENABLE ROW LEVEL SECURITY` / `CREATE POLICY` no diff de migration |
 | `Glob` | Localizar arquivo de migration ou de tipo TS gerado no diff |
@@ -30,7 +30,7 @@ Sem **Write/Edit**: proposital — o portão só relata, nunca conserta. Corrigi
 despacha `deploy-sentinel` não pode virar despachante através dele).
 
 ## Dependências
-- Scripts `npm run typecheck`, `npm run lint`, `npm run build` definidos no `package.json` da pasta `frontend` do
+- Scripts `typecheck`, `lint` e `build` definidos no `package.json` da pasta `frontend` do
   SASI, e script de teste Vitest quando existir.
 - Node 24 ativo (default do `nvm`) — é a versão que a Vercel usa em produção.
 - Repositório git com estado commitado limpo para o build de verificação (não valida working tree sujo).
