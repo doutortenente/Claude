@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AULA-TURBO // MODELO</title>
+<!--
+  ============================================================================
+  AULA-TURBO — MODELO DE APP INTERATIVO (joguinho de aprendizado)
+  ----------------------------------------------------------------------------
+  Este arquivo é AUTOSSUFICIENTE: zero dependências, zero internet, zero build.
+  Abre direto no navegador (celular ou PC). NÃO usa localStorage.
+
+  COMO USAR (para quem preenche):
+  1. Edite APENAS os blocos CONFIG e ESTAGIOS lá embaixo (zona "PREENCHA AQUI").
+  2. Todo o resto (estilo, lógica, calculadora) já funciona sozinho.
+  3. Regras de conteúdo: veja references/pedagogia.md e references/modo-medico.md.
+  ============================================================================
+-->
+<style>
+  :root{
+    --acento:#FF3B30;
+    --bg:#08090c;
+    --card:#111318;
+    --linha:#23262e;
+    --txt:#f4f5f7;
+    --txt-suave:#a8adb8;
+    --nerd:#a855f7;
+    --ok:#22c55e;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:64px;
+  }
+  /* Modo leitura fácil (amigável a dislexia): mais espaço, texto maior */
+  body.leitura-facil{font-size:18.5px;line-height:1.9;letter-spacing:.015em;word-spacing:.06em}
+  body.leitura-facil .bloco-txt,body.leitura-facil .nerd-item{letter-spacing:.02em}
+
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  strong{color:#fff;font-weight:800}
+  .nerd-item strong{color:#e9d5ff}
+
+  /* ---------- HUD / cabeçalho ---------- */
+  header.hud{
+    background:#0c0e13;
+    border-bottom:1px solid var(--linha);
+    padding:12px 16px;
+  }
+  /* aviso de fallback (aparece se o JavaScript não rodar na pré-visualização) */
+  .aviso{border:1px solid var(--linha);background:rgba(255,255,255,.04);border-radius:12px;
+    padding:16px;color:var(--txt-suave);font-size:14px;line-height:1.65;margin-bottom:16px}
+  .aviso b{color:#fff}
+  .hud-top{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:960px;margin:0 auto}
+  .tagline{font-size:10px;letter-spacing:.32em;color:var(--acento);font-weight:800;font-style:italic;text-transform:uppercase}
+  .titulo-app{font-size:19px;font-weight:900;letter-spacing:-.02em;margin:2px 0 0}
+  .titulo-app .sub{color:#5a5f6b;font-weight:400;font-size:13px}
+  .btn-leitura{
+    background:var(--card);border:1px solid var(--linha);color:var(--txt-suave);
+    font-size:11px;font-weight:800;padding:8px 10px;border-radius:9px;cursor:pointer;white-space:nowrap;
+  }
+  .btn-leitura.on{border-color:var(--ok);color:var(--ok)}
+  .progress-wrap{max-width:960px;margin:10px auto 0;display:flex;align-items:center;gap:12px}
+  .progress-label{font-size:11px;color:var(--txt-suave);font-weight:800;white-space:nowrap}
+  .progress-label b{color:var(--ok)}
+  .bar{flex:1;height:7px;background:#1b1e25;border-radius:99px;overflow:hidden}
+  .bar-fill{height:100%;background:linear-gradient(90deg,#ef4444,#eab308,#22c55e);transition:width .6s ease;border-radius:99px}
+
+  /* ---------- layout ---------- */
+  main{max-width:960px;margin:0 auto;padding:16px}
+
+  /* ---------- navegação de estágios ---------- */
+  .nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+  @media(min-width:640px){.nav{grid-template-columns:repeat(8,1fr)}}
+  .nav button{
+    background:transparent;border:2px solid var(--linha);color:var(--txt-suave);
+    padding:10px 4px;border-radius:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
+    transition:transform .1s,border-color .15s,background .15s;font-family:inherit;
+  }
+  .nav button .emj{font-size:19px;line-height:1}
+  .nav button .tag{font-size:9px;font-weight:900;letter-spacing:.02em}
+  .nav button.ativo{background:#fff;color:#000;border-color:#fff;transform:translateY(-2px)}
+  .nav button.feito{border-color:rgba(34,197,94,.5);color:var(--ok);background:rgba(34,197,94,.07)}
+
+  /* ---------- painel do estágio ---------- */
+  .estagio{position:relative;border:1px solid var(--linha);border-radius:14px;overflow:hidden;margin-bottom:16px;
+    background:linear-gradient(160deg,rgba(255,255,255,.035),transparent)}
+  .estagio .faixa{position:absolute;top:0;right:0;height:100%;width:5px;background:var(--acento)}
+  .codinome{display:inline-block;background:var(--acento);color:#000;font-size:10px;font-weight:900;
+    padding:5px 10px;letter-spacing:.05em;border-bottom-right-radius:10px}
+  .estagio-corpo{padding:18px 18px 20px}
+  .estagio-cab{display:flex;gap:14px;align-items:flex-start;margin-top:8px}
+  .emoji-box{flex-shrink:0;width:62px;height:62px;border:2px solid var(--acento);border-radius:13px;
+    display:flex;align-items:center;justify-content:center;font-size:32px;background:rgba(255,255,255,.03)}
+  .estagio-tit{font-size:23px;font-weight:900;letter-spacing:-.02em;line-height:1.15;text-transform:uppercase;font-style:italic;margin:0}
+  @media(min-width:640px){.estagio-tit{font-size:30px}}
+  .missao{display:flex;gap:8px;margin-top:12px;color:var(--txt-suave);font-size:14px}
+  .missao .lbl{font-weight:900;text-transform:uppercase;color:var(--txt);flex-shrink:0}
+  .tldr{margin:18px 0 2px;border-left:4px solid var(--acento);background:rgba(255,255,255,.03);
+    padding:12px 16px;border-radius:0 10px 10px 0}
+  .tldr .k{font-size:10px;font-weight:900;color:var(--acento);letter-spacing:.06em;text-transform:uppercase}
+  .tldr .v{font-size:18px;font-weight:900;font-style:italic;letter-spacing:-.01em;margin-top:3px}
+  @media(min-width:640px){.tldr .v{font-size:21px}}
+
+  /* ---------- blocos de conteúdo ---------- */
+  .blocos{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px}
+  @media(min-width:640px){.blocos{grid-template-columns:1fr 1fr}}
+  .bloco{border:1px solid var(--linha);border-radius:12px;padding:16px;background:rgba(255,255,255,.012);transition:border-color .15s}
+  .bloco:hover{border-color:#3a3f49}
+  .bloco-cab{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px}
+  .bloco-anc{font-size:28px;line-height:1;flex-shrink:0}
+  .bloco-seg{font-size:9px;font-weight:900;color:#4a4f5a;letter-spacing:.18em;text-transform:uppercase}
+  .bloco-tit{font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;margin:2px 0 0}
+  .bloco-txt{font-size:14.5px;color:#cfd3db;margin:0}
+
+  /* ---------- modo nerd ---------- */
+  .nerd{border:2px dashed rgba(168,85,247,.42);background:rgba(168,85,247,.07);border-radius:12px;margin-bottom:18px;overflow:hidden}
+  .nerd-btn{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;
+    background:transparent;border:0;color:var(--txt);padding:15px 16px;cursor:pointer;text-align:left;font-family:inherit}
+  .nerd-btn .ico{width:42px;height:42px;flex-shrink:0;border:1px solid var(--nerd);border-radius:9px;
+    display:flex;align-items:center;justify-content:center;font-size:20px}
+  .nerd-btn .k{font-size:10px;font-weight:900;color:#c084fc;letter-spacing:.14em;text-transform:uppercase}
+  .nerd-btn .t{font-size:15px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.01em;margin-top:2px}
+  .nerd-btn .chev{font-size:20px;color:#c084fc;flex-shrink:0}
+  .nerd-corpo{padding:2px 16px 18px;border-top:1px solid rgba(168,85,247,.2)}
+  .nerd-item{display:flex;gap:12px;align-items:flex-start;border-left:2px solid rgba(168,85,247,.35);
+    padding:6px 0 6px 14px;margin-top:12px}
+  .nerd-item .n{font-size:10px;font-weight:900;color:var(--nerd);margin-top:3px;flex-shrink:0}
+  .nerd-item p{margin:0;font-size:14px;color:#e4d4f6}
+
+  /* ---------- caso final ---------- */
+  .caso{border:1px solid var(--linha);border-radius:12px;padding:16px;margin-bottom:18px;background:rgba(255,255,255,.02)}
+  .caso .k{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--acento)}
+  .caso .txt{font-size:14.5px;color:#cfd3db;margin-top:6px}
+
+  /* ---------- calculadora bayesiana (opcional) ---------- */
+  .calc{border:1px solid var(--linha);border-radius:14px;margin-bottom:18px;overflow:hidden;background:var(--card)}
+  .calc-cab{background:rgba(255,255,255,.03);border-bottom:1px solid var(--linha);padding:13px 16px;
+    display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .calc-cab .t{font-size:13px;font-weight:900;letter-spacing:.02em}
+  .calc-cab .s{font-size:11px;color:var(--txt-suave)}
+  .calc-corpo{padding:16px}
+  .calc-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:640px){.calc-grid{grid-template-columns:1fr 1fr 1fr}}
+  .calc-passo{background:rgba(255,255,255,.02);border:1px solid var(--linha);border-radius:10px;padding:14px;position:relative}
+  .calc-passo .p{position:absolute;top:-9px;left:12px;background:var(--card);border:1px solid var(--linha);
+    border-radius:6px;font-size:10px;font-weight:900;color:var(--txt-suave);padding:2px 7px}
+  .calc-passo label{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--txt-suave);display:block;margin:4px 0 7px}
+  .calc-passo input{width:100%;background:#05060a;border:1px solid var(--linha);border-radius:8px;color:#fff;
+    font-family:ui-monospace,monospace;font-size:19px;padding:9px 11px}
+  .calc-passo input:focus{outline:none;border-color:var(--acento)}
+  .resultado{font-family:ui-monospace,monospace;font-size:34px;font-weight:800;line-height:1.1}
+  .odds{margin-top:14px;background:rgba(255,255,255,.02);border:1px solid var(--linha);border-radius:9px;
+    padding:11px 13px;font-family:ui-monospace,monospace;font-size:12px;color:var(--txt-suave)}
+  .odds b{color:#67c9ff}
+  .decisao{margin-top:14px;display:flex;gap:12px;align-items:center;border-top:1px solid var(--linha);padding-top:14px}
+  .decisao .dot{width:44px;height:44px;flex-shrink:0;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .decisao .dtxt{font-size:13.5px}
+  .presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .presets button{background:#05060a;border:1px solid var(--linha);color:var(--txt-suave);font-size:11px;
+    font-weight:700;padding:6px 9px;border-radius:7px;cursor:pointer;font-family:inherit}
+  .presets button:hover{border-color:var(--acento);color:#fff}
+
+  /* ---------- ações ---------- */
+  .acoes{display:flex;flex-direction:column;gap:10px;margin:6px 0 30px}
+  @media(min-width:640px){.acoes{flex-direction:row}}
+  .btn{flex:1;padding:16px;font-size:13px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+    border-radius:11px;cursor:pointer;border:2px solid;display:flex;align-items:center;justify-content:center;gap:9px;font-family:inherit;transition:transform .1s}
+  .btn:active{transform:scale(.98)}
+  .btn-feito{background:#fff;color:#000;border-color:#fff}
+  .btn-feito.done{background:rgba(34,197,94,.12);color:var(--ok);border-color:var(--ok)}
+  .btn-prox{background:transparent;color:var(--txt);border-color:#2c313b}
+  .btn-prox:hover{background:rgba(255,255,255,.05)}
+
+  /* flash de missão cumprida */
+  .flash{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .25s}
+  .flash.show{opacity:1}
+  .flash .card{background:var(--card);border:2px solid var(--ok);border-radius:16px;padding:28px 34px;text-align:center;transform:scale(.9);transition:transform .25s}
+  .flash.show .card{transform:scale(1)}
+  .flash .big{font-size:44px}
+  .flash .msg{font-size:16px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--ok);margin-top:6px}
+
+  footer{max-width:960px;margin:0 auto;padding:26px 16px;border-top:1px solid var(--linha);
+    color:#5a5f6b;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  footer .r{color:var(--acento);margin-bottom:6px}
+</style>
+</head>
+<body>
+  <header class="hud">
+    <div class="hud-top">
+      <div>
+        <div class="tagline" id="tagline"></div>
+        <h1 class="titulo-app"><span id="titulo-app"></span> <span class="sub" id="subtitulo"></span></h1>
+      </div>
+      <button class="btn-leitura" id="btn-leitura" onclick="toggleLeitura()">🔤 Leitura fácil</button>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><b id="p-feito">0</b>/<span id="p-total">0</span> estágios</div>
+      <div class="bar"><div class="bar-fill" id="bar-fill" style="width:0%"></div></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="nav" id="nav"></div>
+    <div id="calc-slot"></div>
+    <div id="estagio-slot">
+      <noscript><div class="aviso">⚠️ Este joguinho precisa de JavaScript. Abra o arquivo no <b>navegador do celular</b> (Safari/Chrome) ou leia a versão <b>.md</b>.</div></noscript>
+      <div class="aviso" id="aviso-js">📱 <b>Carregando o jogo…</b><br>Se esta mensagem não sumir em 1–2 segundos, a pré-visualização não está rodando o joguinho: toque em <b>abrir no navegador</b> (Safari/Chrome) ou baixe o arquivo e abra por lá. Todo o conteúdo também está no arquivo <b>.md</b> que enviei junto.</div>
+    </div>
+    <div class="acoes" id="acoes" style="display:none">
+      <button class="btn btn-feito" id="btn-feito" onclick="confirmar()"></button>
+      <button class="btn btn-prox" id="btn-prox" onclick="proximo()">Próximo nível ▸</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="r" id="rodape-r"></div>
+    <div id="rodape-1"></div>
+    <div id="rodape-2"></div>
+  </footer>
+
+  <div class="flash" id="flash"><div class="card"><div class="big">🏆</div><div class="msg">Missão cumprida</div></div></div>
+
+<script>
+/* ==========================================================================
+   ▼▼▼ ZONA "PREENCHA AQUI" ▼▼▼
+   Edite SÓ estes dois blocos. Conteúdo = clareza de criança de 12 anos na
+   superfície + profundidade de especialista no Modo Nerd (técnica de Feynman).
+   ========================================================================== */
+
+const CONFIG = {
+  tagline: "TOP SECRET // PROTOCOLO EXEMPLO",
+  tituloApp: "AULA-TURBO",
+  subtitulo: "/modelo_demo",
+  acento: "#FF3B30",
+  rodape: {
+    r: "// MODELO DE DEMONSTRAÇÃO",
+    l1: "Troque este conteúdo pelo seu tema",
+    l2: "© AULA-TURBO",
+  },
+  // Para temas médicos/diagnóstico, ligue a calculadora bayesiana:
+  // calculadoraBayes: { presetsPre:[{label:"Wells baixo", v:1.3}], presetsLR:[{label:"AngioTC +", v:25}] }
+  calculadoraBayes: null,
+};
+
+const ESTAGIOS = [
+  {
+    codinome: "ESTÁGIO 01 // BRIEFING",
+    titulo: "Este é o título do estágio",
+    emoji: "🧠",
+    cor: "#FF3B30",
+    tldr: "Uma frase impactante que resume tudo em 1 linha.",
+    missao: "O que você vai dominar neste estágio, em uma frase.",
+    blocos: [
+      { ancora:"⚡", titulo:"Ideia central", texto:"Um parágrafo curto (2–3 linhas). Use **negrito** nos termos que importam. Uma ideia por bloco." },
+      { ancora:"🎯", titulo:"Por que importa", texto:"Explique o **porquê** com uma analogia concreta antes de qualquer abstração." },
+      { ancora:"🔍", titulo:"Como funciona", texto:"Mostre o mecanismo por baixo dos panos, mas ainda simples." },
+      { ancora:"💥", titulo:"O que dá errado", texto:"O erro clássico que este conceito evita." },
+    ],
+    nerd: {
+      titulo: "Arquivo confidencial — aprofundamento técnico",
+      itens: [
+        "Aqui entra o **jargão real**, fórmulas e mecanismos que um especialista usaria.",
+        "Inclua **referências primárias** verificadas (autor, revista, ano).",
+      ],
+    },
+    // caso: { titulo:"Missão final", texto:"Opcional: um caso real para aplicar tudo." },
+  },
+];
+
+/* ▲▲▲ FIM DA ZONA "PREENCHA AQUI" ▲▲▲ ========================================= */
+
+
+/* ==========================================================================
+   MOTOR DO JOGO — não precisa editar daqui para baixo.
+   ========================================================================== */
+const S = { ativo:0, completos:new Set(), nerd:new Set(), leitura:false };
+
+const bold = t => String(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+const el = (tag, cls, html) => { const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e; };
+
+function initEstatico(){
+  document.documentElement.style.setProperty('--acento', CONFIG.acento || '#FF3B30');
+  document.getElementById('tagline').textContent = CONFIG.tagline || '';
+  document.getElementById('titulo-app').textContent = CONFIG.tituloApp || '';
+  document.getElementById('subtitulo').textContent = CONFIG.subtitulo || '';
+  document.getElementById('p-total').textContent = ESTAGIOS.length;
+  document.getElementById('rodape-r').textContent = CONFIG.rodape?.r || '';
+  document.getElementById('rodape-1').textContent = CONFIG.rodape?.l1 || '';
+  document.getElementById('rodape-2').textContent = CONFIG.rodape?.l2 || '';
+}
+
+function toggleLeitura(){
+  S.leitura = !S.leitura;
+  document.body.classList.toggle('leitura-facil', S.leitura);
+  document.getElementById('btn-leitura').classList.toggle('on', S.leitura);
+}
+
+function renderNav(){
+  const nav = document.getElementById('nav');
+  nav.innerHTML = '';
+  ESTAGIOS.forEach((e,i)=>{
+    const b = el('button');
+    if(i===S.ativo) b.classList.add('ativo');
+    else if(S.completos.has(i)) b.classList.add('feito');
+    b.innerHTML = `<span class="emj">${e.emoji||'▪'}</span><span class="tag">E${String(i+1).padStart(2,'0')}</span>`;
+    b.onclick = ()=>{ S.ativo=i; render(); window.scrollTo({top:0,behavior:'smooth'}); };
+    nav.appendChild(b);
+  });
+}
+
+function renderProgresso(){
+  const pct = Math.round((S.completos.size/ESTAGIOS.length)*100);
+  document.getElementById('p-feito').textContent = S.completos.size;
+  document.getElementById('bar-fill').style.width = pct+'%';
+}
+
+function renderEstagio(){
+  const e = ESTAGIOS[S.ativo];
+  document.documentElement.style.setProperty('--acento', e.cor || CONFIG.acento || '#FF3B30');
+  const slot = document.getElementById('estagio-slot');
+  slot.innerHTML = '';
+
+  // painel principal
+  const p = el('div','estagio');
+  p.appendChild(el('div','faixa'));
+  p.appendChild(el('div','codinome', e.codinome||''));
+  const corpo = el('div','estagio-corpo');
+  const cab = el('div','estagio-cab');
+  cab.appendChild(el('div','emoji-box', e.emoji||'▪'));
+  const cabTxt = el('div');
+  cabTxt.appendChild(el('h2','estagio-tit', e.titulo||''));
+  if(e.missao) cabTxt.appendChild(el('div','missao', `<span class="lbl">Missão:</span> <span>${bold(e.missao)}</span>`));
+  cab.appendChild(cabTxt);
+  corpo.appendChild(cab);
+  if(e.tldr) corpo.appendChild(el('div','tldr', `<div class="k">⚡ TL;DR // resumo rápido</div><div class="v">${bold(e.tldr)}</div>`));
+  p.appendChild(corpo);
+  slot.appendChild(p);
+
+  // blocos
+  if(e.blocos?.length){
+    const grid = el('div','blocos');
+    e.blocos.forEach((b,idx)=>{
+      const c = el('div','bloco');
+      c.innerHTML = `<div class="bloco-cab"><span class="bloco-anc">${b.ancora||'▪'}</span>
+        <div><div class="bloco-seg">Dados_${String(idx+1).padStart(2,'0')}</div>
+        <div class="bloco-tit">${b.titulo||''}</div></div></div>
+        <p class="bloco-txt">${bold(b.texto||'')}</p>`;
+      grid.appendChild(c);
+    });
+    slot.appendChild(grid);
+  }
+
+  // modo nerd
+  if(e.nerd){
+    const aberto = S.nerd.has(S.ativo);
+    const n = el('div','nerd');
+    const btn = el('button','nerd-btn');
+    btn.innerHTML = `<div style="display:flex;gap:12px;align-items:center">
+        <div class="ico">🔬</div>
+        <div><div class="k">Acesso restrito // deep dive</div><div class="t">${e.nerd.titulo||'Modo Nerd'}</div></div>
+      </div><div class="chev">${aberto?'▾':'▸'}</div>`;
+    btn.onclick = ()=>{ aberto?S.nerd.delete(S.ativo):S.nerd.add(S.ativo); renderEstagio(); };
+    n.appendChild(btn);
+    if(aberto){
+      const corpoN = el('div','nerd-corpo');
+      (e.nerd.itens||[]).forEach((it,i)=>{
+        corpoN.appendChild(el('div','nerd-item', `<span class="n">[${String(i+1).padStart(2,'0')}]</span><p>${bold(it)}</p>`));
+      });
+      n.appendChild(corpoN);
+    }
+    slot.appendChild(n);
+  }
+
+  // caso final (opcional)
+  if(e.caso){
+    slot.appendChild(el('div','caso', `<div class="k">🎖️ ${e.caso.titulo||'Missão final'}</div><div class="txt">${bold(e.caso.texto||'')}</div>`));
+  }
+}
+
+function renderAcoes(){
+  const done = S.completos.has(S.ativo);
+  const bf = document.getElementById('btn-feito');
+  bf.classList.toggle('done', done);
+  bf.innerHTML = done ? '✅ Estágio dominado' : '🔥 Confirmar missão';
+  document.getElementById('btn-prox').style.display = (S.ativo < ESTAGIOS.length-1) ? '' : 'none';
+}
+
+function confirmar(){
+  if(!S.completos.has(S.ativo)){
+    S.completos.add(S.ativo);
+    const f = document.getElementById('flash');
+    f.classList.add('show');
+    setTimeout(()=>f.classList.remove('show'), 850);
+  }
+  renderProgresso(); renderNav(); renderAcoes();
+}
+
+function proximo(){
+  if(S.ativo < ESTAGIOS.length-1){ S.ativo++; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+}
+
+/* ---------- calculadora bayesiana opcional ---------- */
+function renderCalc(){
+  const slot = document.getElementById('calc-slot');
+  slot.innerHTML = '';
+  const cfg = CONFIG.calculadoraBayes;
+  if(!cfg) return;
+  const c = el('div','calc');
+  c.innerHTML = `
+    <div class="calc-cab"><div class="t">🧮 Motor bayesiano</div><div class="s">pré-teste × LR = pós-teste</div></div>
+    <div class="calc-corpo">
+      <div class="calc-grid">
+        <div class="calc-passo"><div class="p">1 · PRÉ-TESTE</div><label>Probabilidade pré-teste (%)</label>
+          <input id="c-pre" type="number" min="0.1" max="99.9" step="0.1" value="20">
+          <div class="presets" id="c-pre-presets"></div></div>
+        <div class="calc-passo"><div class="p">2 · LR</div><label>Razão de verossimilhança</label>
+          <input id="c-lr" type="number" min="0.001" step="0.1" value="1">
+          <div class="presets" id="c-lr-presets"></div></div>
+        <div class="calc-passo"><div class="p">3 · RESULTADO</div><label>Probabilidade pós-teste</label>
+          <div class="resultado" id="c-pos">20.0%</div></div>
+      </div>
+      <div class="odds" id="c-odds"></div>
+      <div class="decisao"><div class="dot" id="c-dot">•</div><div class="dtxt" id="c-dtxt"></div></div>
+    </div>`;
+  slot.appendChild(c);
+
+  const presP = document.getElementById('c-pre-presets');
+  (cfg.presetsPre||[]).forEach(p=>{ const b=el('button',null,`${p.label} · ${p.v}%`); b.onclick=()=>{document.getElementById('c-pre').value=p.v; calc();}; presP.appendChild(b); });
+  const presL = document.getElementById('c-lr-presets');
+  (cfg.presetsLR||[]).forEach(p=>{ const b=el('button',null,`${p.label} · ${p.v}`); b.onclick=()=>{document.getElementById('c-lr').value=p.v; calc();}; presL.appendChild(b); });
+
+  document.getElementById('c-pre').addEventListener('input', calc);
+  document.getElementById('c-lr').addEventListener('input', calc);
+  calc();
+}
+
+function calc(){
+  const pre = Math.min(99.9, Math.max(0.1, parseFloat(document.getElementById('c-pre').value)||0.1))/100;
+  const lr = Math.max(0.0001, parseFloat(document.getElementById('c-lr').value)||1);
+  const oddsPre = pre/(1-pre);
+  const oddsPos = oddsPre*lr;
+  const pos = (oddsPos/(1+oddsPos))*100;
+  document.getElementById('c-pos').textContent = pos.toFixed(1)+'%';
+  document.getElementById('c-odds').innerHTML =
+    `odds pré ${oddsPre.toFixed(3)} × LR ${lr} = <b>odds pós ${oddsPos.toFixed(3)}</b>`;
+  let cor,txt,ic;
+  if(pos<2){cor='#22c55e';ic='✕';txt='PROVÁVEL EXCLUSÃO — considerar descartar com segurança.';}
+  else if(pos>80){cor='#ef4444';ic='✓';txt='ALTA PROBABILIDADE — iniciar conduta/tratamento.';}
+  else if(pos<=20){cor='#eab308';ic='!';txt='BAIXA — acompanhar e reavaliar; alerta para agravamento.';}
+  else {cor='#94a3b8';ic='?';txt='ZONA CINZENTA — seguir investigando (mais exames/reavaliação).';}
+  const dot=document.getElementById('c-dot'); dot.style.color=cor; dot.style.borderColor=cor; dot.textContent=ic;
+  document.getElementById('c-pos').style.color=cor;
+  document.getElementById('c-dtxt').textContent=txt;
+}
+
+function render(){ renderNav(); renderProgresso(); renderEstagio(); renderAcoes(); document.getElementById('acoes').style.display=''; }
+
+initEstatico();
+renderCalc();
+render();
+</script>
+</body>
+</html>
