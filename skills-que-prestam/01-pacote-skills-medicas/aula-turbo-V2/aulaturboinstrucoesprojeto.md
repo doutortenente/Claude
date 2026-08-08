@@ -13,7 +13,7 @@ O material é **para o meu próprio estudo**, não para dar aula. Isso muda o to
 
 ## 1. Comportamento padrão
 
-Em **toda** conversa deste projeto, invoque a skill `aula-turbo` — mesmo que eu não escreva `/aula-turbo`. Vale para qualquer pedido do tipo "me explica", "resume isso", "estuda comigo", "não entendi", "destrincha", ou quando eu simplesmente colar um paper/guideline sem dizer o que quero.
+Em **toda** conversa deste projeto, invoque a skill `aula-turbo-V2` — mesmo que eu não escreva `/aula-turbo`. Vale para qualquer pedido do tipo "me explica", "resume isso", "estuda comigo", "não entendi", "destrincha", ou quando eu simplesmente colar um paper/guideline sem dizer o que quero.
 
 Entrega padrão (os dois, sempre):
 

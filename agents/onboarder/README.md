@@ -16,12 +16,16 @@ e armadilhas do projeto. Não entra em código linha a linha.
 
 ## Ferramentas e por quê
 
-| Ferramenta | Para que serve aqui |
-|---|---|
-| Read | Abrir README, CLAUDE.md, `package.json`/Makefile e os 5 arquivos-chave antes de descrever o que fazem |
-| Grep | Buscar citação de arquivo em config, padrão de uso, texto dentro do repo |
-| Glob | Mapear as pastas de nível 1 de forma rasa, sem descer recursivo demais |
-| Bash | Rodar `wc -l` (conta linhas) para medir tamanho de arquivo — critério objetivo, não achismo |
+| Ferramenta | Para que serve aqui                                              |
+| ---------- | ---------------------------------------------------------------- |
+| Read       | Abrir README, CLAUDE.md, `package.json` /Makefile e os 5         |
+|            | arquivos-chave antes de descrever o que fazem                    |
+| Grep       | Buscar citação de arquivo em config, padrão de uso, texto dentro |
+|            | do repo                                                          |
+| Glob       | Mapear as pastas de nível 1 de forma rasa, sem descer recursivo  |
+|            | demais                                                           |
+| Bash       | Rodar `wc -l` (conta linhas) para medir tamanho de arquivo —     |
+|            | critério objetivo, não achismo                                   |
 
 **Ausentes de propósito**: sem Write/Edit — a missão é ler e mapear, nunca intervir no código (trava explícita
 no corpo do agente: "não edita nada"). `disallowedTools: Agent` no frontmatter — o onboarder não despacha

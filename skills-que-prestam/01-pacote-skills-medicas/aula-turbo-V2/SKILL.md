@@ -1,5 +1,5 @@
 ---
-name: aula-turbo
+name: aula-turbo-V2
 description: >-
   Transforma conteúdo complexo (artigo, guideline, paper, tema, conceito
   difícil) num "joguinho" de aprendizado: um app web gamificado
