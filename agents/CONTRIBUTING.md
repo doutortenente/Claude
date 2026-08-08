@@ -5,10 +5,18 @@
 ```bash
 cd ~/projetos/claude
 git checkout -b frota-<nome>
-cp agents/_template.md agents/<nome>.md
-# preencher; ver agents/docs/convencoes.md
+mkdir agents/<nome>
+# copiar os blocos de agents/docs/template-de-agente.md para agents/<nome>/<nome>.md
+# escrever agents/<nome>/README.md com a documentação (SEM cabeçalho YAML)
 python3 ~/projetos/scripts/claude/validar_frota.py --strict
 ```
+
+**Uma pasta por agente**, com o arquivo do agente e o `README.md` de documentação ao lado. O nome do
+arquivo não precisa bater com nada — a identidade vem do campo `name` no cabeçalho — mas usar
+`<nome>/<nome>.md` mantém a pasta legível.
+
+**O `README.md` da pasta não pode ter cabeçalho YAML.** A varredura é recursiva e carrega todo `.md`
+com `name` + `description` como agente; um README com cabeçalho vira agente fantasma.
 
 Antes de escrever, responda 3 perguntas. Se travar em qualquer uma, o agente não deve existir:
 
@@ -31,7 +39,9 @@ arquivo em `docs/` e o agente aponta pra lá.
 ## Checklist antes do commit
 
 - [ ] `validar_frota.py --strict` sai com código 0
-- [ ] Frontmatter tem exatamente 4 campos: `name`, `description`, `tools`, `model`
+- [ ] Agente mora em `agents/<nome>/<nome>.md`, com `README.md` de documentação ao lado
+- [ ] O `README.md` da pasta **não** tem cabeçalho YAML (senão vira agente fantasma)
+- [ ] Cabeçalho só usa campos da spec oficial; `name` e `description` são obrigatórios
 - [ ] `description` diz QUANDO delegar, não resume o procedimento
 - [ ] `description` diz de qual agente vizinho ele se diferencia
 - [ ] Corpo tem as 4 seções na ordem: identidade → `## Método` → `## Formato de saída` → `## Travas`
@@ -59,7 +69,98 @@ Conventional Commits: `feat(agents):`, `docs(agents):`, `fix(agents):`.
 ## Onde NÃO mexer
 
 | Coisa | Por quê |
-|---|---|
-| `~/.claude/agents` | É symlink. Editar lá edita aqui, mas sem git e sem revisão |
-| `agents/docs/contrato-de-relatorio.md` sozinho | Todo agente herda esse formato — mudança afeta os 18 de uma vez |
-| Script de infra dentro deste repo | Casa única é `~/projetos/scripts/`; o validador da frota mora em `scripts/claude/` |
+| ----- | ------- |
+| `     | É       |
+| ~/    |         |
+| .c    | sym     |
+| l     |         |
+| au    | lin     |
+| d     |         |
+| e/    | k.      |
+| a     |         |
+| ge    | Edi     |
+| n     |         |
+| ts    | tar     |
+| `     | lá      |
+|       | edi     |
+|       | ta      |
+|       | aqu     |
+|       | i,      |
+|       | mas     |
+|       | sem     |
+|       | git     |
+|       | e       |
+|       | sem     |
+|       | rev     |
+|       | isã     |
+|       | o       |
+| `     | Tod     |
+| ag    |         |
+| en    | o       |
+| t     |         |
+| s/    | age     |
+| d     |         |
+| oc    | nte     |
+| s     |         |
+| /c    | her     |
+| o     |         |
+| nt    | da      |
+| r     |         |
+| at    | ess     |
+| o     |         |
+| -d    | e       |
+| e     |         |
+| -r    | for     |
+| e     |         |
+| la    | mat     |
+| t     |         |
+| or    | o —     |
+| i     |         |
+| o.    | mud     |
+| m     |         |
+| d`    | anç     |
+| so    | a       |
+| z     |         |
+| in    | afe     |
+| h     |         |
+| o     | tao     |
+|       | s18     |
+|       | de      |
+|       | uma     |
+|       | vez     |
+| Sc    | Cas     |
+| r     |         |
+| ip    | a       |
+| t     |         |
+| de    | úni     |
+| in    | ca      |
+| f     |         |
+| ra    | é       |
+| de    | `       |
+| n     | ~/      |
+| tr    | pro     |
+| o     |         |
+| de    | jet     |
+| s     |         |
+| te    | os/     |
+| re    | scr     |
+| p     |         |
+| o     | ipt     |
+|       | s/`     |
+|       | ; o     |
+|       | val     |
+|       | ida     |
+|       | dor     |
+|       | da      |
+|       | fro     |
+|       | ta      |
+|       | mor     |
+|       | aem     |
+|       | `sc     |
+|       |  ri     |
+|       | p t     |
+|       | s/      |
+|       | cla     |
+|       |  ud     |
+|       | e /     |
+|       | `       |

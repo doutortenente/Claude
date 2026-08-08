@@ -7,16 +7,26 @@ ela altera o roteamento de toda a frota.
 
 ### Adicionados (8)
 
-| agente | model | lacuna que fecha |
-|---|---|---|
-| `arquiteto` | opus | Plano de FROTA (quem despachar, em que ordem) — o `Plan` nativo só desenha a implementação |
-| `segurador` | opus | Segredo vazando, chave de servidor no navegador, PHI em log. O `deploy-sentinel` só olhava RLS e build |
-| `testador` | sonnet | Teste escrito por quem NÃO implementou — teste do autor herda o viés do autor |
-| `otimizador` | opus | Desempenho com baseline medido. Ninguém verificava se estava rápido, só se estava correto |
-| `refatorador` | sonnet | Estrutura sem mudar comportamento, com teste verde obrigatório antes de entrar |
-| `documentador` | sonnet | Doc de repositório (README, CLAUDE.md, changelog). A `secretaria` cuida da memória do operador, não disso |
-| `onboarder` | sonnet | Mapa de repositório inteiro. O `code-explainer` cobre 1 arquivo; o `batedor`, 1 pergunta |
-| `zelador` | haiku | Boletim de saúde com checklist fixo e comparável entre execuções |
+| agente         | model  | lacuna que fecha                                    |
+| -------------- | ------ | --------------------------------------------------- |
+| `arquiteto`    | opus   | Plano de FROTA (quem despachar, em que ordem) — o   |
+|                |        | `Plan` nativo só desenha a implementação            |
+| `segurador`    | opus   | Segredo vazando, chave de servidor no navegador,    |
+|                |        | PHI em log. O `deploy-sentinel` só olhava RLS e     |
+|                |        | build                                               |
+| `testador`     | sonnet | Teste escrito por quem NÃO implementou — teste do   |
+|                |        | autor herda o viés do autor                         |
+| `otimizador`   | opus   | Desempenho com baseline medido. Ninguém             |
+|                |        | verificavase estava rápido, só se estava correto    |
+| `refatorador`  | sonnet | Estrutura sem mudar comportamento, com teste verde  |
+|                |        | obrigatório antes de entrar                         |
+| `documentador` | sonnet | Doc de repositório (README, CLAUDE.md, changelog).  |
+|                |        | A `secretaria` cuida da memória do operador, não    |
+|                |        | disso                                               |
+| `onboarder`    | sonnet | Mapa de repositório inteiro. O `code-explainer`     |
+|                |        | cobre 1 arquivo; o `batedor` , 1 pergunta           |
+| `zelador`      | haiku  | Boletim de saúde com checklist fixo e comparável    |
+|                |        | entre execuções                                     |
 
 ### Estrutura criada
 

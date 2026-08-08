@@ -1,6 +1,25 @@
 # Convenções da frota — como se escreve um agente aqui
 
-Régua para criar ou alterar qualquer `.md` desta pasta. Quem não segue, quebra no `validar_frota.py`.
+Régua para criar ou alterar qualquer agente. Quem não segue, quebra no `validar_frota.py`.
+
+## Uma pasta por agente
+
+```
+agents/<nome>/
+├── <nome>.md      o agente — cabeçalho YAML + corpo
+└── README.md      documentação — SEM cabeçalho YAML
+```
+
+A varredura de `agents/` é recursiva ([spec oficial](https://code.claude.com/docs/en/sub-agents.md)):
+todo `.md` com `name` + `description` no cabeçalho vira agente, em qualquer nível. Duas consequências
+que já morderam:
+
+1. **README de pasta não leva cabeçalho YAML** — viraria um segundo agente com o mesmo assunto.
+2. **Não existe forma documentada de excluir um arquivo da varredura.** Não há `.agentignore`, prefixo
+   especial nem campo `disabled`. A única saída é o arquivo não ter cabeçalho válido. Foi assim que o
+   antigo `_template.md` virou um agente fantasma chamado `nome-em-kebab-case`.
+
+O nome do arquivo não precisa bater com o campo `name` — a identidade vem só do cabeçalho.
 
 ## Frontmatter
 

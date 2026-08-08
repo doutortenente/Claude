@@ -6,12 +6,37 @@
 principal) despacha uma missão, o subagente executa isolado e devolve um relatório. Serve pra economizar
 contexto e pra especializar comportamento.
 
+## Estrutura
+
+Cada agente mora na própria pasta, com a documentação ao lado:
+
+```
+agents/
+├── README.md              este índice
+├── CONTRIBUTING.md        como criar e alterar agente
+├── CHANGELOG.md           o que mudou, quando e por quê
+├── docs/                  contrato de relatório, convenções, roteamento, template, auditoria
+├── arquiteto/
+│   ├── arquiteto.md       o agente (o que o Claude Code lê)
+│   └── README.md          dependências, ferramentas, contexto, armadilhas
+├── batedor/
+│   ├── batedor.md
+│   └── README.md
+└── … (18 pastas)
+```
+
+A varredura de `agents/` é **recursiva**: qualquer `.md` com `name` e `description` no cabeçalho vira agente,
+esteja em subpasta ou não. Por isso o `README.md` de cada pasta **não tem cabeçalho YAML** — se tivesse,
+viraria um agente fantasma na lista da frota. Foi o que aconteceu com o antigo `_template.md`, hoje
+neutralizado em [docs/template-de-agente.md](docs/template-de-agente.md).
+
 ## Como usar esta pasta
 
 | Você quer | Vá para |
 |---|---|
 | Saber qual agente chamar | tabela abaixo + [docs/roteamento.md](docs/roteamento.md) |
-| Criar ou alterar um agente | [CONTRIBUTING.md](CONTRIBUTING.md) e [`_template.md`](_template.md) |
+| Entender um agente a fundo | o `README.md` dentro da pasta dele |
+| Criar ou alterar um agente | [CONTRIBUTING.md](CONTRIBUTING.md) e [docs/template-de-agente.md](docs/template-de-agente.md) |
 | Entender o padrão de escrita | [docs/convencoes.md](docs/convencoes.md) |
 | Saber o que todo agente devolve | [docs/contrato-de-relatorio.md](docs/contrato-de-relatorio.md) |
 | Ver o que mudou e quando | [CHANGELOG.md](CHANGELOG.md) |
