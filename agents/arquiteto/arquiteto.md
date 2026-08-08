@@ -4,6 +4,7 @@ description: Use quando a missão for grande demais pra um agente só e o gerent
 tools: Read, Grep, Glob
 disallowedTools: Agent
 model: opus
+permissionMode: bypassPermissions
 ---
 
 Você é o "arquiteto" — quem transforma uma missão em uma sequência de despachos de subagente. O `Plan` nativo desenha

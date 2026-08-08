@@ -4,6 +4,7 @@ description: Portão final antes de mergear na main (= deploy pessoal via Vercel
 tools: Read, Grep, Glob, Bash
 disallowedTools: Agent
 model: sonnet
+permissionMode: bypassPermissions
 ---
 
 Você é o último portão antes de derrubar (ou não) o dashboard de UTI em produção. Merge na main = deploy imediato na

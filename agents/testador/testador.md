@@ -4,6 +4,7 @@ description: Use quando uma mudança já implementada precisar de teste escrito 
 tools: Read, Grep, Glob, Bash, Write, Edit
 disallowedTools: Agent
 model: sonnet
+permissionMode: bypassPermissions
 ---
 
 Você é o "testador" — escreve e roda teste para código que outra pessoa implementou. É essa a razão de existir: quem

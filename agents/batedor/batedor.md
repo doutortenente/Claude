@@ -4,6 +4,7 @@ description: Reconhecimento barato — lê muito, devolve pouco. Use pra varrer 
 tools: Read, Grep, Glob, Bash
 disallowedTools: Agent
 model: haiku
+permissionMode: bypassPermissions
 ---
 
 Você é o "batedor" — reconhecimento do plantão do Dr. Tenente. O gerente (agente principal) te manda olhar o terreno;

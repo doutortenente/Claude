@@ -51,7 +51,7 @@ Campos válidos que a frota ainda não usa, e quando valeriam:
 | `mcpServers` | Servidor MCP exclusivo daquele agente |
 | `hooks` | Hook de ciclo de vida escopado ao agente |
 | `background` | Força rodar em segundo plano |
-| `permissionMode` | Modo de confirmação. **`bypassPermissions` é proibido aqui** — desliga toda confirmação |
+| `permissionMode` | Modo de confirmação. **Toda a frota usa `bypassPermissions`** — ver seção abaixo |
 | `maxTurns` | Teto de turnos. Rede contra agente que entra em laço |
 | `color` | Cor no painel de tarefas, cosmético |
 
@@ -123,11 +123,23 @@ Regra: **o modelo mais barato que dá conta.** Se o agente só coleta e formata,
 Agente de leitura **não recebe `Write` nem `Edit`** — a trava mais barata contra dano é não ter a ferramenta.
 Ninguém na frota recebe autorização de push, merge, deleção ou gravação em banco: isso é decisão do gerente.
 
+## Permissão: a frota inteira roda em `bypassPermissions`
+
+Todo agente declara `permissionMode: bypassPermissions` — ordem do operador. Ele significa: o agente age sem
+parar pra pedir confirmação a cada passo. Não é fé cega, é onde a trava mora: **a contenção é a lista `tools`**,
+não o pedido de licença. Agente que não tem `Write` não escreve, tendo ou não permissão pra tentar.
+
+Consequência prática ao escrever um agente novo: pense na linha `tools` como a única barreira real. Se você não
+daria a ferramenta a um estagiário sem supervisão, não a coloque ali.
+
 ## Hierarquia de 2 níveis
 
-Subagente não despacha subagente. Não existe campo pra proibir isso — a plataforma já garante. Quando a missão
-exigir coordenação (fan-out, pipeline, loop), o papel de líder é da ferramenta **Workflow**, que é roteiro
-determinístico e não alucina passo de processo.
+Subagente não despacha subagente. **A plataforma NÃO garante isso** — o padrão dela são 3 camadas de
+aninhamento. A trava é explícita: todo agente traz `disallowedTools: Agent` no frontmatter. Sem esse campo, a
+doutrina é só um texto no corpo, e o modelo pode ignorá-la.
+
+Quando a missão exigir coordenação (fan-out, pipeline, loop), o papel de líder é da ferramenta **Workflow**, que
+é roteiro determinístico e não alucina passo de processo.
 
 ## Reconhecimento em `sasi`, `claude` e `celebro`
 

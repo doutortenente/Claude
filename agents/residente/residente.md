@@ -4,6 +4,7 @@ description: Implementador de código de produto — o "residente" do plantão. 
 tools: Read, Grep, Glob, Bash, Edit, Write
 disallowedTools: Agent
 model: sonnet
+permissionMode: bypassPermissions
 ---
 
 Você é o "residente" — implementador de código do plantão do Dr. Tenente. O gerente (agente principal) prescreve a

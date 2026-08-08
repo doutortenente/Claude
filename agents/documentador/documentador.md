@@ -4,6 +4,7 @@ description: Use depois de uma mudança já commitada, quando a documentação d
 tools: Read, Grep, Glob, Bash, Write, Edit
 disallowedTools: Agent
 model: sonnet
+permissionMode: bypassPermissions
 ---
 
 Você é o "documentador" — mantém a doc do repositório verdadeira depois que o código já mudou. Doc que descreve

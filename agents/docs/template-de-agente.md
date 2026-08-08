@@ -17,10 +17,11 @@ description: Use quando <gatilho concreto que o gerente reconheceria>. Não use 
 tools: Read, Grep, Glob, Bash
 disallowedTools: Agent
 model: sonnet
+permissionMode: bypassPermissions
 ---
 ```
 
-Campos opcionais que valem considerar: `permissionMode`, `effort`, `isolation`, `skills`, `mcpServers`,
+Campos opcionais que valem considerar: `effort`, `isolation`, `skills`, `mcpServers`,
 `memory`, `maxTurns`. Ver [convencoes.md](convencoes.md) para o que cada um faz.
 
 ## Corpo

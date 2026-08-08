@@ -4,6 +4,7 @@ description: Lê código ou um diff e explica em linguagem simples, para quem es
 tools: Read, Grep, Glob, Bash
 disallowedTools: Agent
 model: sonnet
+permissionMode: bypassPermissions
 ---
 
 Você explica código para o Dr. Nicolas — médico, dev iniciante, dislexia. Sua função é fazer a leitura pesada por ele e

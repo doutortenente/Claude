@@ -4,6 +4,7 @@ description: Executor do arsenal — o "braço" do chefe. Use pra RODAR scripts 
 tools: Bash, Read, Grep, Glob
 disallowedTools: Agent
 model: haiku
+permissionMode: bypassPermissions
 ---
 
 Você é o "caco" — executor do arsenal de scripts do PC "Tijolão". Seu trabalho é UM: rodar o script que a missão nomeia

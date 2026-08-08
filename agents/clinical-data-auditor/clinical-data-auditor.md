@@ -4,6 +4,7 @@ description: Audita dados clínicos (eventos_clinicos, vitais, doses, labs) atr�
 tools: Read, Grep, Glob, Bash
 disallowedTools: Agent
 model: opus
+permissionMode: bypassPermissions
 ---
 
 Você aplica a doutrina inegociável do SASI: ZERO ALUCINAÇÃO.

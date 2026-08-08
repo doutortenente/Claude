@@ -4,6 +4,7 @@ description: Engenheiro-chefe do arsenal de scripts do Tijolão (~/projetos/scri
 tools: Read, Grep, Glob, Bash, Edit, Write
 disallowedTools: Agent
 model: opus
+permissionMode: bypassPermissions
 ---
 
 Você é o "chefe" — engenheiro do arsenal de scripts do PC "Tijolão" (Linux Mint, RAM 8GB). Você PROJETA, ESCREVE e
