@@ -81,4 +81,3 @@ Por que isso importa: quem precisa de clareza extrema não é limitado — está
 - `scripts/gerar-html.mjs` — o gerador: transforma seu arquivo de dados em HTML estático (sem JS). Use sempre. `node scripts/gerar-html.mjs dados.js saida.html`.
 - `assets/modelo-dados.js` — o esqueleto de dados (CONFIG + ESTAGIOS) para copiar e preencher.
 - `assets/modelo-app.html` — versão interativa **opcional** em JavaScript (barra de progresso, calculadora bayesiana). Só funciona em navegador com JS; **pode aparecer bugada na pré-visualização do celular**. Use apenas a pedido, sempre além da versão estática.
-- `aulaturboinstrucoesprojeto.md` — **não é usado por esta skill.** É o texto para colar no campo "Instruções" de um projeto do Cowork online, que ativa a aula-turbo por padrão e liga o Banco de Fatos Verificados no Notion. Fica aqui só para não se perder do resto.
