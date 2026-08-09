@@ -8,13 +8,14 @@
 
 | Métrica | Valor | Como foi medido |
 | --- | ---: | --- |
-| Arquivos versionados | 909 | `git ls-files \| wc -l` |
+| Arquivos versionados | 923 | `git ls-files \| wc -l` |
 | Arquivos indexados | 917 | índice (exclui symlink, `ide/`, `.git`) |
+| Symlinks versionados | 7 | por isso indexados < versionados |
 | Arquivos em `skills-que-prestam/` | 848 | dos 917 indexados |
 | Disco sem histórico | 30 MB | `du -sh --exclude=.git` |
 | Disco com histórico | 67 MB | `du -sh` |
-| Linhas indexadas | 103.458 | `memory/MAPA-CLAUDE.md` |
-| Tokens indexados | 514.678 | `memory/MAPA-CLAUDE.md` |
+| Linhas indexadas | 103.487 | `memory/MAPA-CLAUDE.md` |
+| Tokens indexados | 514.941 | `memory/MAPA-CLAUDE.md` |
 | Skills ativas | 36 | pastas de topo nos 5 pacotes |
 | `SKILL.md` no repo | 71 | inclui as 3 skills de `.claude/skills/`, sub-skills aninhadas e `_anthropic/` |
 | Symlinks em `~/.claude/skills/` | 36 | batem 1:1 com as skills ativas |

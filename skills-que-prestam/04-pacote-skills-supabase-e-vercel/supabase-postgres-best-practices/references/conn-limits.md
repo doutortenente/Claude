@@ -1,7 +1,7 @@
 ---
 title: Set Appropriate Connection Limits
 impact: CRITICAL
-impactDescription: Prevent database crashes and mapa-claude-e-catalogo-skills exhaustion
+impactDescription: Prevent database crashes and memory exhaustion
 tags: connections, max-connections, limits, stability
 ---
 
@@ -17,7 +17,7 @@ show max_connections;  -- 500 (way too high for 4GB RAM)
 
 -- Each connection uses 1-3MB RAM
 -- 500 connections * 2MB = 1GB just for connections!
--- Out of mapa-claude-e-catalogo-skills errors under load
+-- Out of memory errors under load
 ```
 
 **Correct (calculate based on resources):**

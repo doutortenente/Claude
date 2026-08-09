@@ -76,7 +76,27 @@ find agents -mindepth 1 -maxdepth 1 -type d | wc -l     # subagentes + a pasta d
 
 Compare com a tabela "Números do repo" de `docs/REPOSITORY-INVENTORY.md`. Em `agents/`, subtraia 1 da contagem: `agents/docs/` é doutrina, não subagente.
 
-## 5. Relatório final (obrigatório, nesta forma)
+## 5. Find/replace em massa que vazou para skill de terceiro
+
+Já aconteceu **duas vezes**. Renomear uma pasta com busca-e-troca global atinge a palavra comum dentro da
+documentação vendorizada, e o estrago fica invisível: o arquivo continua válido, só passa a mentir.
+
+- `fdcb2f2` — trocou `skills` por `pacotao-macaroca-de-skills` dentro de texto corrido.
+- 09-ago-2026 — trocou a palavra inglesa `memory` por `mapa-claude-e-catalogo-skills` em 7 linhas de 5 arquivos:
+  "Out of **memory** errors" virou "Out of **mapa-claude-e-catalogo-skills** errors".
+
+Nome de pasta deste repo **não tem** o que fazer dentro de `skills-que-prestam/`, que é conteúdo de terceiro:
+
+```bash
+grep -rnE 'mapa-claude-e-catalogo-skills|pacotao-macaroca-de-skills|claude-steroid' skills-que-prestam/
+```
+
+Saída vazia = aprovado. Qualquer acerto é corrupção: leia a frase inteira e devolva a palavra original.
+
+**Prevenção:** ao renomear pasta, troque só o que é caminho — `grep -rl 'x/' | xargs sed -i 's|x/|y/|g'`, com a
+barra dentro do padrão. Nunca a palavra solta.
+
+## 6. Relatório final (obrigatório, nesta forma)
 
 | Item | Esperado | Encontrado | Veredito |
 | --- | --- | --- | --- |
@@ -85,5 +105,6 @@ Compare com a tabela "Números do repo" de `docs/REPOSITORY-INVENTORY.md`. Em `a
 | Symlinks quebrados | 0 | _n_ | OK / FALHA |
 | Índice | mais novo que os `.md` | velho / em dia | OK / FALHA |
 | Números do inventário | batem | _quais divergiram_ | OK / FALHA |
+| Nome de pasta dentro de skill de terceiro | 0 acertos | _n_ | OK / FALHA |
 
 Uma linha por item, sempre as cinco. Item não verificado é `[SEM_FONTE]`, nunca "OK" por otimismo. Cada FALHA leva o caminho exato do arquivo culpado.
