@@ -1,4 +1,4 @@
-# Claude-Steroid
+# claude
 
 **Repositório** (pasta de trabalho com histórico de tudo que mudou) canônico de configuração do Claude Code, a IA que
 roda no terminal: **skills** (procedimentos que ela sabe executar) e **subagentes** (ajudantes especializados), com a

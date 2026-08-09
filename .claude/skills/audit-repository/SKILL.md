@@ -88,7 +88,7 @@ documentação vendorizada, e o estrago fica invisível: o arquivo continua vál
 Nome de pasta deste repo **não tem** o que fazer dentro de `skills-que-prestam/`, que é conteúdo de terceiro:
 
 ```bash
-grep -rnE 'mapa-claude-e-catalogo-skills|pacotao-macaroca-de-skills|claude-steroid' skills-que-prestam/
+grep -rnE 'mapa-claude-e-catalogo-skills|pacotao-macaroca-de-skills|skills-que-prestam' skills-que-prestam/
 ```
 
 Saída vazia = aprovado. Qualquer acerto é corrupção: leia a frase inteira e devolva a palavra original.
