@@ -1,0 +1,323 @@
+# Decisões arquiteturais
+
+> O **porquê** que não cabe no código. Cada entrada registra uma decisão já tomada, o problema que ela resolveu, o que
+> foi jogado fora e como conferir que ainda vale.
+> A regra em uma linha está no [`CLAUDE.md`](../CLAUDE.md). Aqui está o motivo.
+
+**Registro, não debate.** Decisão listada aqui não se rediscute sem fato novo medido.
+
+| # | Decisão | Data |
+| ---: | --- | --- |
+| 1 | Casa única de config | 22-jul-2026 |
+| 2 | Casa única de script | 22-jul-2026 |
+| 3 | Skills em 5 pacotes temáticos | 01-ago-2026 |
+| 4 | Reserva fria fora deste repo | 07-ago-2026 |
+| 5 | Subagentes em pasta própria | 07-ago-2026 |
+| 6 | Push e merge sem confirmação | 28-jul-2026 |
+| 7 | Sem backup local | 10-jul-2026 |
+| 8 | Hook que não roda é removido | 22-jul-2026 |
+| 9 | Índice em `memory/`, `ide/` fora do indexador | 08-ago-2026 |
+| 10 | Só `auditor-do-repo` foi criado | 08-ago-2026 |
+| 11 | Nome Claude-Steroid; renomear é fase 2 | 08-ago-2026 |
+| 12 | Regras de PHI removidas da governança | 09-ago-2026 |
+| 13 | `_anthropic/` tem duas licenças; repo segue público | 09-ago-2026 |
+
+---
+
+### 1. Casa única de config, sem cópia no repo (22-jul-2026)
+
+**Decisão:** **config** (arquivo de ajuste que o programa lê ao ligar, como o protocolo impresso que fica colado na
+parede da UTI) mora só onde o Claude Code lê de verdade — nunca duplicada aqui dentro.
+
+**Problema que resolveu:** existiam `settings/` e `rules/` na raiz do repo que ninguém carregava. Eram fotocópia de um
+protocolo antigo pendurada numa parede errada: quem lia, lia a versão desatualizada, e quem editava, editava o papel
+que o sistema ignorava. Cópia num segundo lugar apodrece.
+
+**O que foi descartado e por quê:** descartado manter cópia "de referência" no repo, e descartado **symlink** (atalho
+que aponta para o arquivo verdadeiro) da config para dentro do repo — ordem do operador na mesma data: "symlink caga a
+organização". Symlink continua permitido só onde já era, nas skills e nos agentes.
+
+**Como verificar que continua valendo:**
+```bash
+ls -d ~/projetos/claude/settings ~/projetos/claude/rules 2>&1   # tem que dar "inexistente" nas duas
+```
+
+---
+
+### 2. Casa única de script em `~/projetos/scripts/` (22-jul-2026)
+
+**Decisão:** todo **script** de infraestrutura (arquivo de comandos automáticos, o equivalente a uma rotina fixa de
+enfermagem) mora em `~/projetos/scripts/`, em gavetas por assunto. Este repo não tem pasta `scripts/`.
+
+**Problema que resolveu:** havia quatro pastas de script espalhadas por repos diferentes. Ninguém sabia qual versão do
+mesmo script era a viva, e corrigir um bug obrigava a caçar as quatro.
+
+**O que foi descartado e por quê:** descartado deixar cada repo com sua `scripts/` própria. Uma exceção sobreviveu com
+motivo técnico: script que **é o corpo de uma skill** fica em `skills-que-prestam/<pacote>/<nome>/scripts/`, porque a
+skill o chama por caminho relativo — tirar de lá quebra a skill em silêncio.
+
+**Como verificar que continua valendo:**
+```bash
+ls -d ~/projetos/claude/scripts 2>&1        # tem que dar "inexistente"
+find ~/projetos/claude/skills-que-prestam -maxdepth 3 -type d -name scripts   # só corpo de skill pode aparecer
+```
+
+---
+
+### 3. Skills organizadas em 5 pacotes temáticos numerados (01-ago-2026)
+
+**Decisão:** as 36 skills ativas vivem em `skills-que-prestam/<pacote>/<nome>/`, em cinco pacotes numerados, e cada uma
+é ligada individualmente por symlink em `~/.claude/skills/`.
+
+**Problema que resolveu:** as skills estavam achatadas num único nível, sem agrupamento. Achar a skill certa exigia ler
+a lista inteira, e não dava para desligar um bloco de assunto sem caçar item por item. O número no prefixo
+(`00-`, `01-`…) força a ordem de leitura em vez de deixar o alfabeto decidir.
+
+**O que foi descartado e por quê:** descartado o symlink único apontando para a pasta-mãe. Ligar o pacote inteiro tira
+o controle fino — cada skill instalada cobre pedágio de contexto (hoje **11.173 caracteres** injetados em toda
+mensagem), então desligar uma precisa custar um comando, não uma reorganização.
+
+**Como verificar que continua valendo:**
+```bash
+ls ~/.claude/skills/ | wc -l                                   # 36
+find ~/.claude/skills/ -xtype l                                # vazio = nenhum symlink quebrado
+python3 ~/projetos/scripts/indices/query_claude_index.py skills
+```
+
+---
+
+### 4. Reserva fria de 85 skills extraída para outro repo (07-ago-2026)
+
+**Decisão:** as 85 skills de terceiros que não estão em serviço saíram daqui para o repo privado
+`doutortenente/pacotao-macaroca-de-skills`, publicado como marketplace de plugin do Claude Code.
+
+**Problema que resolveu:** peso morto. Eram **24 MB / 572 arquivos** ocupando disco e, pior, entrando no índice de
+busca — cada consulta ao repo varria material que nunca seria acionado. Estoque de material vencido no almoxarifado
+atrapalha achar o que se usa.
+
+**O que foi descartado e por quê:** descartado apagar (perderia a reserva) e descartado manter clonado aqui em pasta
+com prefixo `_` (o indexador continuaria pegando). A procedência de cada skill — origem, commit fixado, licença —
+mora no `reference/VENDOR.md` daquele repo, não neste. Não reclonar para cá.
+
+**Como verificar que continua valendo:**
+```bash
+ls -d ~/projetos/claude/pacotao-macaroca-de-skills 2>&1   # tem que dar "inexistente"
+git -C ~/projetos/claude ls-files | wc -l                 # 910 na medição de 08-ago-2026
+```
+
+---
+
+### 5. Subagentes padronizados em `agents/<nome>/<nome>.md` (07-ago-2026)
+
+**Decisão:** os 18 **subagentes** (assistentes especializados que recebem uma tarefa fechada, como um residente que
+você manda buscar um exame) seguem uma forma só: uma pasta por agente, com o arquivo de mesmo nome dentro, mais o
+`agents/README.md` que mapeia quem chama quem.
+
+**Problema que resolveu:** os agentes tinham formatos diferentes entre si — uns arquivo solto, outros pasta. Sem forma
+fixa, não dava para validar o conjunto por script nem para saber, olhando, se um agente estava completo.
+
+**O que foi descartado e por quê:** descartado o arquivo solto `agents/<nome>.md`. Pasta própria é o que permite ao
+agente carregar material anexo (referência, exemplo) sem poluir a raiz. A doutrina comum ficou em `agents/docs/`
+(6 arquivos), fora dos agentes, para não ser copiada 18 vezes.
+
+**Como verificar que continua valendo:**
+```bash
+python3 ~/projetos/scripts/indices/query_claude_index.py agents   # 18
+ls ~/projetos/claude/agents/docs | wc -l                          # 6
+```
+
+---
+
+### 6. Push e merge sem pedir confirmação; commit direto em `main` proibido (28-jul-2026)
+
+**Decisão:** ao concluir um trabalho, o fluxo é **branch** (linha de trabalho paralela) → **PR** (pedido de incorporação
+revisável) → **merge** (junção na linha principal), e o merge acontece sem parar para perguntar. **Commit** (registro
+de uma mudança) direto na `main` continua proibido.
+
+**Problema que resolveu:** o operador estava sendo interrompido por um pedido de autorização em cada fechamento de
+tarefa, para responder sempre a mesma coisa. Pergunta cuja resposta é conhecida é imposto de atenção, e ele tem TDAH —
+interrupção sem informação nova custa caro.
+
+**O que foi descartado e por quê:** descartado dispensar o PR junto com a confirmação. O PR não existe para pedir
+licença: ele existe para deixar rastro auditável do que entrou e permitir desfazer. Só a etapa de aprovação humana
+caiu; a trilha ficou.
+
+**Como verificar que continua valendo:** o histórico da `main` não pode ter commit que não tenha vindo de merge de
+branch.
+```bash
+git -C ~/projetos/claude log --oneline -10 main
+```
+
+---
+
+### 7. Sem backup local: nada de `.bak` nem tarball (10-jul-2026)
+
+**Decisão:** não criar cópia de segurança local — nem arquivo terminado em `.bak`, nem **tarball** (pacote compactado
+de uma pasta inteira).
+
+**Problema que resolveu:** cópia local vira lixo que ninguém limpa e, pior, vira fonte ambígua: dois arquivos parecidos
+e nenhuma certeza de qual é o vivo. O SSD tem 111,8 G e o disco é recurso escasso nesta máquina.
+
+**O que foi descartado e por quê:** descartada a rede de segurança caseira porque já existe uma melhor: o histórico do
+**git** (registro versionado de toda mudança) no GitHub. Recuperar arquivo apagado é `git checkout`, não escavação de
+`.bak`. O preço aceito conscientemente: o que nunca foi commitado não tem volta — daí a regra de listagem completa
+antes de apagar pasta.
+
+**Como verificar que continua valendo:**
+```bash
+find ~/projetos/claude -path ~/projetos/claude/skills-que-prestam -prune -o \
+     \( -name "*.bak" -o -name "*.tar.gz" -o -name "*.tgz" \) -print   # tem que sair vazio
+```
+> `skills-que-prestam/` fica de fora da busca: os dois `.tar.gz` de lá são material que veio junto com a skill
+> (`artifacts-builder`, `_anthropic/examples/web-artifacts-builder`), não backup.
+
+---
+
+### 8. Hook que não roda é removido (22-jul-2026)
+
+**Decisão:** **hook** (gatilho automático que dispara antes ou depois de uma ação, como o alarme do monitor que toca
+sozinho quando a saturação cai) que não executa sai do sistema. Não fica desativado, não fica comentado — sai.
+
+**Problema que resolveu:** os três hooks do `prompt-improver` apontavam para
+`.claude/skills/prompt-improver/scripts/engine.py`, caminho que não existia. Cobravam **~189 tokens por prompt** e
+nunca rodaram uma vez. Era um alarme desligado da tomada, ocupando espaço no painel e cobrando manutenção.
+
+**O que foi descartado e por quê:** descartado consertar o caminho. A skill continua no repo e pode ser chamada à mão;
+o disparo automático não tinha demanda comprovada que justificasse o pedágio em toda mensagem.
+
+**Como verificar que continua valendo:** todo hook declarado tem que apontar para arquivo que existe e ser executável.
+```bash
+ls ~/projetos/claude/.claude/hooks/
+grep -o '"command":[^,}]*' ~/projetos/claude/.claude/settings.json
+```
+
+---
+
+### 9. Índice em `memory/`, categorizador corrigido, `ide/` fora do indexador (08-ago-2026)
+
+**Decisão:** a pasta do índice passou de `mapa-claude-e-catalogo-skills/` para `memory/`, o categorizador do indexador
+foi corrigido e a pasta `ide/` ficou fora do indexador — não só fora do git.
+
+**Problema que resolveu:** dois problemas em um. O nome antigo descrevia dois produtos numa frase e não batia com o
+padrão dos repos irmãos (`sasi/memory`). E, o grave: os arquivos `ide/*.lock` carregam **authToken** (senha de sessão
+para falar com a IDE) em texto puro — estavam bloqueados no git, mas o indexador ainda os lia e os despejava no índice
+de busca. Segredo fora do git mas dentro do índice continua sendo segredo vazado.
+
+**O que foi descartado e por quê:** descartado confiar só no `.gitignore` (lista do que o git ignora). Ignorar no git
+protege o que sai para o GitHub; não protege o que o indexador local escreve no `MAPA-CLAUDE.md`. As duas barreiras
+precisam existir.
+
+**Como verificar que continua valendo:**
+```bash
+grep -rn "authToken" ~/projetos/claude/memory/MAPA-CLAUDE.md   # tem que sair vazio
+grep -n "ide/" ~/projetos/claude/.gitignore                    # linha 25
+```
+
+---
+
+### 10. Dos agentes genéricos propostos, só `auditor-do-repo` foi criado (08-ago-2026)
+
+**Decisão:** dos três agentes genéricos propostos — `security-reviewer`, `documentation-reviewer`,
+`repository-auditor` — nenhum foi criado. Criou-se apenas `auditor-do-repo`, escopado a este repositório.
+
+**Problema que resolveu:** a proposta duplicaria competência que a frota de 18 já tem: `segurador` cobre segurança,
+`documentador` cobre documentação, `fiscal` refuta entrega e `zelador` cuida da higiene. Três agentes a mais seriam
+três descrições a mais no prompt e, na hora de acionar, ambiguidade sobre qual chamar. É a "bola de neve": ferramenta
+que entra, não é usada e ninguém remove.
+
+**O que foi descartado e por quê:** `auditor-do-repo` sobreviveu ao corte porque faz o que nenhum outro faz — conferir
+se caminho citado em documento existe no disco. Documentação que aponta para pasta inexistente é a falha mais comum
+deste repo, e detectá-la é trabalho mecânico, não julgamento.
+
+**Como verificar que continua valendo:**
+```bash
+ls ~/projetos/claude/.claude/agents/          # só auditor-do-repo.md
+ls ~/projetos/claude/agents/ | grep -Ec '^(security-reviewer|documentation-reviewer|repository-auditor)$'   # 0
+```
+
+---
+
+### 11. Arquitetura rebatizada Claude-Steroid; renomear pasta e repo é fase 2 (08-ago-2026)
+
+**Decisão:** o nome da arquitetura passou a ser **Claude-Steroid**. A pasta no disco continua `~/projetos/claude` e o
+repositório no GitHub continua `doutortenente/Claude`.
+
+**Problema que resolveu:** "claude" nomeava ao mesmo tempo o produto da Anthropic e esta configuração pessoal.
+Conversar sobre "o claude" era ambíguo. O nome novo separa as duas coisas sem tocar em nada que já funciona.
+
+**O que foi descartado e por quê:** descartado renomear tudo na mesma sessão. A IDE mantém o projeto aberto com o
+caminho antigo travado, e renomear com ela viva quebra referência em silêncio. Fase 2 — renomear a pasta para
+`~/projetos/claude-steroid` e o repo para `doutortenente/Claude-Steroid` — fica pendente de a IDE fechar o projeto.
+Até lá, **é proibido escrever `~/projetos/claude-steroid` em documento** como se já existisse.
+
+**Como verificar que continua valendo:**
+```bash
+ls -d ~/projetos/claude ~/projetos/claude-steroid 2>&1        # o 1º existe, o 2º não
+# nenhum documento pode citar o caminho futuro, exceto as 3 fontes que falam da fase 2 de propósito
+grep -rn 'projetos/claude-steroid' ~/projetos/claude/ --include='*.md' \
+  | grep -vE 'docs/(DECISIONS|RUNBOOK)\.md|skills/verify-before-finish/SKILL\.md'   # tem que sair vazio
+```
+
+---
+
+### 12. Regras de PHI removidas da governança deste repo (09-ago-2026)
+
+**Decisão:** ordem direta do operador. Toda regra e restrição sobre **PHI** (dado que identifica paciente) sai da
+governança deste repositório. A regra que se chamava `security-and-phi.md` virou
+[`security-and-secrets.md`](../.claude/rules/security-and-secrets.md) sem a seção de PHI, o gancho parou de barrar
+caminho com `PHI` no nome, e a conferência de PHI saiu da lista pré-commit (6 itens viraram 5).
+
+**Problema que resolveu:** o operador quis a governança do repo tratando só de segredo e credencial. Regra clínica que
+ele já cumpre por dever profissional não precisa estar duplicada como trava de ferramenta.
+
+**O que foi descartado e por quê:** descartada a trava automática — o gancho não olha mais o nome do caminho atrás de
+`PHI`. Fica registrado o que a remoção custou, para quem ler isto daqui a seis meses não achar que foi esquecimento:
+era a única barreira automática entre dado de paciente e um commit. O que **permanece** protegido: `.env` e derivados,
+`settings.local.json`, `ide/**` (guarda `authToken`), `.agentbridge/**` e `*.log`.
+
+**Como verificar que continua valendo:**
+```bash
+# este arquivo é a única exceção: ele PRECISA nomear o que foi removido, senão o registro não registra nada
+grep -rnw PHI ~/projetos/claude/CLAUDE.md ~/projetos/claude/.claude \
+     ~/projetos/claude/docs --exclude=DECISIONS.md    # tem que sair vazio
+printf '%s' '{"tool_input":{"file_path":"/x/PHI-LOCAL/n.md"}}' \
+  | bash ~/projetos/claude/.claude/hooks/block-sensitive-files.sh; echo "esperado 0, veio $?"
+```
+
+---
+
+### 13. `_anthropic/` tem duas licenças, e o repo segue público (09-ago-2026)
+
+**Decisão:** parar de afirmar que `_anthropic/` é proprietário em bloco. Medido: `examples/` traz 23 `LICENSE.txt`
+**Apache 2.0** (redistribuir é permitido) e `public/` traz 6 com `© 2025 Anthropic, PBC. All rights reserved.`
+(`docx`, `xlsx`, `pdf`, `pptx`, `file-reading`, `pdf-reading`). O repositório `doutortenente/Claude` é **público** e,
+avisado disso, o operador decidiu mantê-lo público.
+
+**Problema que resolveu:** a documentação dizia "não redistribuir fora deste repo **privado**" — duas afirmações
+erradas na mesma frase. A licença não era única e o repositório não era privado. Quem lesse aquilo tomaria decisão de
+distribuição com base em fato falso.
+
+**O que foi descartado e por quê:** descartado tornar o repositório privado e descartado remover `public/` do
+rastreamento. Ambos foram propostos ao operador em 09-ago-2026 e recusados por ele; a exposição das 6 skills
+`All rights reserved` é **risco assumido**, não descuido. Registrado aqui para não voltar à pauta sem fato novo.
+
+**Como verificar que continua valendo:**
+```bash
+A=~/projetos/claude/skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic
+find $A -name LICENSE.txt -exec grep -li "all rights reserved" {} \; | wc -l   # esperado 6
+find $A -name LICENSE.txt -exec grep -li "apache license"      {} \; | wc -l   # esperado 23
+gh repo view doutortenente/Claude --json visibility -q .visibility            # esperado PUBLIC
+```
+
+---
+
+## Como adicionar uma decisão aqui
+
+Entra decisão que **fecha uma porta** — que impede alguém de refazer amanhã o que já foi resolvido hoje. Preferência de
+estilo, ajuste pontual e tarefa concluída não entram.
+
+1. Numere na sequência, com a data em que a decisão foi tomada (não a data em que foi escrita aqui).
+2. Preencha os quatro campos. Se você não sabe dizer **o que foi descartado**, não era uma decisão — era um passo.
+3. O campo de verificação precisa ser comando executável ou checagem objetiva. "Revisar manualmente" não serve.
+4. Acrescente a linha na tabela do topo.
+5. Não repita o que o [`CLAUDE.md`](../CLAUDE.md) já diz. Ele dá a regra; aqui está o motivo.

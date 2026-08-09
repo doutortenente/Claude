@@ -115,7 +115,4 @@ neutralizado em [docs/template-de-agente.md](docs/template-de-agente.md).
 5. **Nenhum agente faz push, merge, deleção ou gravação em banco.** Isso é decisão do gerente.
 6. **Fan-out cabe em 3 agentes simultâneos.** 4 núcleos e 7,6 GiB de RAM: acima disso vira fila.
 
-## Personas de reunião
 
-25 personas em 5 times × 5 arquétipos, uso exclusivo da skill `/meeting` (plugin `meeting-bots`
-vendorizado). Não entram no roteamento normal e não substituem ninguém da frota.

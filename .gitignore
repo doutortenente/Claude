@@ -12,9 +12,12 @@ chaves_secretas.txt
 .DS_Store
 node_modules/
 
-# Índice local (regenerável)
-mapa-claude-e-catalogo-skills/claude_index.db
-mapa-claude-e-catalogo-skills/claude_index.db.bak
+# Índice local (regenerável) — o MAPA e o CATÁLOGO em .md SÃO versionados
+memory/claude_index.db
+memory/claude_index.db.bak
+
+# Banco de conversa do agentbridge — estado local de sessão
+.agentbridge/
 
 .forge/
 
