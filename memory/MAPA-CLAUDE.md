@@ -2,7 +2,7 @@
 
 > Gerado 09-aug-2026 por `~/projetos/scripts/indices/build_claude_index.py`
 
-**Total:** 917 arquivos · 19.4 MB · 103,488 linhas · 514,953 tokens indexados · **64 skills**
+**Total:** 918 arquivos · 19.4 MB · 103,527 linhas · 515,783 tokens indexados · **64 skills**
 
 ## Por categoria
 
@@ -14,11 +14,11 @@
 | `skill_clinical` | 35 | 40,781 | Pacote 01 — skills médicas (UTI) |
 | `agent` | 45 | 27,088 | Subagentes — `agents/<nome>/` |
 | `skill_backend` | 67 | 24,053 | Pacote 04 — Supabase e Vercel |
-| `docs` | 4 | 9,255 | `docs/` — manual, inventário, decisões, runbook |
+| `docs` | 4 | 8,824 | `docs/` — manual, inventário, decisões, runbook |
 | `skill_ide` | 8 | 8,619 | Pacote 00 — IDE e documentação |
-| `governance` | 12 | 6,675 | `.claude/` — rules, skills, agents, hooks, settings |
+| `governance` | 13 | 7,934 | `.claude/` — rules, skills, agents, hooks, settings |
 | `memory` | 2 | 1,696 | `memory/` — este índice |
-| `root` | 5 | 1,571 | CLAUDE.md, README, .gitignore, .env.example |
+| `root` | 5 | 1,573 | CLAUDE.md, README, .gitignore, .env.example |
 | `extracao` | 1 | 762 | `EXTRACAO-CLINICA-SASI/` — briefing + atalhos |
 | `vendor_blob` | 304 | 0 | Binários/pesados (só path, sem FTS) |
 

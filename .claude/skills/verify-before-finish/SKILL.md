@@ -17,7 +17,7 @@ Para cada arquivo/pasta que você mencionou na resposta:
 ls -d <caminho>          # ou:  ls -l <caminho>  se for symlink
 ```
 
-Citou caminho que não conferiu = alucinação. Caso de borda que já mordeu: `~/projetos/claude-steroid` **não existe** — a renomeação é fase 2. Escrever caminho futuro como se fosse presente é o erro mais caro deste repo.
+Citou caminho que não conferiu = alucinação. Escrever caminho **futuro** — o que vai existir depois de uma mudança planejada — como se já estivesse no disco é o erro mais caro deste repo: ele já custou duas rodadas de conserto. Plano não é fato. Só existe o que o `ls` acha agora.
 
 ## 2. Todo número foi medido?
 

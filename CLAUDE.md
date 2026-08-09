@@ -1,4 +1,4 @@
-# CLAUDE-STEROID — Constituição
+# `claude` — Constituição do repositório
 
 > Constituição curta. Detalhe mora em `.claude/rules/` (regra por assunto) e `docs/` (manual humano).
 > Se esta página discordar de uma regra específica, **a regra específica vence**.

@@ -18,9 +18,10 @@
 | 8 | Hook que não roda é removido | 22-jul-2026 |
 | 9 | Índice em `memory/`, `ide/` fora do indexador | 08-ago-2026 |
 | 10 | Só `auditor-do-repo` foi criado | 08-ago-2026 |
-| 11 | Nome Claude-Steroid; renomear é fase 2 | 08-ago-2026 |
+| 11 | Renomear pasta e repo CANCELADO; o nome é `claude` | 09-ago-2026 |
 | 12 | Regras de PHI removidas da governança | 09-ago-2026 |
 | 13 | `_anthropic/` tem duas licenças; repo segue público | 09-ago-2026 |
+| 14 | Com a IDE viva, Grep/Glob/`sed -i` em massa são barrados 1× | 09-ago-2026 |
 
 ---
 
@@ -237,25 +238,30 @@ ls ~/projetos/claude/agents/ | grep -Ec '^(security-reviewer|documentation-revie
 
 ---
 
-### 11. Arquitetura rebatizada Claude-Steroid; renomear pasta e repo é fase 2 (08-ago-2026)
+### 11. Renomear a pasta e o repo foi CANCELADO — o nome continua `claude` (09-ago-2026)
 
-**Decisão:** o nome da arquitetura passou a ser **Claude-Steroid**. A pasta no disco continua `~/projetos/claude` e o
-repositório no GitHub continua `doutortenente/Claude`.
+**Decisão:** ordem direta do operador, revogando o que estava planejado em 08-ago-2026. A pasta é e continua
+`~/projetos/claude`; o repositório é e continua `doutortenente/Claude`. **Não existe fase 2.**
 
-**Problema que resolveu:** "claude" nomeava ao mesmo tempo o produto da Anthropic e esta configuração pessoal.
-Conversar sobre "o claude" era ambíguo. O nome novo separa as duas coisas sem tocar em nada que já funciona.
+**Problema que resolveu:** o nome `claude` é o **padrão de fábrica**. O Claude Code procura configuração em
+`~/.claude/`; os 36 atalhos de skill, o atalho de agentes, os dois scripts de índice, `~/.claude.json`, os arquivos de
+memória do operador e `~/projetos/CLAUDE.md` gravam `/home/dr/projetos/claude` **por extenso**, sem um caminho
+relativo sequer. Renomear troca um incômodo de vocabulário por uma superfície de quebra em ~45 pontos — e quebra em
+silêncio: a skill some da lista, o índice para de achar arquivo, o script falha ao abrir caminho que não existe mais.
+Palavras do operador: *"tudo sempre por padrão geralmente orienta pra claude"*.
 
-**O que foi descartado e por quê:** descartado renomear tudo na mesma sessão. A IDE mantém o projeto aberto com o
-caminho antigo travado, e renomear com ela viva quebra referência em silêncio. Fase 2 — renomear a pasta para
-`~/projetos/claude-steroid` e o repo para `doutortenente/Claude-Steroid` — fica pendente de a IDE fechar o projeto.
-Até lá, **é proibido escrever `~/projetos/claude-steroid` em documento** como se já existisse.
+**O que foi descartado e por quê:** descartado o plano de mover a pasta e usar `gh repo rename`. O ganho era estético
+(desambiguar "o claude" produto de "o claude" configuração) e o custo era estrutural. Ambiguidade de nome se resolve
+falando com mais precisão; caminho absoluto quebrado só se resolve caçando os 45 pontos um a um.
 
 **Como verificar que continua valendo:**
 ```bash
-ls -d ~/projetos/claude ~/projetos/claude-steroid 2>&1        # o 1º existe, o 2º não
-# nenhum documento pode citar o caminho futuro, exceto as 3 fontes que falam da fase 2 de propósito
-grep -rn 'projetos/claude-steroid' ~/projetos/claude/ --include='*.md' \
-  | grep -vE 'docs/(DECISIONS|RUNBOOK)\.md|skills/verify-before-finish/SKILL\.md'   # tem que sair vazio
+ls -d ~/projetos/claude                                        # existe
+ls -d ~/projetos/claude-steroid 2>&1                           # NÃO existe, e não deve passar a existir
+git -C ~/projetos/claude remote -v | head -1                   # aponta para doutortenente/Claude
+# nenhum documento pode prometer o rename — só esta decisão pode citar o nome descartado
+grep -rn 'claude-steroid' ~/projetos/claude/ --include='*.md' --exclude-dir=.git \
+  | grep -v 'docs/DECISIONS\.md'                               # tem que sair vazio
 ```
 
 ---
@@ -307,6 +313,39 @@ A=~/projetos/claude/skills-que-prestam/03-pacote-skills-claude-nativas/_anthropi
 find $A -name LICENSE.txt -exec grep -li "all rights reserved" {} \; | wc -l   # esperado 6
 find $A -name LICENSE.txt -exec grep -li "apache license"      {} \; | wc -l   # esperado 23
 gh repo view doutortenente/Claude --json visibility -q .visibility            # esperado PUBLIC
+```
+
+---
+
+### 14. Com a IDE viva, buscar na mão é barrado — uma vez por sessão (09-ago-2026)
+
+**Decisão:** o hook `.claude/hooks/prefer-ide-tools.sh`, registrado no `~/.claude/settings.json` **global**, barra
+`Grep`, `Glob` e `sed -i` em massa **enquanto houver uma IDE JetBrains viva com o projeto aberto**, devolvendo o nome
+exato da ferramenta do MCP `jetbrains-index` que resolve. Barra **uma vez por sessão e por classe**: repetir a mesma
+chamada passa.
+
+**Problema que resolveu:** a regra "buscar antes de varrer" existia em `.claude/rules/repository-navigation.md` desde
+08-ago-2026 e mesmo assim continuou sendo ignorada — inclusive na sessão que a escreveu. Regra escrita depende de o
+agente lembrar; hook não depende. Palavras do operador: *"não ficar igual primata fazendo tudo na mão sendo que a IDE
+faz pra você"*. O `sed -i` em massa entrou na mesma trava porque é o caminho pelo qual este repo já foi corrompido
+duas vezes (`fdcb2f2` e 09-ago-2026).
+
+**O que foi descartado e por quê:** descartado **barrar sempre**. Existe caso legítimo de sobra — índice em
+`isDumbMode` (a IDE ainda montando o catálogo), arquivo fora do projeto, log, binário, e subagente que nem tem o MCP na
+caixa de ferramentas. Barreira sem saída viraria pedágio e seria removida na semana seguinte, como os três hooks do
+`prompt-improver` em 22-jul-2026. Barrar uma vez força ler a alternativa e custa no máximo uma chamada. Descartado
+também estender aos eventos `Write`/`Edit`: fica para o `ide_sync_files` depois da escrita, citado no `SessionStart`.
+Descartado registrar no `.claude/settings.json` deste repo — a WebStorm também abre o SASI, e a regra vale lá.
+
+**Como verificar que continua valendo:**
+```bash
+H=~/projetos/claude/.claude/hooks/prefer-ide-tools.sh; S=chk-$$
+J(){ printf '{"session_id":"%s","hook_event_name":"PreToolUse","tool_name":"%s","cwd":"%s","tool_input":%s}' "$S" "$1" "$2" "$3"; }
+# com a IDE ABERTA neste projeto: barra na 1ª, libera na 2ª
+J Grep ~/projetos/claude '{"pattern":"x"}' | bash $H >/dev/null 2>&1; echo "1a: $? (esperado 2)"
+J Grep ~/projetos/claude '{"pattern":"x"}' | bash $H >/dev/null 2>&1; echo "2a: $? (esperado 0)"
+# projeto sem IDE aberta nunca é barrado
+J Grep ~/vaults/celebro '{"pattern":"x"}'  | bash $H >/dev/null 2>&1; echo "sem IDE: $? (esperado 0)"
 ```
 
 ---

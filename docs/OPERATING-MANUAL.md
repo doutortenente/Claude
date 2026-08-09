@@ -37,21 +37,30 @@ quando?"**.
 **Teste de 1 pergunta:** se apagar este arquivo, quem sente falta?
 Agente sempre → `CLAUDE.md` · agente às vezes → `rules/` ou `SKILL.md` · humano → `docs/` · ninguém percebe → não escrever.
 
-### Hook: um só em serviço, e ele foi provado
+### Hook: dois em serviço, os dois provados rodando
 
 **Hook** = gatilho automático. Analogia: o alarme do monitor que dispara sozinho quando a saturação cai — ninguém precisa
 olhar a tela.
 
-Estado medido em 09-ago-2026: **1 hook em serviço**, `.claude/hooks/block-sensitive-files.sh` (3.492 bytes, executável),
-registrado em `.claude/settings.json` no evento `PreToolUse` com matcher `Write|Edit` — ou seja, ele é consultado antes de
-todo comando que escreve ou edita arquivo neste repo, e pode barrar a escrita. Provado em 09-ago-2026: entrada com
-`file_path` de `.env` devolve **exit code** (código de saída: 0 = liberado, ≠0 = barrado) **2** e bloqueia; entrada com
-`README.md` devolve **0** e libera. `~/.claude/settings.json` e `~/projetos/.claude/settings.json` seguem **sem hook
-algum** — o único `"hooks"` dos três arquivos é o deste repo.
+Estado medido em 09-ago-2026, **2 hooks em serviço**, os dois no mesmo arquivo de script deste repo:
+
+| Script | Registrado em | Evento · matcher | O que faz |
+| --- | --- | --- | --- |
+| `.claude/hooks/block-sensitive-files.sh` | `.claude/settings.json` (só neste repo) | `PreToolUse` · `Write\|Edit` | barra escrita em `.env`, `settings.local.json`, `*.log`, `ide/**`, `.agentbridge/**` |
+| `.claude/hooks/prefer-ide-tools.sh` | `~/.claude/settings.json` (**global**) | `SessionStart` + `PreToolUse` · `Grep\|Glob\|Bash` | com a IDE viva, empurra busca e troca em massa para o MCP `jetbrains-index` |
+
+O segundo é global de propósito: o operador trabalha na WebStorm em vários repos, e a regra vale em todos. Ele se
+desliga sozinho quando não há IDE viva com o projeto aberto, então sessão de terminal puro não paga nada.
+
+**Provas rodadas na sessão em que cada um nasceu.** `block-sensitive-files.sh`: entrada com `file_path` de `.env`
+devolve **exit code** (código de saída: 0 = liberado, ≠0 = barrado) **2**; `README.md` devolve **0** — 7 casos, 7 certos.
+`prefer-ide-tools.sh`: 10 casos, 10 certos — Grep barra na 1ª e libera na 2ª, Glob barra, `sed -i` com `xargs` barra,
+`sed -i` num arquivo só libera, `ls` libera, projeto sem IDE libera, `Write` passa direto, `IDE_HOOK=off` desliga e o
+`SessionStart` devolve JSON válido.
 
 O rigor vem de 22-jul-2026, quando três hooks do `prompt-improver` foram removidos porque apontavam para caminho
 inexistente e cobravam ~189 tokens por prompt sem nunca executar. **Hook que não roda é pedágio.** Hook novo só entra se
-for provado rodando na mesma sessão em que foi criado — foi exatamente o que este passou.
+for provado rodando na mesma sessão em que foi criado — foi exatamente o que os dois passaram.
 
 ---
 

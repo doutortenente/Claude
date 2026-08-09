@@ -44,6 +44,14 @@ Antes da primeira chamada de navegação: `ide_index_status`.
 
 **Nunca cair pro grep por impaciência** — resultado parcial que parece completo é pior que esperar.
 
+## Isto aqui não é só conselho: tem hook
+
+Enquanto houver IDE JetBrains viva com o projeto aberto, o gatilho automático `.claude/hooks/prefer-ide-tools.sh`
+(registrado no `~/.claude/settings.json` global) **barra** `Grep`, `Glob` e `sed -i` em massa e devolve o nome da
+ferramenta do MCP que resolve. Ele barra **uma vez por sessão e por classe** — repetir a mesma chamada passa, porque
+existe caso legítimo: índice em `isDumbMode`, arquivo fora do projeto, log, binário. Desligar na marra:
+`IDE_HOOK=off`. Sem IDE viva ele não faz nada. Motivo em [`../../docs/DECISIONS.md`](../../docs/DECISIONS.md) §14.
+
 ## Comandos do índice
 
 Todos: `python3 ~/projetos/scripts/indices/query_claude_index.py <comando>`
