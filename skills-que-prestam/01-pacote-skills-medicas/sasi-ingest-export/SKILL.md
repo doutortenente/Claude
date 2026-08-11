@@ -83,7 +83,7 @@ decorativo em qualquer lugar** (Impressão, Conduta, passagem, pendência, nota�
 > confirmada).
 
 **A. Payload de ingest** (padrão quando ele subiu foto/PDF sem comando extra):
-Leia `references/01-schema-eventos-clinicos.md` para o schema exato. Devolve JSON validado (`sasi-ocr-ingest/v1`). O Dr.
+Leia `references/01-schema-eventos-clinicos.md` para o schema exato. **Banco mudou em 10-ago-2026** (tabelas novas de ATB, culturas, dispositivos e janelas de vitais): leia também `references/08-p0-banco-10ago.md` antes de gravar. Devolve JSON validado (`sasi-ocr-ingest/v1`). O Dr.
 Nicolas revisa; gravação no Supabase só com **“deploy”** / **“salvar no Supabase”** via MCP.
 
 **Pendências/tarefas vão no array próprio `pendencias: [{tarefa, prioridade}]`** (prioridade `1`=alta/tempo-sensível,
@@ -197,13 +197,34 @@ tipo no banco**, anexando ao `valor_json` do evento:
 8. **Sedação + GCS pré-sedação**: evento `rass` (`valor_num`) + no `gcs` gravar
    `valor_json: {"pre_sedacao": true|false, "confounded_by_sedation": true|false}`. É o que permite a imputação CNS do
    motor (carry-forward do GCS pré-sedação).
-9. **Diurese diária**: gravar `diurese_h` em mL/h. Se a folha só traz total 24h, dividir por 24 e marcar
-   `valor_json: {"from_24h_total": true}`. O motor converte pra mL/dia.
+9. **Diurese diária**: com série horária, gravar `diurese_h` em mL/h. Se a folha só traz o total de 24h,
+   gravar direto como tipo **`diurese_24h`** (existe desde 10-ago) — sem dividir nada, sem inventar hora.
 
 O **cálculo** do escore (0–4 por componente) é feito a jusante, no banco (view/motor de SOFA) — a skill só garante a
 **captura** dos insumos.
 
 ---
+
+## 🗄️ Banco P0 (10-ago-2026) — o que mudou na gravação
+
+O banco ganhou tabelas novas e regras novas. O `sasi_deploy_ingest` v1 cobre só eventos/evolução/pendências —
+**o resto grava-se via MCP Supabase**, sempre depois do "deploy" do Dr. Detalhe completo e exemplos:
+`references/08-p0-banco-10ago.md`. O essencial:
+
+1. **Janela de vitais → tabela `janelas_24h`**, não mais eventos `pam_min`/`pas_min` (viraram legado).
+   Max/min + contagem de excursões saem do `build_passagem.py` (o LLM não conta). Reprocessar a mesma folha
+   não duplica (chave única por paciente+tipo+fim da janela).
+2. **ATB → tabela `atbs`** (1 linha por curso, com `data_inicio`/`data_fim`/`duracao_planejada_dias` — o "7"
+   do D7/7). D-day nunca se grava: é derivado.
+3. **Cultura → `culturas` + `antibiograma`** (1 linha por antibiótico, S/I/R + CIM).
+4. **Dispositivo com data → `dispositivo_episodios`** ("CVC sim (08/05)" abre; "não (15/03 a 24/03)" fecha).
+   **PROIBIDO escrever em `pacientes.dispositivos`** — virou campo derivado, o banco recalcula sozinho.
+5. **Evolução**: mandar `data_plantao` (data do plantão da folha) + `turno` ('diurna'/'noturna') +
+   `illness_severity` ('estavel'|'watcher'|'instavel'|'critico') + `tipo_nota`. `internacao_id` NUNCA — o
+   banco carimba sozinho.
+6. **`custom` morreu**: vocabulário agora tem 79 tipos (troponina, proBNP, D-dímero, TP/TTPA, painel hepático,
+   VHS, TSH/T4L, PVC, diurese_24h, diurese_parcial, uf_dialise, debito_dreno…). Valor sem tipo = avisar, não
+   forçar `custom`.
 
 ## 🚨 Regras invioláveis
 
@@ -250,6 +271,7 @@ Edge Function `ocr-ingest` no dia a dia.
 - `references/03-clinical-sanity-checks.md` — Ranges fisiológicos + regras de incompatibilidade
 - `references/04-export-evolucao-template.md` — Template de evolução médica (SOAP adaptado SASI)
 - `references/05-export-passagem-turno.md` — Template de passagem de plantão 1 página
+- `references/08-p0-banco-10ago.md` — **OBRIGATÓRIA antes de gravar no banco** (tabelas novas de 10-ago)
 - `references/07-export-prescricao-ordenada.md` — Ordenador de prescrição por sistema (7 blocos) + safety check
 - `references/06-api-automation-prompts.md` — **LEGADO** (não usar)
 
