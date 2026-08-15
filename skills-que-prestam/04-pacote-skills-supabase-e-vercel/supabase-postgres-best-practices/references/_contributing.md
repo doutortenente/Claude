@@ -1,7 +1,7 @@
 # Writing Guidelines for Postgres References
 
-This document provides guidelines for creating effective Postgres best practice references that work well with AI agents
-and LLMs.
+This document provides guidelines for creating effective Postgres best
+practice references that work well with AI agents and LLMs.
 
 ## Key Principles
 
@@ -14,7 +14,8 @@ Show exact SQL rewrites. Avoid philosophical advice.
 
 ### 2. Error-First Structure
 
-Always show the problematic pattern first, then the solution. This trains agents to recognize anti-patterns.
+Always show the problematic pattern first, then the solution. This trains agents
+to recognize anti-patterns.
 
 ```markdown
 **Incorrect (sequential queries):** [bad example]
@@ -26,7 +27,7 @@ Always show the problematic pattern first, then the solution. This trains agents
 
 Include specific metrics. Helps agents prioritize fixes.
 
-**Good:** "10x faster queries", "50% smaller index", "Eliminates N+1"
+**Good:** "10x faster queries", "50% smaller index", "Eliminates N+1" 
 **Bad:** "Faster", "Better", "More efficient"
 
 ### 4. Self-Contained Examples
@@ -123,14 +124,14 @@ const posts = await db.query("SELECT * FROM posts WHERE user_id = ANY($1)", [
 
 ## Impact Level Guidelines
 
-| Level           | Improvement | Use When                                                                 |
-| --------------- | ----------- | ------------------------------------------------------------------------ |
-| **CRITICAL**    | 10-100x     | Missing indexes, connection exhaustion, sequential scans on large tables |
-| **HIGH**        | 5-20x       | Wrong index types, poor partitioning, missing covering indexes           |
-| **MEDIUM-HIGH** | 2-5x        | N+1 queries, inefficient pagination, RLS optimization                    |
-| **MEDIUM**      | 1.5-3x      | Redundant indexes, query plan instability                                |
-| **LOW-MEDIUM**  | 1.2-2x      | VACUUM tuning, configuration tweaks                                      |
-| **LOW**         | Incremental | Advanced patterns, edge cases                                            |
+| Level | Improvement | Use When |
+|-------|-------------|----------|
+| **CRITICAL** | 10-100x | Missing indexes, connection exhaustion, sequential scans on large tables |
+| **HIGH** | 5-20x | Wrong index types, poor partitioning, missing covering indexes |
+| **MEDIUM-HIGH** | 2-5x | N+1 queries, inefficient pagination, RLS optimization |
+| **MEDIUM** | 1.5-3x | Redundant indexes, query plan instability |
+| **LOW-MEDIUM** | 1.2-2x | VACUUM tuning, configuration tweaks |
+| **LOW** | Incremental | Advanced patterns, edge cases |
 
 ---
 
