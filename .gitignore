@@ -23,3 +23,5 @@ memory/claude_index.db.bak
 
 # lockfiles do plugin Claude Code na IDE — contêm authToken, NUNCA versionar
 ide/
+# Config local .codex/ — contém URL MCP, não versionar
+.codex/

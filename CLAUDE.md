@@ -17,7 +17,7 @@ Detalhe: `.claude/rules/communication.md`.
 
 ## 2. O que é este repositório
 
-**É** a fonte canônica da configuração do Claude Code do Dr. Tenente: 36 skills ativas, 18 subagentes e as regras que
+**É** a fonte canônica da configuração do Claude Code do Dr. Tenente: 38 skills ativas, 18 subagentes e as regras que
 governam os dois. O sistema operacional lê daqui por **symlink** (atalho de arquivo: um apontador que faz a pasta
 parecer existir em dois lugares sem duplicar nada).
 
@@ -32,7 +32,7 @@ estrutura é o defeito nº 1 deste repo, e já aconteceu duas vezes.
 | Regra | Verificável |
 | --- | --- |
 | Abrir pela conclusão | Contexto, se existir, é 1 frase — nunca antes da resposta |
-| Número medido, não adjetivo | "11.173 caracteres", não "bem menor". Sem fonte → `[SEM_FONTE]` |
+| Número medido, não adjetivo | "16.430 caracteres", não "bem menor". Sem fonte → `[SEM_FONTE]` |
 | Tabela com ≥3 itens comparáveis · lista para sequência | Parágrafo só para argumento, máx. 3 linhas |
 | Zero bajulação, zero preâmbulo, zero emoji | Máx. 1 frase de contexto antes de agir |
 | Pergunta só quando muda o produto | Múltipla escolha numerada |
@@ -42,8 +42,8 @@ Se ele afirma um fato, é fato — não gastar token confirmando.
 
 ## 4. Regras de trabalho
 
-**Buscar antes de varrer.** O repo tem 901 arquivos indexados / 30 MB (sem histórico). Varrer com `Glob` ou `Read` em
-massa queima contexto e é lento.
+**Buscar antes de varrer.** O repo tem 924 arquivos versionados (`git ls-files`) / 31 MB sem histórico — medido
+11-ago-2026. Varrer com `Glob` ou `Read` em massa queima contexto e é lento.
 
 | Precisa de | Use primeiro |
 | --- | --- |
@@ -61,9 +61,12 @@ novo antes de conferir se já existe equivalente.
 
 - **Segredo**: o cofre é `~/projetos/.env` (arquivo real, permissão 600). Nada de chave neste repo.
 - **`ide/`**: os `.lock` da IDE contêm `authToken` em texto puro. Estão no `.gitignore` **e** fora do indexador.
-- **Licença**: `_anthropic/` tem duas licenças. `examples/` é Apache 2.0 (23 arquivos, redistribuir é permitido);
-  `public/` é `© 2025 Anthropic, PBC. All rights reserved.` (6 skills — a licença veda reter cópia fora dos serviços
-  da Anthropic e distribuir a terceiros). Detalhe em `.claude/rules/security-and-secrets.md`.
+- **Licença**: `_anthropic/` mora em `skills-que-prestam/03-pacote-skills-claude-nativas/`, **não na raiz**, e mistura
+  duas licenças (medido 11-ago-2026). `examples/` — 24 pastas, todas Apache 2.0, redistribuir é permitido.
+  `public/` — 8 pastas: 6 são `© 2025 Anthropic, PBC. All rights reserved.` (`docx`, `xlsx`, `pptx`, `pdf`,
+  `pdf-reading`, `file-reading`), e essa licença veda reter cópia fora dos serviços da Anthropic e distribuir a
+  terceiros; `frontend-design` é Apache 2.0; `product-self-knowledge` não tem `LICENSE.txt` — ausência de arquivo não
+  é permissão. Detalhe em `.claude/rules/security-and-secrets.md`.
 - **Git**: commit direto em `main` é proibido. Fluxo é branch → PR → merge, e o merge não pede confirmação.
 
 Detalhe: `.claude/rules/security-and-secrets.md` e `.claude/rules/git-workflow.md`.
@@ -73,6 +76,7 @@ Detalhe: `.claude/rules/security-and-secrets.md` e `.claude/rules/git-workflow.m
 | Mecanismo | Onde mora | Regra |
 | --- | --- | --- |
 | Skill ativa | `skills-que-prestam/<pacote>/<nome>/SKILL.md` | 1 symlink individual em `~/.claude/skills/` |
+| Skill local do repo | `.claude/skills/<nome>/SKILL.md` | `add-skill`, `audit-repository`, `verify-before-finish` — carregam só aqui, sem symlink |
 | Subagente | `agents/<nome>/<nome>.md` + `README.md` | `~/.claude/agents` é symlink pra cá |
 | Regra por assunto | `.claude/rules/*.md` | Só carrega dentro deste repo |
 | Config do repo | `.claude/settings.json` | Config global fica em `~/.claude/settings.json` |
@@ -83,8 +87,8 @@ Detalhe: `.claude/rules/security-and-secrets.md` e `.claude/rules/git-workflow.m
 **Casa única:** config mora onde o Claude Code lê, sem cópia no repo. Cópia num segundo lugar apodrece — foi o que
 matou `settings/` e `rules/` em 22-jul-2026.
 
-**Custo de skill:** cada skill ativa injeta `name` + `description` em **toda** mensagem — hoje 11.173 caracteres para
-36 skills. Skill que não é usada é pedágio: desligar removendo o symlink, a pasta fica no repo.
+**Custo de skill:** cada skill ativa injeta `name` + `description` em **toda** mensagem — hoje 16.430 caracteres para
+38 skills (medido 11-ago-2026). Skill que não é usada é pedágio: desligar removendo o symlink, a pasta fica no repo.
 
 ## 7. Referências
 
