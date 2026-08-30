@@ -22,6 +22,7 @@
 | 12 | Regras de PHI removidas da governança | 09-ago-2026 |
 | 13 | `_anthropic/` tem duas licenças; repo segue público | 09-ago-2026 |
 | 14 | Com a IDE viva, Grep/Glob/`sed -i` em massa são barrados 1× | 09-ago-2026 |
+| 15 | Contexto do operador versionado em `context/` + sync script | 30-ago-2026 |
 
 ---
 
@@ -346,6 +347,44 @@ J Grep ~/projetos/claude '{"pattern":"x"}' | bash $H >/dev/null 2>&1; echo "1a: 
 J Grep ~/projetos/claude '{"pattern":"x"}' | bash $H >/dev/null 2>&1; echo "2a: $? (esperado 0)"
 # projeto sem IDE aberta nunca é barrado
 J Grep ~/vaults/celebro '{"pattern":"x"}'  | bash $H >/dev/null 2>&1; echo "sem IDE: $? (esperado 0)"
+```
+
+---
+
+### 15. Contexto do operador versionado em `context/` + sync script (30-ago-2026)
+
+**Decisão:** o contexto do operador — persona global (`CLAUDE.md`), memória (4 arquivos `.md`), configs sanitizadas
+de settings/MCP/Codex — passa a ser **versionado** em `context/` dentro deste repo, e é **empurrado** para `~/.claude/`
+pelo script `scripts/sync-claude-config.py`.
+
+**Problema que resolveu:** o operador perdia horas de contexto (comando, débitos, log, alpha-council) e a persona
+global viviam só em `~/.claude/`, fora de qualquer backup. Qualquer perda de disco ou máquina nova exigia
+reconstrução manual. Além disso, 40 de 42 skills em `~/.claude/skills/` eram **cópias** não-simbólicas,
+desincronizando o runtime do repo sem que ninguém notasse.
+
+**O que foi descartado e por quê:** descartado versionar `~/.claude/settings.json` diretamente — o arquivo contém
+`ANTHROPIC_AUTH_TOKEN` (e outros secrets). Em vez disso, cria-se `context/claude/settings.example.json`
+com `${ANTHROPIC_AUTH_TOKEN}` como placeholder; o sync script injeta o token real do runtime existente (ou do
+`~/projetos/.env`) ao gerar `~/.claude/settings.json`. O `ANTHROPIC_AUTH_TOKEN` nunca cruza o repo.
+
+Descartado também versionar `~/.hermes/` (34 MB de bases) — só os arquivos de config interessam, e já são mantidos
+como template em `tijolao-ai/hermes/`.
+
+Descartado converter `using-superpowers` em symlink — é um **plugin** do marketplace (1,2 MB, 6 sub-skills), não uma
+skill do repo. Permanece como cópia em `~/.claude/skills/`.
+
+**Como verificar que continua valendo:**
+```bash
+# 1. Nenhum secret no repo context/
+grep -rn 'sk-[a-zA-Z0-9]\{10,\}' ~/projetos/claude/context/   # tem que sair vazio
+
+# 2. Symlinks todos corretos
+find ~/.claude/skills/ -xtype l                                # vazio = nenhum quebrado
+ls ~/.claude/skills/ | wc -l                                   # 43 (42 symlinks + 1 plugin)
+
+# 3. Sync script executa e preserva token
+python3 ~/projetos/claude/scripts/sync-claude-config.py --apply
+python3 -c "import json; s=json.load(open('/home/dr/.claude/settings.json')); print('token OK:', s['env']['ANTHROPIC_AUTH_TOKEN'][:10])"
 ```
 
 ---

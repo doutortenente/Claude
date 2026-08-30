@@ -25,3 +25,6 @@ memory/claude_index.db.bak
 ide/
 # Config local .codex/ — contém URL MCP, não versionar
 .codex/
+
+# Templates no context/ SÃO versionados (secrets são substituídos por ${VARS})
+!context/
