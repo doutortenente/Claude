@@ -1,0 +1,62 @@
+{
+  "_comment": "Template de configura\u00e7\u00e3o de MCP (Model Context Protocol) servers.\nOrigens: ~/.claude/settings.json (CLI) + ~/.claude.json (desktop) + ~/projetos/.mcp.json (workspace).\nSecrets (OBSIDIAN_API_KEY) s\u00e3o carregados do ambiente ou de ~/projetos/.env.\nagentbridge est\u00e1 DESABILITADO por decis\u00e3o do operador (28-jul-2026): endpoint MCP inv\u00e1lido.\nSincronizar via: python3 ~/projetos/claude/scripts/sync-claude-config.py --apply",
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    },
+    "jetbrains-index": {
+      "type": "http",
+      "url": "http://127.0.0.1:29172/index-mcp/streamable-http",
+      "_comment": "Porta muda a cada rein\u00edcio da IDE; corrigida automaticamente por scripts/pc/fix_ide_mcp.py"
+    },
+    "jetbrains-steroid": {
+      "type": "http",
+      "url": "http://127.0.0.1:6315/mcp"
+    },
+    "webstorm": {
+      "type": "http",
+      "url": "http://127.0.0.1:64542/stream"
+    },
+    "agentbridge": {
+      "type": "http",
+      "url": "http://127.0.0.1:8642/mcp",
+      "enabled": false,
+      "_comment": "DESABILITADO 28-jul-2026: MCP agentbridge quebrado, s\u00f3 reativar com endpoint v\u00e1lido"
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=idswehsvvqczzkiatuzu&read_only=true&features=docs,debugging,database,development,functions,storage"
+    },
+    "obsidian": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "obsidian-mcp-server"
+      ],
+      "env": {
+        "OBSIDIAN_API_KEY": "${OBSIDIAN_API_KEY}",
+        "OBSIDIAN_BASE_URL": "http://127.0.0.1:27123",
+        "OBSIDIAN_VAULT_PATH": "/home/dr/vaults/celebro"
+      }
+    },
+    "exa": {
+      "type": "http",
+      "url": "https://mcp.exa.ai/mcp",
+      "_comment": "Requer EXA_API_KEY no ambiente; s\u00f3 instalar sob demanda"
+    }
+  },
+  "disabledMcpServers": [
+    "agentbridge",
+    "jetbrains-index",
+    "jetbrains-steroid",
+    "obsidian",
+    "playwright",
+    "webstorm"
+  ],
+  "_note": "Em CLI (~/.claude/settings.json): mcpServers e disabledMcpServers.\nEm desktop (~/.claude.json): mesma estrutura, + mcpServers no .claude.json.\nEm workspace (~/projetos/.mcp.json): apenas supabase, obsidian, webstorm.\nA lista disabledMcpServers no CLI afeta qual config \u00e9 carregada."
+}

@@ -1,0 +1,184 @@
+{
+  "env": {
+    "ULTRACOST_GATE": "off",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:20128/v1",
+    "ANTHROPIC_AUTH_TOKEN": "${ANTHROPIC_AUTH_TOKEN}",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "cc/claude-fable-5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "ag/claude-opus-4-6-thinking",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "cx/gpt-5.6-sol",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "groq/openai/gpt-oss-120b"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(pnpm *)",
+      "Bash(npm *)",
+      "Bash(bun *)",
+      "Bash(node *)",
+      "Bash(python3 *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(unzip *)",
+      "Bash(jq *)",
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "deny": [],
+    "defaultMode": "bypassPermissions"
+  },
+  "model": "opus",
+  "disableClaudeAiConnectors": true,
+  "skillOverrides": {
+    "_anthropic": "off",
+    "admissao-uti": "off",
+    "ai-agent-workspace": "off",
+    "analise-ecott": "off",
+    "artifacts-builder": "off",
+    "aula-turbo-V2": "off",
+    "book-to-skill": "off",
+    "brainstorming": "off",
+    "canvas-design": "off",
+    "chrome-devtools-cli": "off",
+    "context7-cli": "off",
+    "context7-docs": "off",
+    "context7-mcp": "off",
+    "controles-vitais-janela": "off",
+    "create-skill": "off",
+    "create-subagent": "off",
+    "dispatching-parallel-agents": "off",
+    "docs-update": "off",
+    "docx": "off",
+    "file-organizer": "off",
+    "find-docs": "off",
+    "hemodinamica-calculada": "off",
+    "humanizer": "off",
+    "ide-index-mcp": "off",
+    "mcp-builder": "off",
+    "pdf": "off",
+    "plantao": "off",
+    "pptx": "off",
+    "prompt-improver": "off",
+    "sasi-ingest-export": "off",
+    "skill-creator": "off",
+    "subagent-driven-development": "off",
+    "supabase": "off",
+    "supabase-automation": "off",
+    "supabase-postgres-best-practices": "off",
+    "using-superpowers": "off",
+    "vercel-cli": "off",
+    "vercel-react-best-practices": "off",
+    "writing-skills": "off",
+    "xlsx": "off"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/dr/projetos/claude/.claude/hooks/prefer-ide-tools.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Grep|Glob|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/dr/projetos/claude/.claude/hooks/prefer-ide-tools.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/env node /home/dr/.tokentracker/bin/notify.cjs --source=claude"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/env node /home/dr/.tokentracker/bin/notify.cjs --source=claude"
+          }
+        ]
+      }
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "enableWorkflows": true,
+  "_comment_ultracode": "ultracode REMOVIDO 22-ago: forcava workflow multi-agente em toda tarefa, principal fonte de queima de token. Religar so sob demanda escrevendo 'ultracode' no prompt.",
+  "enabledPlugins": {
+    "humanizer@skills-dir": false,
+    "hooks-development@buildwithclaude": true,
+    "nextjs-expert@buildwithclaude": true
+  },
+  "extraKnownMarketplaces": {
+    "buildwithclaude": {
+      "source": {
+        "source": "github",
+        "repo": "davepoon/buildwithclaude"
+      }
+    }
+  },
+  "language": "portuguese",
+  "effortLevel": "high",
+  "askUserQuestionTimeout": "never",
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark-daltonized",
+  "editorMode": "normal",
+  "verbose": true,
+  "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "preferFastMode": true,
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    },
+    "jetbrains-index": {
+      "type": "http",
+      "url": "http://127.0.0.1:29172/index-mcp/streamable-http"
+    },
+    "jetbrains-steroid": {
+      "type": "http",
+      "url": "http://127.0.0.1:6315/mcp"
+    },
+    "agentbridge": {
+      "type": "http",
+      "url": "http://127.0.0.1:8642/mcp"
+    },
+    "webstorm": {
+      "url": "http://127.0.0.1:64542/stream",
+      "type": "http"
+    }
+  },
+  "disabledMcpServers": [],
+  "hasCompletedOnboarding": true,
+  "_comment": "Template versionado de ~/.claude/settings.json. Secrets (ANTHROPIC_AUTH_TOKEN) s\u00e3o carregados do ambiente ou de ~/projetos/.env. Sincronizar via: python3 ~/projetos/claude/scripts/sync-claude-config.py --apply"
+}

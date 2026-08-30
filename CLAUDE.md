@@ -17,9 +17,11 @@ Detalhe: `.claude/rules/communication.md`.
 
 ## 2. O que é este repositório
 
-**É** a fonte canônica da configuração do Claude Code do Dr. Tenente: 38 skills ativas, 18 subagentes e as regras que
-governam os dois. O sistema operacional lê daqui por **symlink** (atalho de arquivo: um apontador que faz a pasta
-parecer existir em dois lugares sem duplicar nada).
+**É** a fonte canônica da configuração do Claude Code do Dr. Tenente: 41 skills (38 em pacotes + 3 locais),
+18 subagentes e as regras que governam os dois. O runtime (`~/.claude/`) lê daqui por **symlink** (atalho de arquivo:
+um apontador que faz a pasta parecer existir em dois lugares sem duplicar nada). O contexto do operador
+(persona, memória, configs sanitizadas) mora em `context/` e é sincronizado para `~/.claude/` pelo script
+`scripts/sync-claude-config.py`.
 
 **NÃO é** um aplicativo. Não tem build, teste, runtime nem dependência instalável. Nada aqui "roda" — tudo aqui é lido
 por um agente.
@@ -42,8 +44,8 @@ Se ele afirma um fato, é fato — não gastar token confirmando.
 
 ## 4. Regras de trabalho
 
-**Buscar antes de varrer.** O repo tem 924 arquivos versionados (`git ls-files`) / 31 MB sem histórico — medido
-11-ago-2026. Varrer com `Glob` ou `Read` em massa queima contexto e é lento.
+**Buscar antes de varrer.** O repo tem 925 arquivos versionados (`git ls-files`) / 31 MB sem histórico — medido
+30-ago-2026. Varrer com `Glob` ou `Read` em massa queima contexto e é lento.
 
 | Precisa de | Use primeiro |
 | --- | --- |
@@ -80,15 +82,19 @@ Detalhe: `.claude/rules/security-and-secrets.md` e `.claude/rules/git-workflow.m
 | Subagente | `agents/<nome>/<nome>.md` + `README.md` | `~/.claude/agents` é symlink pra cá |
 | Regra por assunto | `.claude/rules/*.md` | Só carrega dentro deste repo |
 | Config do repo | `.claude/settings.json` | Config global fica em `~/.claude/settings.json` |
+| Contexto do operador | `context/` | Persona, memória, configs sanitizadas. Sincroniza pra `~/.claude/` via `scripts/sync-claude-config.py` |
 | Hook | `.claude/hooks/*.sh` | Hook que não roda é pedágio — provar na sessão ou remover |
 | Índice | `memory/` | Regerar: `python3 ~/projetos/scripts/indices/build_claude_index.py` |
-| Script de infra | `~/projetos/scripts/` | **Não** existe `scripts/` neste repo |
+| Script de infra | `~/projetos/scripts/` | **Não** existe `scripts/` neste repo — exceto `scripts/sync-claude-config.py` |
 
 **Casa única:** config mora onde o Claude Code lê, sem cópia no repo. Cópia num segundo lugar apodrece — foi o que
-matou `settings/` e `rules/` em 22-jul-2026.
+matou `settings/` e `rules/` em 22-jul-2026. Contexto do operador (persona, memória, configs sanitizadas) é a
+exceção: vive versionado em `context/` e é **pushado** para `~/.claude/` pelo sync script — o runtime continua a única
+fonte viva de secrets (`ANTHROPIC_AUTH_TOKEN`), que não entram no repo.
 
-**Custo de skill:** cada skill ativa injeta `name` + `description` em **toda** mensagem — hoje 16.430 caracteres para
-38 skills (medido 11-ago-2026). Skill que não é usada é pedágio: desligar removendo o symlink, a pasta fica no repo.
+**Custo de skill:** cada skill ativa injeta `name` + `description` em **toda** mensagem — hoje ~19.000 caracteres para
+41 skills (medido 30-ago-2026, após a importação de `ai-agent-workspace` e `vercel-react-best-practices`). Skill que
+não é usada é pedágio: desligar removendo o symlink, a pasta fica no repo.
 
 ## 7. Referências
 

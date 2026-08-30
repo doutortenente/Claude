@@ -1,0 +1,11 @@
+{
+  "_comment": "Template de ~/.claude/settings.local.json. Mergeido por cima de settings.json em runtime.",
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)"
+    ]
+  },
+  "enabledPlugins": {
+    "claude-md-kit@buildwithclaude": true
+  }
+}
