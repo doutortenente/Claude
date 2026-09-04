@@ -20,7 +20,6 @@ set -uo pipefail
 MODO_FILE="${HOME}/.claude/modo"
 SETTINGS="${HOME}/.claude/settings.json"
 SKILLS_DIR="${HOME}/.claude/skills"
-REPO_CLAUDE="${HOME}/projetos/claude"
 
 # Sem arquivo de modo, o padrão é o mais barato: nada ligado.
 MODO="nada"
@@ -52,15 +51,12 @@ for link in "$SKILLS_DIR"/*/; do
   nome="$(basename "$link")"
   alvo="$(readlink -f "$link" 2>/dev/null || echo "")"
 
-  # As 3 skills locais (add-skill, audit-repository, verify-before-finish) mexem
-  # no próprio arsenal: só fazem sentido com a sessão aberta dentro do repo claude.
-  # Fora dele viram off como qualquer outra.
+  # As 3 skills locais (add-skill, audit-repository, verify-before-finish) são
+  # ferramenta de trabalho, não skill de domínio: ficam SEMPRE ligadas, em
+  # qualquer modo e em qualquer diretório. Custo das três, medido 04-set-2026
+  # pelo endpoint count_tokens: 383 tokens/msg.
   if [ -z "$alvo" ] || [[ "$alvo" == */claude/.claude/skills/* ]]; then
-    if [ "$PWD" = "$REPO_CLAUDE" ] || [[ "$PWD" == "$REPO_CLAUDE"/* ]]; then
-      ligadas=$((ligadas+1)); continue
-    fi
-    OVER="$(printf '%s' "$OVER" | jq --arg n "$nome" '. + {($n): "off"}')"
-    economizadas=$((economizadas+1)); continue
+    ligadas=$((ligadas+1)); continue
   fi
 
   if [ -n "$PACOTES" ] && echo "$alvo" | grep -qE "$PACOTES"; then
