@@ -25,7 +25,9 @@ Fonte canônica da configuração do Claude Code: 41 skills (38 em pacotes + 3 l
 
 ## 3. Custo de skill — o sistema de modos
 
-Skill ligada injeta `name` + `description` em toda mensagem. Medido 03-set-2026: ligar as 38 custa **+4.659 tokens por mensagem**.
+Skill ligada injeta `name` + `description` em toda mensagem. Medido 04-set-2026 pelo endpoint `count_tokens` da própria API, uma skill por vez: as 41 de `~/.claude/skills` custam **5.172 tokens por mensagem** somadas.
+
+O modo **não alcança skill de plugin**. As 14 do `~/.claude/plugins/` (`dataviz`, `claude-api`, `simplify`, `update-config`…) custam **1.200 tokens/msg** e ficam ligadas em qualquer modo, inclusive `nada` — desligar exige mexer no plugin, não em `skillOverrides`.
 
 O hook `.claude/hooks/modo-de-skills.sh` roda no início da sessão, lê a palavra em `~/.claude/modo` e deixa ligado só o grupo daquele modo; o resto vira `off`.
 
@@ -36,13 +38,13 @@ O hook `.claude/hooks/modo-de-skills.sh` roda no início da sessão, lê a palav
 | `codigo` | ide + nativas do Claude |
 | `escritorio` | workspace (docx, pdf, xlsx, organizador) |
 | `estudo` | aula-turbo, book-to-skill, find-docs |
-| `tudo` / `nada` | todas / nenhuma |
+| `tudo` / `nada` | todas / só as 3 locais |
 
-Trocar: `.claude/hooks/modo <nome>`. As 3 skills locais só ligam com o diretório de trabalho dentro deste repo.
+Trocar: `.claude/hooks/modo <nome>`. As 3 skills locais (`add-skill`, `audit-repository`, `verify-before-finish`) são ferramenta de trabalho: ficam **sempre ligadas**, em qualquer modo e qualquer diretório — 383 tokens/msg as três.
 
 ## 4. Busca
 
-`Grep`/`Glob`, ou `query_claude_index.py search <termo>` pra catálogo. Os 3 MCPs de IDE JetBrains foram desativados em 04-set-2026 (`disabledMcpServers`) — portas mortas, nenhuma IDE rodando; o hook `prefer-ide-tools.sh` que barrava `Grep`/`Glob` foi apagado.
+`Grep`/`Glob`, ou `query_claude_index.py search <termo>` pra catálogo. Os 3 MCPs de IDE JetBrains foram desativados em 04-set-2026 (`disabledMcpServers`) — portas mortas, nenhuma IDE rodando. O hook `prefer-ide-tools.sh` continua registrado, mas dorme: age só com IDE JetBrains viva **e** `jetbrains-index` fora de `disabledMcpServers`. Hoje as duas travas barram — ele sai em `exit 0`, sem output e sem custo.
 
 **Não abrir sem necessidade:** `skills-que-prestam/` inteira com `Glob` · `_anthropic/` sem a skill ter sido acionada · `ide/` (token em texto puro, fora do git e do indexador).
 
