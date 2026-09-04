@@ -1,104 +1,65 @@
-# `claude` — Constituição do repositório
+# `claude` — repositório
 
-> Constituição curta. Detalhe mora em `docs/` (manual humano).
+## 1. O que é
 
-## 1. Prioridade máxima
+Fonte canônica da configuração do Claude Code: 41 skills (38 em pacotes + 3 locais), 18 subagentes. O runtime `~/.claude/` lê daqui por **symlink** (atalho: a pasta parece existir em dois lugares sem duplicar nada).
 
-O interlocutor é **médico intensivista**, não programador. Esta regra tem precedência sobre qualquer outra.
+**Não é** aplicativo. Sem build, sem teste, sem runtime, sem dependência. Nada aqui roda — tudo aqui é lido por um agente.
 
-- Responder em **português**.
-- Todo termo de dev (build, deploy, commit, branch, hook, symlink, cache, runtime, RLS, MCP…) leva **tradução de 1
-  linha em português comum, na 1ª aparição da resposta**.
-- Analogia clínica ou do cotidiano **antes** do jargão. Proibido sigla crua e "é só rodar X".
-- Isto é vocabulário, não postura: a linguagem é acessível, a cobrança é brutal.
+**Defeito nº 1 deste repo:** documento que cita caminho inexistente. Já aconteceu duas vezes. É o que a skill `audit-repository` confere.
 
+## 2. Onde mora cada coisa
 
-## 2. O que é este repositório
+| Mecanismo | Onde | Regra |
+|---|---|---|
+| Skill em serviço | `skills-que-prestam/<pacote>/<nome>/SKILL.md` | 1 symlink individual em `~/.claude/skills/` |
+| Skill local do repo | `.claude/skills/<nome>/SKILL.md` | `add-skill`, `audit-repository`, `verify-before-finish` — só aqui, sem symlink |
+| Subagente | `agents/<nome>/<nome>.md` + `README.md` | `~/.claude/agents` é symlink pra cá |
+| Hook | `.claude/hooks/` | Hook que não roda é pedágio — provar na sessão ou remover |
+| Config do repo | `.claude/settings.json` | A global fica em `~/.claude/settings.json` |
+| Contexto do operador | `context/` | Sincroniza pra `~/.claude/` via `scripts/sync-claude-config.py` |
+| Índice | `memory/` | Regerar: `python3 ~/projetos/scripts/indices/build_claude_index.py` |
+| Script de infra | `~/projetos/scripts/` | Não existe `scripts/` aqui — exceto `sync-claude-config.py` |
 
-**É** a fonte canônica da configuração do Claude Code do Dr. Tenente: 41 skills (38 em pacotes + 3 locais),
-18 subagentes e as regras que governam os dois. O runtime (`~/.claude/`) lê daqui por **symlink** (atalho de arquivo:
-um apontador que faz a pasta parecer existir em dois lugares sem duplicar nada). O contexto do operador
-(persona, memória, configs sanitizadas) mora em `context/` e é sincronizado para `~/.claude/` pelo script
-`scripts/sync-claude-config.py`.
+**Casa única:** config mora onde o Claude Code lê, sem cópia no repo. Cópia num segundo lugar apodrece — foi o que matou `settings/` e `rules/` em 22-jul-2026, e de novo em 04-set-2026.
 
-**NÃO é** um aplicativo. Não tem build, teste, runtime nem dependência instalável. Nada aqui "roda" — tudo aqui é lido
-por um agente.
+## 3. Custo de skill — o sistema de modos
 
-**Prioridade aqui:** que todo caminho citado em documento **exista de verdade**. Documento que mente sobre a própria
-estrutura é o defeito nº 1 deste repo, e já aconteceu duas vezes.
+Skill ligada injeta `name` + `description` em toda mensagem. Medido 03-set-2026: ligar as 38 custa **+4.659 tokens por mensagem**.
 
-## 3. Regras de comunicação
+O hook `.claude/hooks/modo-de-skills.sh` roda no início da sessão, lê a palavra em `~/.claude/modo` e deixa ligado só o grupo daquele modo; o resto vira `off`.
 
-| Regra | Verificável |
-| --- | --- |
-| Abrir pela conclusão | Contexto, se existir, é 1 frase — nunca antes da resposta |
-| Número medido, não adjetivo | "16.430 caracteres", não "bem menor". Sem fonte → `[SEM_FONTE]` |
-| Tabela com ≥3 itens comparáveis · lista para sequência | Parágrafo só para argumento, máx. 3 linhas |
-| Zero bajulação, zero preâmbulo, zero emoji | Máx. 1 frase de contexto antes de agir |
-| Pergunta só quando muda o produto | Múltipla escolha numerada |
+| Modo | Liga |
+|---|---|
+| `plantao` | pacote médico |
+| `sasi` | médico + supabase |
+| `codigo` | ide + nativas do Claude |
+| `escritorio` | workspace (docx, pdf, xlsx, organizador) |
+| `estudo` | aula-turbo, book-to-skill, find-docs |
+| `tudo` / `nada` | todas / nenhuma |
 
-**ZERO ALUCINAÇÃO:** campo sem fonte legível é `null` + `[SEM_FONTE]`. Nunca estimar dose, lab, sinal vital ou ID.
-Se ele afirma um fato, é fato — não gastar token confirmando.
+Trocar: `.claude/hooks/modo <nome>`. As 3 skills locais só ligam com o diretório de trabalho dentro deste repo.
 
-## 4. Regras de trabalho
+## 4. Busca
 
-**Buscar antes de varrer.** O repo tem 925 arquivos versionados (`git ls-files`) / 31 MB sem histórico — medido
-30-ago-2026. Varrer com `Glob` ou `Read` em massa queima contexto e é lento.
+`Grep`/`Glob`, ou `query_claude_index.py search <termo>` pra catálogo. Os 3 MCPs de IDE JetBrains foram desativados em 04-set-2026 (`disabledMcpServers`) — portas mortas, nenhuma IDE rodando; o hook `prefer-ide-tools.sh` que barrava `Grep`/`Glob` foi apagado.
 
-| Precisa de | Use primeiro |
-| --- | --- |
-| Onde mora X, quem chama X | `Grep` / `Glob` (o MCP JetBrains foi removido em 04-set-2026 — 3 portas mortas) |
-| Qual skill existe | `memory/SKILLS-CATALOGO.md` |
-| Inventário e números | `docs/REPOSITORY-INVENTORY.md` |
-| Busca textual no índice | `query_claude_index.py search <termo>` |
-
-
-**Evitar:** varredura cega de `skills-que-prestam/`; abrir `_anthropic/` sem a skill ter sido acionada; criar arquivo
-novo antes de conferir se já existe equivalente.
+**Não abrir sem necessidade:** `skills-que-prestam/` inteira com `Glob` · `_anthropic/` sem a skill ter sido acionada · `ide/` (token em texto puro, fora do git e do indexador).
 
 ## 5. Segurança
 
-- **Segredo**: o cofre é `~/projetos/.env` (arquivo real, permissão 600). Nada de chave neste repo.
-- **`ide/`**: os `.lock` da IDE contêm `authToken` em texto puro. Estão no `.gitignore` **e** fora do indexador.
-- **Licença**: `_anthropic/` mora em `skills-que-prestam/03-pacote-skills-claude-nativas/`, **não na raiz**, e mistura
-  duas licenças (medido 11-ago-2026). `examples/` — 24 pastas, todas Apache 2.0, redistribuir é permitido.
-  `public/` — 8 pastas: 6 são `© 2025 Anthropic, PBC. All rights reserved.` (`docx`, `xlsx`, `pptx`, `pdf`,
-  `pdf-reading`, `file-reading`), e essa licença veda reter cópia fora dos serviços da Anthropic e distribuir a
-  terceiros; `frontend-design` é Apache 2.0; `product-self-knowledge` não tem `LICENSE.txt` — ausência de arquivo não
-  é permissão.
-- **Git**: commit direto em `main` é proibido. Fluxo é branch → PR → merge, e o merge não pede confirmação.
+- Cofre é `~/projetos/.env` (permissão 600). **Nada de chave neste repo** — só `.env.example`.
+- `_anthropic/public/` tem 6 skills sob `© 2025 Anthropic, PBC. All rights reserved.` (`docx`, `xlsx`, `pdf`, `pptx`, `file-reading`, `pdf-reading`); `examples/` é Apache 2.0. `doutortenente/Claude` é público — risco assumido pelo operador em 09-ago-2026, registrado em `docs/DECISIONS.md`.
+- `ANTHROPIC_AUTH_TOKEN` fica em texto puro em `~/.claude/settings.json` (600, fora de todo repo git). Editar por script exige `mktemp` + `mv` — redirecionar direto pro original deixa o arquivo vazio se o `jq` falhar, e derruba a sessão.
 
+**Antes de commitar:** `git status --short` · `git diff --cached --name-only` · `git diff --cached | grep -inE "sk-|api[_-]?key|secret|Bearer "` (tem de sair vazio) · `git check-ignore -v ide/ .agentbridge`.
 
-## 6. Operações do repo
+## 6. Git
 
-| Mecanismo | Onde mora | Regra |
-| --- | --- | --- |
-| Skill ativa | `skills-que-prestam/<pacote>/<nome>/SKILL.md` | 1 symlink individual em `~/.claude/skills/` |
-| Skill local do repo | `.claude/skills/<nome>/SKILL.md` | `add-skill`, `audit-repository`, `verify-before-finish` — carregam só aqui, sem symlink |
-| Subagente | `agents/<nome>/<nome>.md` + `README.md` | `~/.claude/agents` é symlink pra cá |
-| Config do repo | `.claude/settings.json` | Config global fica em `~/.claude/settings.json` |
-| Contexto do operador | `context/` | Persona, memória, configs sanitizadas. Sincroniza pra `~/.claude/` via `scripts/sync-claude-config.py` |
-| Hook | `.claude/hooks/*.sh` | Hook que não roda é pedágio — provar na sessão ou remover |
-| Índice | `memory/` | Regerar: `python3 ~/projetos/scripts/indices/build_claude_index.py` |
-| Script de infra | `~/projetos/scripts/` | **Não** existe `scripts/` neste repo — exceto `scripts/sync-claude-config.py` |
-
-**Casa única:** config mora onde o Claude Code lê, sem cópia no repo. Cópia num segundo lugar apodrece — foi o que
-matou `settings/` e `rules/` em 22-jul-2026. Contexto do operador (persona, memória, configs sanitizadas) é a
-exceção: vive versionado em `context/` e é **pushado** para `~/.claude/` pelo sync script — o runtime continua a única
-fonte viva de secrets (`ANTHROPIC_AUTH_TOKEN`), que não entram no repo.
-
-**Custo de skill:** cada skill ativa injeta `name` + `description` em **toda** mensagem — hoje ~19.000 caracteres para
-41 skills (medido 30-ago-2026, após a importação de `ai-agent-workspace` e `vercel-react-best-practices`). Skill que
-não é usada é pedágio: desligar removendo o symlink, a pasta fica no repo.
+Commit direto em `main` é proibido: branch → PR → merge, e o merge não pede confirmação (ordem de 28-jul-2026).
+Sem `.bak`, sem `arquivo-v2.md`, sem tarball — o git é o backup.
+Mensagem: `tipo(escopo): o que mudou` — `feat`, `fix`, `refactor`, `docs`, `chore`.
 
 ## 7. Referências
 
-| Documento | Para quê |
-| --- | --- |
-| `README.md` | Explicação humana, entrada do repo |
-| `docs/OPERATING-MANUAL.md` | Manual operacional detalhado |
-| `docs/REPOSITORY-INVENTORY.md` | Inventário medido (mutável) |
-| `docs/DECISIONS.md` | Decisões arquiteturais e o porquê |
-| `docs/RUNBOOK.md` | Procedimentos passo a passo |
-| `agents/README.md` | Mapa e roteamento dos 18 subagentes |
-| `memory/MAPA-CLAUDE.md` | Inventário gerado pelo indexador |
+`README.md` · `docs/OPERATING-MANUAL.md` · `docs/REPOSITORY-INVENTORY.md` · `docs/DECISIONS.md` · `docs/RUNBOOK.md` · `agents/README.md`

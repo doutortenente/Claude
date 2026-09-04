@@ -9,8 +9,7 @@
 # COMO FUNCIONA
 # Lê uma palavra de ~/.claude/modo e reescreve o bloco "skillOverrides" do
 # ~/.claude/settings.json: o grupo do modo fica ligado, todo o resto vira
-# "name-only" (o nome aparece, a descrição não é cobrada; invocar pelo nome
-# ainda funciona e carrega a skill inteira na hora).
+# "off" — a skill some da lista e não é cobrada.
 #
 # Roda no SessionStart e devolve reloadSkills:true — a troca vale na sessão
 # em curso, sem reiniciar o Claude Code.
@@ -55,19 +54,19 @@ for link in "$SKILLS_DIR"/*/; do
 
   # As 3 skills locais (add-skill, audit-repository, verify-before-finish) mexem
   # no próprio arsenal: só fazem sentido com a sessão aberta dentro do repo claude.
-  # Fora dele viram name-only como qualquer outra.
+  # Fora dele viram off como qualquer outra.
   if [ -z "$alvo" ] || [[ "$alvo" == */claude/.claude/skills/* ]]; then
     if [ "$PWD" = "$REPO_CLAUDE" ] || [[ "$PWD" == "$REPO_CLAUDE"/* ]]; then
       ligadas=$((ligadas+1)); continue
     fi
-    OVER="$(printf '%s' "$OVER" | jq --arg n "$nome" '. + {($n): "name-only"}')"
+    OVER="$(printf '%s' "$OVER" | jq --arg n "$nome" '. + {($n): "off"}')"
     economizadas=$((economizadas+1)); continue
   fi
 
   if [ -n "$PACOTES" ] && echo "$alvo" | grep -qE "$PACOTES"; then
     ligadas=$((ligadas+1))
   else
-    OVER="$(printf '%s' "$OVER" | jq --arg n "$nome" '. + {($n): "name-only"}')"
+    OVER="$(printf '%s' "$OVER" | jq --arg n "$nome" '. + {($n): "off"}')"
     economizadas=$((economizadas+1))
   fi
 done
@@ -89,6 +88,6 @@ jq -n --arg m "$MODO" --argjson l "$ligadas" --argjson e "$economizadas" '
   hookEventName: "SessionStart",
   reloadSkills: true,
   additionalContext: ("MODO: " + $m + " — " + ($l|tostring) + " skills ligadas, "
-    + ($e|tostring) + " em name-only (nome visivel, descricao nao cobrada). "
+    + ($e|tostring) + " desligadas. "
     + "Trocar: .claude/hooks/modo <plantao|sasi|codigo|escritorio|estudo|tudo|nada>")
 }}'
