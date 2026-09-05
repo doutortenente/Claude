@@ -1,6 +1,6 @@
 # Catálogo de Skills — Claude
 
-> Gerado 03-sep-2026 · **leia isto antes de varrer `skills/` com Read/Glob.**
+> Gerado 05-sep-2026 · **leia isto antes de varrer `skills/` com Read/Glob.**
 > Regenerar: `python3 ~/projetos/scripts/indices/build_claude_index.py`
 
 ## Clínicas (UTI)
