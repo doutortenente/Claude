@@ -2,7 +2,7 @@
 
 > Gerado 05-sep-2026 por `~/projetos/scripts/indices/build_claude_index.py`
 
-**Total:** 1072 arquivos · 20.5 MB · 134,326 linhas · 651,627 tokens indexados · **68 skills**
+**Total:** 1072 arquivos · 20.5 MB · 134,316 linhas · 651,467 tokens indexados · **68 skills**
 
 ## Por categoria
 
@@ -17,7 +17,7 @@
 | `other` | 19 | 14,429 | Revisar |
 | `docs` | 4 | 9,347 | `docs/` — manual, inventário, decisões, runbook |
 | `skill_ide` | 8 | 8,716 | Pacote 00 — IDE e documentação |
-| `governance` | 11 | 7,041 | `.claude/` — rules, skills, agents, hooks, settings |
+| `governance` | 11 | 6,881 | `.claude/` — rules, skills, agents, hooks, settings |
 | `memory` | 2 | 1,738 | `memory/` — este índice |
 | `root` | 5 | 1,508 | CLAUDE.md, README, .gitignore, .env.example |
 | `extracao` | 1 | 762 | `EXTRACAO-CLINICA-SASI/` — briefing + atalhos |

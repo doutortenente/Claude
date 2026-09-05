@@ -68,36 +68,26 @@ Medido em 05-set-2026: **97 modelos** em 14 prefixos ativos.
 | Logs | `~/.9router/logs/` |
 | Segredo do login e ID da máquina | `~/.9router/jwt-secret`, `~/.9router/machine-id` (ambos 600) |
 | Código instalado | `~/.local/lib/node_modules/9router/` |
-| Repositório (clone de `decolua/9router`) | `~/projetos/9router` |
+| Repositório de desenvolvimento | Ausente no estado medido em 05-set-2026; o runtime não depende de clone local |
 | Credenciais de acesso | `~/projetos/.env`, variáveis `NINEROUTER_*` |
 | Painel | `http://localhost:20128/dashboard` |
 | Endpoint da API | `http://localhost:20128/v1` |
 
 O banco é SQLite com as tabelas `providerConnections`, `providerNodes`, `apiKeys`, `combos`, `usageDaily`, `usageHistory`, `requestDetails`, `settings`, `proxyPools`, `kv`, `_meta`. A documentação pública ainda fala em `db.json` — **está desatualizada**; nesta versão é SQLite.
 
-### Por que existem duas cópias do 9router
+### Instalação ativa
 
-Não é duplicação por engano. São duas coisas com o mesmo nome e papéis diferentes:
+No estado medido em 05-set-2026 há uma única instalação operacional:
 
-| | `~/projetos/9router` (clone) | `~/.local/lib/node_modules/9router` (instalado) |
+| Caminho | Papel | Versão medida |
 |---|---|---|
-| Roda? | **não** — é código-fonte parado | **sim** — é ele na porta 20128 |
-| Tamanho | 30 MB | 71 MB |
-| Para que serve | guarda as **9 skills do 9router** que o Hermes lê | o programa em si |
-| Versão medida (05-set-2026) | 0.5.55 no `package.json` | **0.5.69** |
+| `~/.local/lib/node_modules/9router` | programa que responde na porta 20128 | 0.5.69 |
 
-O `npm install -g` baixa o pacote publicado; ele nunca usa o clone. O clone só está aqui porque `~/.hermes/config.yaml` (linha 151) aponta `skills.external_dirs` para `~/projetos/9router/skills` — 9 skills (`9router-chat`, `-image`, `-tts`, `-stt`, `-video`, `-embeddings`, `-web-search`, `-web-fetch`) que **não vêm no pacote instalado**. Apagar o clone quebra essas skills.
+Não existe `~/projetos/9router`, e `skills.external_dirs` aponta somente para `~/.claude/skills`. Não invente dependência de clone local. Confira sempre a versão realmente executada:
 
-Duas armadilhas daí:
-
-1. **Ler o clone para explicar o que está rodando pode enganar** — a versão pode divergir. A que responde é a instalada:
-   ```bash
-   node -e 'console.log(require(process.env.HOME+"/.local/lib/node_modules/9router/package.json").version)'
-   ```
-2. **O `package.json` do clone mente sobre estar atrasado.** Medido em 05-set-2026, o git estava sincronizado (0 commits à frente, 0 atrás de `origin/main`) mesmo com `version: 0.5.55` — o autor não sobe o número a cada release. Confie no `git log`, não no `package.json`:
-   ```bash
-   git -C ~/projetos/9router log --oneline HEAD..origin/main | wc -l   # 0 = em dia
-   ```
+```bash
+node -e 'console.log(require(process.env.HOME+"/.local/lib/node_modules/9router/package.json").version)'
+```
 
 ## Diagnóstico, na ordem
 
