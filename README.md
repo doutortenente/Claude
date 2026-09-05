@@ -15,7 +15,7 @@ claude/
 ├── README.md                    este arquivo — porta de entrada
 ├── docs/                        manual humano (4 arquivos)
 ├── agents/                      18 subagentes + docs/ (6) + README/CONTRIBUTING/CHANGELOG
-├── skills-que-prestam/          36 skills ativas, em 5 pacotes numerados
+├── skills-que-prestam/          38 skills canônicas ativas, em 5 pacotes numerados
 ├── memory/                      MAPA-CLAUDE.md + SKILLS-CATALOGO.md + índice de busca
 ├── EXTRACAO-CLINICA-SASI/       briefing clínico pro pipeline do SASI
 ├── .claude/                     config LIDA pelo Claude Code (rules, hooks, settings)
@@ -34,13 +34,13 @@ claude/
 | Entender a frota de subagentes | `agents/README.md` |
 | Descobrir qual skill existe e o que ela faz | `memory/SKILLS-CATALOGO.md` |
 
-## Números medidos (08-ago-2026)
+## Números medidos (03-set-2026)
 
-- **901 arquivos** indexados, **30 MB** sem histórico de commits (**67 MB** com histórico)
-- **36 skills** ativas (00: 4 · 01: 7 · 02: 9 · 03: 12 · 04: 4) — todas com symlink 1:1 em `~/.claude/skills/`, 0
-  quebrado
+- **1.077 arquivos** versionados, **31.057.921 bytes** sem histórico de commits (**62.009.990 bytes** com histórico)
+- **41 skills canônicas ativas** (00: 4 · 01: 7 · 02: 9 · 03: 13 · 04: 5 · locais: 3)
+- `~/.claude/skills/`: **71 entradas** — 41 skills canônicas + `_anthropic` + 28 externas Firecrawl + 1 pasta do plugin `using-superpowers`; 0 atalhos quebrados
 - **18 subagentes** em `agents/<nome>/`
-- Custo de contexto: **11.173 caracteres** injetados em toda mensagem só pelas skills ativas
+- Custo atual de contexto: `[SEM_FONTE]` — precisa ser remensurado após a expansão das skills
 
 ## Licença
 

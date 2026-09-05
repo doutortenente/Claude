@@ -1,6 +1,6 @@
 # Catálogo de Skills — Claude
 
-> Gerado 09-aug-2026 · **leia isto antes de varrer `skills/` com Read/Glob.**
+> Gerado 03-sep-2026 · **leia isto antes de varrer `skills/` com Read/Glob.**
 > Regenerar: `python3 ~/projetos/scripts/indices/build_claude_index.py`
 
 ## Clínicas (UTI)
@@ -20,6 +20,8 @@
 
 ## Desenvolvimento (superpowers)
 
+- **ai-agent-workspace** — `skills-que-prestam/03-pacote-skills-claude-nativas/ai-agent-workspace/SKILL.md`
+  Give every AI agent its own computer: a persistent workspace with a filesystem, processes, shells, networking, and agent sessions on a lightweight in-process OS…
 - **algorithmic-art** — `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/examples/algorithmic-art/SKILL.md`
   Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generati…
 - **artifacts-builder** — `skills-que-prestam/03-pacote-skills-claude-nativas/artifacts-builder/SKILL.md`
@@ -58,6 +60,8 @@
   Use this skill when a file has been uploaded but its content is NOT in your context — only its path at /mnt/user-data/uploads/ is listed in an uploaded_files bl…
 - **financial-calculator** — `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/examples/financial-calculator/SKILL.md`
   Run financial calculations and scenario comparisons — tax estimates, loan comparisons, retirement projections, rent vs. buy, investment scenarios, and more. Pur…
+- **firecrawl** — `skills-que-prestam/03-pacote-skills-claude-nativas/firecrawl/SKILL.md`
+  |
 - **frontend-design** — `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/public/frontend-design/SKILL.md`
   Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making ch…
 - **grocery-shopping** — `skills-que-prestam/03-pacote-skills-claude-nativas/_anthropic/examples/grocery-shopping/SKILL.md`
