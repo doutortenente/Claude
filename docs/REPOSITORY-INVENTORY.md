@@ -1,6 +1,6 @@
 # Inventário do repositório
 
-> **Documento mutável.** Números medidos em **30-ago-2026**. Regerar a fonte com
+> **Documento mutável.** Números básicos remedidos em **03-set-2026**. Regerar a fonte com
 > `python3 ~/projetos/scripts/indices/build_claude_index.py` e atualizar esta página quando divergir.
 > Número sem medição é `[SEM_FONTE]` — nunca estimado.
 
@@ -8,22 +8,22 @@
 
 | Métrica | Valor | Como foi medido |
 | --- | ---: | --- |
-| Arquivos versionados | 925 | `git ls-files \| wc -l` |
-| Arquivos indexados | 919 | índice (exclui symlink, `ide/`, `.git`) |
-| Symlinks versionados | 7 | por isso indexados < versionados |
-| Arquivos em `skills-que-prestam/` | 850 | dos 917 indexados |
-| Disco sem histórico | 31 MB | `du -sh --exclude=.git` |
-| Disco com histórico | 67 MB | `du -sh` |
-| Linhas indexadas | ~105.000 | `memory/MAPA-CLAUDE.md` |
-| Tokens indexados | ~520.000 | `memory/MAPA-CLAUDE.md` |
-| Skills ativas (repo) | 41 | 38 em `skills-que-prestam/` + 3 locais em `.claude/skills/` |
-| `SKILL.md` no repo | 73 | inclui as 3 skills de `.claude/skills/`, sub-skills aninhadas e `_anthropic/` |
-| Symlinks em `~/.claude/skills/` | 42 | 41 skills + 1 `_anthropic` vendor collection |
-| Symlinks quebrados | 0 | verificado 30-ago-2026 |
+| Arquivos versionados | 1.077 | `git ls-files \| wc -l` |
+| Arquivos indexados | 919 | índice ainda não regenerado; valor histórico de 30-ago-2026 |
+| Symlinks versionados | 7 | `find . -type l -not -path './.git/*' \| wc -l` |
+| Arquivos em `skills-que-prestam/` | `[SEM_FONTE]` | recontar após decidir o destino do Firecrawl não rastreado |
+| Disco sem histórico | 31.057.921 bytes | `du -sb --exclude=.git .` |
+| Disco com histórico | 62.009.990 bytes | `du -sb .` |
+| Linhas indexadas | `[SEM_FONTE]` | índice precisa ser regenerado |
+| Tokens indexados | `[SEM_FONTE]` | índice precisa ser regenerado |
+| Skills canônicas ativas (repo) | 41 | 38 versionadas em `skills-que-prestam/` + 3 locais em `.claude/skills/` |
+| `SKILL.md` no repo | 74 | 71 sob `skills-que-prestam/` + 3 locais; inclui subskills e `_anthropic/` |
+| Entradas em `~/.claude/skills/` | 71 | 41 canônicas + `_anthropic` + 28 externas Firecrawl + 1 pasta de plugin |
+| Symlinks quebrados | 0 | verificado 03-set-2026 |
 | Plugins (não skills) | 1 | `using-superpowers` — marketplace plugin, mantido como cópia |
 | Subagentes | 18 | `agents/<nome>/` |
 | Diretório `context/` | 11 | persona, memory (4), claude (2), codex (3), mcp (2) — 30-ago-2026 |
-| **Custo de contexto das skills** | **~19.000 caracteres** | `name` + `description` injetados em TODA mensagem |
+| **Custo de contexto das skills** | `[SEM_FONTE]` | remensurar após reconciliar as 71 entradas do runtime |
 
 ## Skills por pacote
 
@@ -32,9 +32,9 @@
 | `00-pacote-ide-e-documentacao` | 4 | IDE, Context7, busca de documentação |
 | `01-pacote-skills-medicas` | 7 | UTI: admissão, eco, hemodinâmica, plantão, ingest |
 | `02-pacote-skills-workspace` | 9 | docx, pdf, xlsx, pptx, organização de arquivo |
-| `03-pacote-skills-claude-nativas` | 14 | skill-creator, TDD, brainstorming, humanizer + ai-agent-workspace |
+| `03-pacote-skills-claude-nativas` | 13 | skill-creator, TDD, brainstorming, humanizer + ai-agent-workspace |
 | `04-pacote-skills-supabase-e-vercel` | 5 | banco e publicação + vercel-react-best-practices |
-| **Total** | **38** | (3 local + _anthropic vendor = 41 skills no repo, 42 symlinks) |
+| **Total nos pacotes** | **38** | mais 3 skills locais = 41 canônicas; `_anthropic` é coleção, não skill |
 
 `_anthropic/` (dentro do pacote 03) **não é skill ativável** — é coleção com prefixo `_`. Duas licenças, medidas em
 09-ago-2026: `examples/` = Apache 2.0 (23 arquivos `LICENSE.txt`, redistribuir permitido) · `public/` =

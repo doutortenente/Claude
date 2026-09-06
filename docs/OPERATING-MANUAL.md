@@ -7,7 +7,7 @@
 
 ## 1. O que é este repositório
 
-É o **prontuário da configuração do Claude Code**: 36 skills ativas, 18 subagentes e as regras que governam os dois.
+É o **prontuário da configuração do Claude Code**: 41 skills canônicas ativas (38 de pacote + 3 locais), 18 subagentes e as regras que governam os dois.
 O sistema lê deste repo por atalho de arquivo, não por cópia. Editar aqui é editar o que o agente usa amanhã de manhã.
 
 **Não é um aplicativo.** Não há build (compilação), teste automatizado, runtime (programa em execução) nem dependência
@@ -75,7 +75,7 @@ Isso resolve o problema de fundo: o Claude Code lê de `~/.claude/`, mas o hist�
 | Atalho em `~/.claude/` | Aponta para | Granularidade |
 | --- | --- | --- |
 | `agents` | `/home/dr/projetos/claude/agents` | **1 atalho para a pasta inteira** — os 18 subagentes entram juntos |
-| `skills/<nome>` | `skills-que-prestam/<pacote>/<nome>` | **36 atalhos individuais**, um por skill |
+| `skills/<nome>` | `skills-que-prestam/<pacote>/<nome>` ou fonte externa declarada | **71 entradas atuais**: 70 atalhos + 1 pasta de plugin; 41 skills canônicas do repo |
 
 ### Por que agentes vão em bloco e skills vão uma a uma
 
